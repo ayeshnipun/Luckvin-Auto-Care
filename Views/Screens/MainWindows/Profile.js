@@ -115,7 +115,7 @@ export default class Profile extends Component {
 						size="xlarge"
 						rounded
 						onPress={() => console.log("Works!")}
-						source={{uri: 'https://api.adorable.io/avatars/285/test@user.i.png'}}
+						source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
 						showEditButton
 					/>
 					<View
@@ -134,10 +134,18 @@ export default class Profile extends Component {
 							)}
 					</View>
 				</View>
-				{/* <Button
-					title="Logout"
-					onPress={this.logOut}
-				/> */}
+
+				<View style={{ paddingBottom: 20, borderBottomWidth: 1 }}>
+					<TouchableOpacity>
+						<Text>Logout</Text>
+					</TouchableOpacity>
+					<TouchableOpacity>
+						<Text>Edit Profile</Text>
+					</TouchableOpacity>
+					{/* <TouchableOpacity>
+						<Text>Logout</Text>
+					</TouchableOpacity> */}
+				</View>
 			</View>
 		)
 	}
