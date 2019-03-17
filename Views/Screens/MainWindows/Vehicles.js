@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, StyleSheet, TextInput } from 'react-native'
 import { Card, ListItem, Button, Icon, Image } from 'react-native-elements'
+import { ImagePicker } from 'react-native-image-picker';
 
 import { fb, database } from '../../../firebaseConfig/config';
 
@@ -21,29 +22,37 @@ class Vehicles extends Component {
 
 	}
 
-	componentWillMount() {
-		fb.auth().onAuthStateChanged(function (user) {
-			if (user) {
-				this.setState({
-					user
-				});
-			}
-		}.bind(this));
-	}
-
 	componentDidMount() {
 		this.getDataFromFBase();
 	}
 
 	getDataFromFBase() {
-		database.collection('Users').doc(this.state.user.uid)
-			.collection('Vehicles').onSnapshot(snap => {
-				snap.docChanges().forEach(change => {
-					this.setState(prevState => ({
-						v_list: [...prevState.v_list, { key: change.doc.id, details: change.doc.data() }]
-					}))
+		fb.auth().onAuthStateChanged(function (user) {
+			if (user) {
+				this.setState({
+					user
 				});
-			});
+				database.collection('Users').doc(this.state.user.uid)
+					.collection('Vehicles').onSnapshot(snap => {
+						snap.docChanges().forEach(change => {
+							this.setState(prevState => ({
+								v_list: [...prevState.v_list, { key: change.doc.id, details: change.doc.data() }]
+							}))
+						});
+					});
+			}
+		}.bind(this));
+	}
+
+	addPicture = async () => {
+		let result = await ImagePicker.launchCameraAsync(); 
+		// let result = await ImagePicker.launchImagelibraryAsync();
+		
+		if (!result.cancelled) {
+			
+		} else {
+			
+		}
 	}
 
 	submitVehicle = () => {
@@ -81,6 +90,10 @@ class Vehicles extends Component {
 		return (
 			// <KeyboardAvoidingView style={styles.vehicleContainer} behavior="padding">
 			<View style={styles.vehicleContainer}>
+				<Button
+					title="Add Picture"
+					onPress={this.addPicture.bind(this)}
+				/>
 				<TextInput onChangeText={(vNum) => this.setState({ v_number: vNum })} placeholder="Vehicle Number" style={styles.ti1}></TextInput>
 				<TextInput onChangeText={(vBrn) => this.setState({ v_brand: vBrn })} placeholder="Vehicle Brand" style={styles.ti1}></TextInput>
 				<TextInput onChangeText={(vTyp) => this.setState({ v_type: vTyp })} placeholder="Vehicle Type" style={styles.ti1}></TextInput>
