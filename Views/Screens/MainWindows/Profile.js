@@ -1,18 +1,29 @@
 import React, { Component } from 'react'
 import { Text, View, Button, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
-import { ImagePicker } from 'react-native-image-picker'
+// import { ImagePicker } from 'react-native-image-picker'
 import { Avatar } from 'react-native-elements';
 import { fb, database } from '../../../firebaseConfig/config'
 
 import WelcomeScreen from '../WelcomeScreen'
 
+var ImagePicker = require('react-native-image-picker');
+
+
+const options = {
+	title: 'Select Avatar',
+	customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+	storageOptions: {
+		skipBackup: true,
+		path: 'images',
+	},
+};
 export default class Profile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			userData: null,
 			user: null,
-			avatarSource: null
+			avatar: null
 		}
 
 	}
@@ -29,7 +40,7 @@ export default class Profile extends Component {
 							userData: user.data()
 						});
 					})
-					console.log(user);
+					// console.log(user);
 				} else {
 					console.log("Eror")
 				}
@@ -38,39 +49,33 @@ export default class Profile extends Component {
 	}
 
 	editAvatar = () => {
-		const options = {
-			title: 'Select Avatar',
-			customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-			storageOptions: {
-				skipBackup: true,
-				path: 'images',
-			},
-		};
-
-		/**
-		 * The first arg is the options object for customization (it can also be null or omitted for default options),
-		 * The second arg is the callback which sends object: response (more info in the API Reference)
-		 */
-		ImagePicker.launchImageLibrary(options, (response) => {
-			console.log('Response = ', response);
-
-			if (response.didCancel) {
-				console.log('User cancelled image picker');
-			} else if (response.error) {
-				console.log('ImagePicker Error: ', response.error);
-			} else if (response.customButton) {
-				console.log('User tapped custom button: ', response.customButton);
+		ImagePicker.showImagePicker({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
+			if (res.didCancel) {
+				console.log("User cancelled!");
+			} else if (res.error) {
+				console.log("Error", res.error);
 			} else {
-				const source = { uri: response.uri };
-
-				// You can also display the image using data:
-				// const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-				this.setState({
-					avatarSource: source,
-				});
+				this.uploadAvatar(res).then(() => {
+					alert("Success");
+				}).catch((error) => {
+					alert(error);
+				})
+				// this.setState({
+				// 	avatar: res
+				// 	// avatar: { uri: res.uri }
+				// });
+				// console.log(this.state.avatar);
 			}
 		});
+	}
+
+	uploadAvatar = async (res) => {
+		// console.log(res);
+		const response = await fetch(res.uri)
+		console.log(response)
+		// const blob = await response.blob();
+		// var ref = fb.storage().ref().child("Users/" + res.fileName);
+		// return ref.put(blob);
 	}
 
 	logOut = () => {

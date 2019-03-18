@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, StyleSheet, TextInput, ActivityIndicator } from 'react-native'
-import { Card, ListItem, Button, Icon, Image } from 'react-native-elements'
+import { Text, View, ScrollView, StyleSheet, TextInput, ActivityIndicator, KeyboardAvoidingView } from 'react-native'
+import { Card, ListItem, Button, Image, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import { ImagePicker } from 'react-native-image-picker';
 
 import { fb, database } from '../../../firebaseConfig/config';
@@ -94,9 +95,24 @@ class Vehicles extends Component {
 					title="Add Picture"
 					onPress={this.addPicture.bind(this)}
 				/>
-				<TextInput onChangeText={(vNum) => this.setState({ v_number: vNum })} placeholder="Vehicle Number" style={styles.ti1}></TextInput>
-				<TextInput onChangeText={(vBrn) => this.setState({ v_brand: vBrn })} placeholder="Vehicle Brand" style={styles.ti1}></TextInput>
-				<TextInput onChangeText={(vTyp) => this.setState({ v_type: vTyp })} placeholder="Vehicle Type" style={styles.ti1}></TextInput>
+				<TextInput
+					onChangeText={(vNum) => this.setState({ v_number: vNum })}
+					placeholder="Vehicle Number"
+					style={styles.ti1} />
+
+				{/* <FormLabel>Name</FormLabel>
+				<FormInput onChangeText={(vNum) => this.setState({ v_number: vNum })} />
+				<FormValidationMessage>Error message</FormValidationMessage> */}
+
+				<TextInput
+					onChangeText={(vBrn) => this.setState({ v_brand: vBrn })}
+					placeholder="Vehicle Brand" style={styles.ti1} />
+
+				<TextInput
+					onChangeText={(vTyp) => this.setState({ v_type: vTyp })}
+					placeholder="Vehicle Type"
+					style={styles.ti1} />
+
 				<Button
 					title="Submit Vehicle"
 					onPress={this.submitVehicle.bind(this)}
@@ -147,9 +163,12 @@ const styles = StyleSheet.create({
 		backgroundColor: '#ffffff',
 	},
 	ti1: {
-		borderColor: 'gray', borderWidth: 1,
+		// borderColor: 'gray', 
+		// borderWidth: 1,
 		width: 300,
-		height: 40
+		height: 40,
+		borderBottomWidth: 1.5,
+		borderBottomColor: 'gray'
 	},
 	contentContainer: {
 		// paddingVertical: 20

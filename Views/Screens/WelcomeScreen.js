@@ -1,20 +1,10 @@
-// import React, { Component } from 'react'
-// import { Text, View, StyleSheet } from 'react-native'
-
-// export default class WelcomeScreen extends Component {
-//   render() {
-// 	return (
-// 	  <View>
-// 		<Text> textInComponent </Text>
-// 	  </View>
-// 	)
-//   }
-// }
-
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableHighlight, Image, ImageBackground } from 'react-native'
-import { Button } from 'react-native-elements'
-// import Icon from 'react-native-vector-icons/FontAwesome';
+import {
+	StyleSheet,
+	Text, View, TextInput, TouchableHighlight, Image, ImageBackground, KeyboardAvoidingView, ScrollView, TouchableOpacity
+} from 'react-native'
+import { Button, Input } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { fb } from '../../firebaseConfig/config';
 
 class WelcomeScreen extends Component {
@@ -26,7 +16,7 @@ class WelcomeScreen extends Component {
 			name: '',
 			contact: '',
 			user: null,
-			page: ''
+			page: 'register'
 		};
 		this.ref = fb.firestore().collection('Users');
 		// this.signoutUser();
@@ -107,123 +97,95 @@ class WelcomeScreen extends Component {
 	render() {
 		if (this.state.page == '') {
 			return (
-				<View style={styles.container}>
-					{/* <ImageBackground source={require('../images/Login.jpg')} resizeMode='cover' style={styles.container}> */}
-					<View style={styles.inputContainer}>  
-						{/* <Image style={styles.inputIcon} source={{ uri: 'https://png.icons8.com/message/ultraviolet/50/3498db' }} /> */}
-						<TextInput style={styles.inputs}
-							placeholder="Email"
-							placeholderTextColor="#ed1a4b"
-							keyboardType="email-address"
-							underlineColorAndroid='transparent'
-							onChangeText={(email) => this.setState({ email })} 
-							/>
+				<KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#045487' }}>
+					<View style={{ marginTop: 70, flex: 1 }}>
+						<ScrollView style={{ paddingLeft: 30, paddingRight: 30, paddingTop: 20, flex: 1 }}>
+							<Text style={{ fontSize: 30, color: 'white', fontWeight: '300', marginBottom: 30, textAlign:'center' }}>Log In</Text>
+							<View style={{ marginBottom: 20 }}>
+								<Text style={{ color: 'white' }}>EMAIL ADDRESS</Text>
+								<Input style={{ borderBottomColor: 'white' }} />
+							</View>
+
+							<View style={{ marginBottom: 20 }}>
+								<Text style={{ color: 'white' }}>PASSWORD</Text>
+								<Input style={{ borderBottomColor: 'white', color:'white' }} />
+							</View>
+
+							<TouchableOpacity style={{
+								marginTop: 10,
+								marginHorizontal: 40,
+								paddingVertical: 15,
+								borderRadius: 20,
+								// borderColor:'gray',
+								backgroundColor: 'white',
+								fontSize: 20
+							}}
+								onPress={() => this.loginUser()}>
+								<Text style={{textAlign:'center'}}>LOGIN</Text>
+							</TouchableOpacity>
+
+							<TouchableOpacity style={{marginTop:40}} onPress={() => this.setState({
+								page: "register"
+							})}>
+								<Text style={{textAlign:'center', color:'white'}}>Click here to Register</Text>
+							</TouchableOpacity>
+						</ScrollView>
 					</View>
-
-					<View style={styles.inputContainer}>
-						{/* <Image style={styles.inputIcon} source={{ uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db' }} /> */}
-						<TextInput style={styles.inputs}
-							placeholder="Password"
-							placeholderTextColor="#ed1a4b"
-							secureTextEntry={true}
-							underlineColorAndroid='transparent'
-							onChangeText={(password) => this.setState({ password })}
-							 />
-					</View>
-
-					{/* <Button
-						title="SIGNUP"
-						ViewComponent={require('expo').LinearGradient}
-						linearGradientProps={{
-							colors: ['#FF9800', '#F44336'],
-							start: [1, 0],
-							end: [0.2, 0],
-						}}
-						onPress={() => this.onClickListener(this.state.email, this.state.password)}
-					/>
-
-					<Button
-						icon={
-							<Icon
-								name="arrow-right"
-								size={15}
-								color="white"
-							/>
-						}
-						iconRight
-						onPress={() => this.onClickListener(this.state.email, this.state.password)}
-						title="Button with right icon"
-					/> */}
-					
-					<TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.loginUser(this.state.email, this.state.password)}>
-						<Text style={styles.loginText}>Login</Text>
-					</TouchableHighlight>
-
-					<TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('restore_password')}>
-						<Text>Forgot your password?</Text>
-					</TouchableHighlight>
-
-					<TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.setState({
-						page: "register"
-					})}>
-						<Text>Register</Text>
-					</TouchableHighlight>
-					{/* </ImageBackground> */}
-				</View>
+				</KeyboardAvoidingView>
 			)
 		} else if (this.state.page == "register") {
 			return (
-				<View style={styles.container}>
-					<View style={styles.inputContainer}>
-						{/* <Image style={styles.inputIcon} source={{ uri: 'https://png.icons8.com/message/ultraviolet/50/3498db' }} /> */}
-						<TextInput style={styles.inputs}
-							placeholder="Email"
-							keyboardType="email-address"
-							underlineColorAndroid='transparent'
-							onChangeText={(email) => this.setState({ email })} />
+				<KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#045487' }}>
+					<View style={{ marginTop: 0, flex: 1 }}>
+						<ScrollView style={{ paddingLeft: 30, paddingRight: 30, paddingTop: 20, flex: 1 }}>
+							<Text style={{ fontSize: 30, color: 'white', fontWeight: '300', marginBottom: 30, textAlign:'center' }}>Register</Text>
+							<View style={{ marginBottom: 20 }}>
+								<Text style={{ color: 'white' }}>EMAIL ADDRESS</Text>
+								<Input style={{ borderBottomColor: 'white' }} />
+							</View>
+							<View style={{ marginBottom: 20 }}>
+								<Text style={{ color: 'white' }}>FIRST NAME</Text>
+								<Input style={{ borderBottomColor: 'white' }} />
+							</View>
+							<View style={{ marginBottom: 20 }}>
+								<Text style={{ color: 'white' }}>LAST NAME</Text>
+								<Input style={{ borderBottomColor: 'white' }} />
+							</View>
+							<View style={{ marginBottom: 20 }}>
+								<Text style={{ color: 'white' }}>CONTACT NUMBER</Text>
+								<Input style={{ borderBottomColor: 'white' }} />
+							</View>
+
+							<View style={{ marginBottom: 20 }}>
+								<Text style={{ color: 'white' }}>PASSWORD</Text>
+								<Input style={{ borderBottomColor: 'white', color:'white' }} />
+							</View>
+							<View style={{ marginBottom: 20 }}>
+								<Text style={{ color: 'white' }}>CONFIRM PASSWORD</Text>
+								<Input style={{ borderBottomColor: 'white', color:'white' }} />
+							</View>
+
+							<TouchableOpacity style={{
+								marginTop: 10,
+								marginHorizontal: 40,
+								paddingVertical: 15,
+								borderRadius: 20,
+								// borderColor:'gray',
+								backgroundColor: 'white',
+								fontSize: 20
+							}}
+								onPress={() => this.loginUser()}>
+								<Text style={{textAlign:'center'}}>REGISTER</Text>
+							</TouchableOpacity>
+
+							<TouchableOpacity style={{marginTop:40, marginBottom:40}} onPress={() => this.setState({
+								page: "register"
+							})}>
+								<Text style={{textAlign:'center', color:'white'}}>Already a user? Click here to Login</Text>
+							</TouchableOpacity>
+						</ScrollView>
 					</View>
-
-					<View style={styles.inputContainer}>
-						{/* <Image style={styles.inputIcon} source={{ uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db' }} /> */}
-						<TextInput style={styles.inputs}
-							placeholder="Password"
-							secureTextEntry={true}
-							underlineColorAndroid='transparent'
-							onChangeText={(password) => this.setState({ password })} />
-					</View>
-
-					<View style={styles.inputContainer}>
-						{/* <Image style={styles.inputIcon} source={{ uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db' }} /> */}
-						<TextInput style={styles.inputs}
-							placeholder="Name"
-							// secureTextEntry={true}
-							underlineColorAndroid='transparent'
-							onChangeText={(name) => this.setState({ name })} />
-					</View>
-
-					<View style={styles.inputContainer}>
-						{/* <Image style={styles.inputIcon} source={{ uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db' }} /> */}
-						<TextInput style={styles.inputs}
-							placeholder="Contact"
-							// secureTextEntry={true}
-							underlineColorAndroid='transparent'
-							onChangeText={(contact) => this.setState({ contact })} />
-					</View>
-
-					<TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.signup(this.state.email, this.state.password)}>
-						<Text style={styles.loginText}>Sign Up</Text>
-					</TouchableHighlight>
-					{/* 	
-					<TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
-						<Text>Forgot your password?</Text>
-					</TouchableHighlight> */}
-
-					<TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.setState({
-						page: ''
-					})}>
-						<Text>Login</Text>
-					</TouchableHighlight>
-				</View>
+				</KeyboardAvoidingView>
 			)
 		}
 	}
