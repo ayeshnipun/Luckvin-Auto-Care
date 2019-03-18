@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, StyleSheet, TextInput } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, TextInput, ActivityIndicator } from 'react-native'
 import { Card, ListItem, Button, Icon, Image } from 'react-native-elements'
 import { ImagePicker } from 'react-native-image-picker';
 
@@ -45,13 +45,13 @@ class Vehicles extends Component {
 	}
 
 	addPicture = async () => {
-		let result = await ImagePicker.launchCameraAsync(); 
+		let result = await ImagePicker.launchCameraAsync();
 		// let result = await ImagePicker.launchImagelibraryAsync();
-		
+
 		if (!result.cancelled) {
-			
+
 		} else {
-			
+
 		}
 	}
 
@@ -118,8 +118,15 @@ class Vehicles extends Component {
 						}
 					</ScrollView>
 				) : (
-						<View>
-							<Text>empty</Text>
+						<View style={{
+							flex: 1,
+							justifyContent: 'center',
+							flexDirection: 'row',
+							justifyContent: 'space-around',
+							padding: 10
+						}}
+						>
+							<ActivityIndicator size="small" color="#00ff00" />
 						</View>
 					)}
 			</View>

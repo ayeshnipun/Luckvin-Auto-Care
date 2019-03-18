@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Button, Image, TouchableOpacity } from 'react-native'
+import { Text, View, Button, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { ImagePicker } from 'react-native-image-picker'
 import { Avatar } from 'react-native-elements';
 import { fb, database } from '../../../firebaseConfig/config'
@@ -11,7 +11,8 @@ export default class Profile extends Component {
 		super(props);
 		this.state = {
 			userData: null,
-			user: null
+			user: null,
+			avatarSource: null
 		}
 
 	}
@@ -37,7 +38,20 @@ export default class Profile extends Component {
 	}
 
 	editAvatar = () => {
-		ImagePicker.showImagePicker(options, (response) => {
+		const options = {
+			title: 'Select Avatar',
+			customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+			storageOptions: {
+				skipBackup: true,
+				path: 'images',
+			},
+		};
+
+		/**
+		 * The first arg is the options object for customization (it can also be null or omitted for default options),
+		 * The second arg is the callback which sends object: response (more info in the API Reference)
+		 */
+		ImagePicker.launchImageLibrary(options, (response) => {
 			console.log('Response = ', response);
 
 			if (response.didCancel) {
@@ -57,7 +71,6 @@ export default class Profile extends Component {
 				});
 			}
 		});
-		//   });
 	}
 
 	logOut = () => {
@@ -77,8 +90,8 @@ export default class Profile extends Component {
 			<View style={{ flex: 1 }}>
 				<View
 					style={{
-						height: 50,
-						paddingTop: 30,
+						height: 70,
+						paddingTop: 20,
 						backgroundColor: 'white',
 						borderColor: 'lightgray',
 						borderBottomWidth: 0.5,
@@ -112,9 +125,9 @@ export default class Profile extends Component {
 						/>
 					</TouchableOpacity> */}
 					<Avatar
-						size="xlarge"
+						size="large"
 						rounded
-						onPress={() => console.log("Works!")}
+						onPress={() => this.editAvatar()}
 						source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
 						showEditButton
 					/>
@@ -125,22 +138,67 @@ export default class Profile extends Component {
 					>
 						{this.state.userData ? (
 							<View>
-								<Text>{this.state.userData.name}</Text>
-								<Text>{this.state.userData.email}</Text>
+								<Text style={{ fontSize: 15 }}>{this.state.userData.name}</Text>
+								<Text style={{ fontSize: 15 }}>{this.state.userData.email}</Text>
 								{/* <Text>Username</Text> */}
 							</View>
 						) : (
-								<Text>Fetching Data..</Text>
+								<View style={{
+									flex: 1,
+									justifyContent: 'center',
+									flexDirection: 'row',
+									justifyContent: 'space-around',
+									padding: 10
+								}}
+								>
+									<ActivityIndicator size="small" color="#00ff00" />
+								</View>
 							)}
 					</View>
 				</View>
 
 				<View style={{ paddingBottom: 20, borderBottomWidth: 1 }}>
-					<TouchableOpacity>
-						<Text>Logout</Text>
+					<TouchableOpacity
+						style={{
+							marginTop: 10,
+							marginHorizontal: 40,
+							paddingVertical: 15,
+							borderRadius: 20,
+							// borderColor:'gray',
+							backgroundColor: 'gray'
+						}}
+						onPress={() => this.logOut()}
+					>
+						<Text
+							style={{
+								textAlign: 'center',
+								color: 'white',
+								fontSize: 17
+							}}
+						>
+							Logout
+						</Text>
 					</TouchableOpacity>
-					<TouchableOpacity>
-						<Text>Edit Profile</Text>
+
+					<TouchableOpacity
+						style={{
+							marginTop: 10,
+							marginHorizontal: 40,
+							paddingVertical: 15,
+							borderRadius: 20,
+							// borderColor:'gray',
+							backgroundColor: 'gray'
+						}}
+					>
+						<Text
+							style={{
+								textAlign: 'center',
+								color: 'white',
+								fontSize: 17
+							}}
+						>
+							Edit Profile
+						</Text>
 					</TouchableOpacity>
 					{/* <TouchableOpacity>
 						<Text>Logout</Text>

@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 // import Location from './Views/Screens/MainWindows/Location';
 // import WelcomeScreen from './Views/Screens/WelcomeScreen'
@@ -38,7 +38,7 @@ export default class Location extends Component {
 					}
 				});
 			},
-			(error) => alert(JSON.stringify(error)),
+			(error) => alert("Error","Cannot get the connection due to bad connectivity."),
 			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 		);
 	}
@@ -60,34 +60,50 @@ export default class Location extends Component {
 
 	render() {
 		const { region } = this.state.region;
-		return (
-			<View style={{ flex: 1 }}>
-				<MapView
-					provider={PROVIDER_GOOGLE}
-					initialRegion={this.state.region}
-					region={this.state.region}
-					// region={region}
-					style={{ flex: 1 }}
-					// onRegionChange={this.onRegionChange}
-					showsUserLocation
-					loadingEnabled
-				>
-					<Marker
-						coordinate={{
-							latitude: this.state.region.latitude,
-							longitude: this.state.region.longitude
-						}}
-					></Marker>
-				</MapView>
-				{/* <Search onLocationSelected={this.handleLocationSelected} /> */}
-				<Button title="Place" color="red" onPress={this.setAlarmToDestination} />
-			</View>
-			// <View style={{flex:1}}>
+		if (this.state.region.latitude != 0 && this.state.region.longitude != 0) {
+			return (
+				<View style={{ flex: 1 }}>
+					<MapView
+						provider={PROVIDER_GOOGLE}
+						initialRegion={this.state.region}
+						region={this.state.region}
+						// region={region}
+						style={{ flex: 1 }}
+						// onRegionChange={this.onRegionChange}
+						showsUserLocation
+						loadingEnabled
+					>
+						<Marker
+							coordinate={{
+								latitude: this.state.region.latitude,
+								longitude: this.state.region.longitude
+							}}
+						></Marker>
+					</MapView>
+					{/* <Search onLocationSelected={this.handleLocationSelected} /> */}
+					<Button title="Place" color="red" onPress={this.setAlarmToDestination} />
+				</View>
+				// <View style={{flex:1}}>
 
-			// 	{/* <WelcomeScreen /> */}
-			// 	{/* <Location/> */}
-			// </View>
-		);
+				// 	{/* <WelcomeScreen /> */}
+				// 	{/* <Location/> */}
+				// </View>
+			);
+		} else {
+			return (
+				<View style={{
+					flex: 1,
+					justifyContent: 'center',
+					flexDirection: 'row',
+					justifyContent: 'space-around',
+					padding: 10
+				}}
+				>
+					<ActivityIndicator size="large" color="#00ff00" />
+				</View>
+			);
+		}
+
 	}
 }
 
