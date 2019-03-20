@@ -12,11 +12,13 @@ class WelcomeScreen extends Component {
 		super(props);
 		this.state = {
 			email: '',
-			password: '',
-			name: '',
+			fname:'',
+			lname:'',
 			contact: '',
+			password: '',
+			password_c:'',
 			user: null,
-			page: 'register'
+			page: ''
 		};
 		this.ref = fb.firestore().collection('Users');
 		// this.signoutUser();
@@ -103,12 +105,12 @@ class WelcomeScreen extends Component {
 							<Text style={{ fontSize: 30, color: 'white', fontWeight: '300', marginBottom: 30, textAlign:'center' }}>Log In</Text>
 							<View style={{ marginBottom: 20 }}>
 								<Text style={{ color: 'white' }}>EMAIL ADDRESS</Text>
-								<Input style={{ borderBottomColor: 'white' }} />
+								<Input style={{ borderBottomColor: 'white' }} onChangeText={(email) => {this.setState({email})}}/>
 							</View>
 
 							<View style={{ marginBottom: 20 }}>
 								<Text style={{ color: 'white' }}>PASSWORD</Text>
-								<Input style={{ borderBottomColor: 'white', color:'white' }} />
+								<Input style={{ borderBottomColor: 'white', color:'white' }} onChangeText={(password) => {this.setState({password})}}/>
 							</View>
 
 							<TouchableOpacity style={{
@@ -120,12 +122,14 @@ class WelcomeScreen extends Component {
 								backgroundColor: 'white',
 								fontSize: 20
 							}}
-								onPress={() => this.loginUser()}>
+								onPress={() => this.loginUser(this.state.email, this.state.password)}>
 								<Text style={{textAlign:'center'}}>LOGIN</Text>
 							</TouchableOpacity>
 
 							<TouchableOpacity style={{marginTop:40}} onPress={() => this.setState({
-								page: "register"
+								page: "register",
+								email: '',
+								password: ''
 							})}>
 								<Text style={{textAlign:'center', color:'white'}}>Click here to Register</Text>
 							</TouchableOpacity>
@@ -141,28 +145,28 @@ class WelcomeScreen extends Component {
 							<Text style={{ fontSize: 30, color: 'white', fontWeight: '300', marginBottom: 30, textAlign:'center' }}>Register</Text>
 							<View style={{ marginBottom: 20 }}>
 								<Text style={{ color: 'white' }}>EMAIL ADDRESS</Text>
-								<Input style={{ borderBottomColor: 'white' }} />
+								<Input style={{ borderBottomColor: 'white' }} onChangeText={(email) => {this.setState(email)}}/>
 							</View>
 							<View style={{ marginBottom: 20 }}>
 								<Text style={{ color: 'white' }}>FIRST NAME</Text>
-								<Input style={{ borderBottomColor: 'white' }} />
+								<Input style={{ borderBottomColor: 'white' }} onChangeText={(fname) => {this.setState(fname)}}/>
 							</View>
 							<View style={{ marginBottom: 20 }}>
 								<Text style={{ color: 'white' }}>LAST NAME</Text>
-								<Input style={{ borderBottomColor: 'white' }} />
+								<Input style={{ borderBottomColor: 'white' }} onChangeText={(lname) => {this.setState(lname)}}/>
 							</View>
 							<View style={{ marginBottom: 20 }}>
 								<Text style={{ color: 'white' }}>CONTACT NUMBER</Text>
-								<Input style={{ borderBottomColor: 'white' }} />
+								<Input style={{ borderBottomColor: 'white' }} onChangeText={(contact) => {this.setState(contact)}}/>
 							</View>
 
 							<View style={{ marginBottom: 20 }}>
 								<Text style={{ color: 'white' }}>PASSWORD</Text>
-								<Input style={{ borderBottomColor: 'white', color:'white' }} />
+								<Input style={{ borderBottomColor: 'white', color:'white' }} onChangeText={(password) => {this.setState(password)}}/>
 							</View>
 							<View style={{ marginBottom: 20 }}>
 								<Text style={{ color: 'white' }}>CONFIRM PASSWORD</Text>
-								<Input style={{ borderBottomColor: 'white', color:'white' }} />
+								<Input style={{ borderBottomColor: 'white', color:'white' }} onChangeText={(password_c) => {this.setState(password_c)}}/>
 							</View>
 
 							<TouchableOpacity style={{
@@ -179,7 +183,7 @@ class WelcomeScreen extends Component {
 							</TouchableOpacity>
 
 							<TouchableOpacity style={{marginTop:40, marginBottom:40}} onPress={() => this.setState({
-								page: "register"
+								page: ''
 							})}>
 								<Text style={{textAlign:'center', color:'white'}}>Already a user? Click here to Login</Text>
 							</TouchableOpacity>
