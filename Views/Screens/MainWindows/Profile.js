@@ -143,7 +143,7 @@ export default class Profile extends Component {
 					>
 						{this.state.userData ? (
 							<View>
-								<Text style={{ fontSize: 15 }}>{this.state.userData.name}</Text>
+								<Text style={{ fontSize: 15 }}>{this.state.userData.fname}</Text>
 								<Text style={{ fontSize: 15 }}>{this.state.userData.email}</Text>
 								{/* <Text>Username</Text> */}
 							</View>

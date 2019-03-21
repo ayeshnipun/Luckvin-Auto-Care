@@ -18,7 +18,7 @@ class WelcomeScreen extends Component {
 			password: '',
 			password_c:'',
 			user: null,
-			page: 'register'
+			page: ''
 		};
 		this.ref = fb.firestore().collection('Users');
 		// this.signoutUser();
@@ -69,8 +69,10 @@ class WelcomeScreen extends Component {
 			await fb.auth().createUserWithEmailAndPassword(email, pass).then(data => {
 				this.ref.doc(data.user.uid).set({
 					email: data.user.email,
-					name: this.state.name,
-					contact: this.state.contact
+					fname: this.state.fname,
+					lname: this.state.lname,
+					contact: this.state.contact,
+					password: this.state.password
 				});
 				// console.log(data.user.uid);
 			});
@@ -127,7 +129,7 @@ class WelcomeScreen extends Component {
 									<Icon
 										size = {20}
 										style={{paddingTop:20, paddingLeft:10, paddingRight:10}}
-  										name='bullseye'
+  										name='eye'
   										color='white' />
 									{/* <Text style={{ color: 'white' }}>PASSWORD</Text> */}
 									<TextInput 
@@ -172,7 +174,13 @@ class WelcomeScreen extends Component {
 						<View style={{ marginTop: 0, flex: 1 }}>
 							<TouchableHighlight
 								onPress={()=>this.setState({
-									page: ''
+									page: '',
+									email: '',
+									fname:'',
+									lname:'',
+									contact: '',
+									password: '',
+									password_c:'',
 								})}
 							>
 								<Icon
@@ -199,8 +207,8 @@ class WelcomeScreen extends Component {
 										keyboardType='email-address'
 										placeholder = "Emali"
 										placeholderTextColor = "#bab8b8"
-										style={styles.textInputs} 
-										onChangeText={(email) => {this.setState(email)}}
+										style={styles.textInputs}  
+										onChangeText={(email) => {this.setState({email})}}
 									/>
 								</View>
 								<View style={{ marginBottom: 20, flexDirection:'row' }}>
@@ -213,7 +221,7 @@ class WelcomeScreen extends Component {
 										placeholder = "First Name"
 										placeholderTextColor = "#bab8b8" 
 										style={styles.textInputs} 
-										onChangeText={(fname) => {this.setState(fname)}}
+										onChangeText={(fname) => {this.setState({fname})}}
 									/>
 								</View>
 								<View style={{ marginBottom: 20, flexDirection:'row' }}>
@@ -226,7 +234,7 @@ class WelcomeScreen extends Component {
 										placeholder = "Last Name"
 										placeholderTextColor = "#bab8b8" 
 										style={styles.textInputs} 
-										onChangeText={(lname) => {this.setState(lname)}}
+										onChangeText={(lname) => {this.setState({lname})}}
 									/>
 								</View>
 								<View style={{ marginBottom: 20, flexDirection:'row' }}>
@@ -240,7 +248,7 @@ class WelcomeScreen extends Component {
 										placeholder = "Contact Number"
 										placeholderTextColor = "#bab8b8" 
 										style={styles.textInputs} 
-										onChangeText={(contact) => {this.setState(contact)}}
+										onChangeText={(contact) => {this.setState({contact})}}
 									/>
 								</View>
 
@@ -255,7 +263,7 @@ class WelcomeScreen extends Component {
 										placeholder = "Password"
 										placeholderTextColor = "#bab8b8"
 										style={styles.textInputs} 
-										onChangeText={(password) => {this.setState(password)}}
+										onChangeText={(password) => {this.setState({password})}}
 									/>
 								</View>
 								
@@ -270,7 +278,7 @@ class WelcomeScreen extends Component {
 										placeholder = "Confirm Password"
 										placeholderTextColor = "#bab8b8"
 										style={styles.textInputs} 
-										onChangeText={(password_c) => {this.setState(password_c)}}
+										onChangeText={(password_c) => {this.setState({password_c})}}
 									/>
 								</View>
 
@@ -284,7 +292,7 @@ class WelcomeScreen extends Component {
 									fontSize: 20,
 									marginBottom:60
 								}}
-									onPress={() => this.loginUser()}>
+									onPress={() => this.signup(this.state.email, this.state.password)}>
 									<Text style={{textAlign:'center', color:'white'}}>REGISTER</Text>
 								</TouchableOpacity>
 							</ScrollView>

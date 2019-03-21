@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, StyleSheet, TextInput, ActivityIndicator, KeyboardAvoidingView } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, TextInput ,ActivityIndicator, KeyboardAvoidingView } from 'react-native'
 import { Card, ListItem, Button, Image, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { Avatar } from 'react-native-elements';
 import { ImagePicker } from 'react-native-image-picker';
 
 import { fb, database } from '../../../firebaseConfig/config';
 
-// import WelcomeScreen from '../../WelcomeScreen';
+// var ImagePicker = require('react-native-image-picker');
 
 
 class Vehicles extends Component {
@@ -45,15 +46,25 @@ class Vehicles extends Component {
 		}.bind(this));
 	}
 
-	addPicture = async () => {
-		let result = await ImagePicker.launchCameraAsync();
-		// let result = await ImagePicker.launchImagelibraryAsync();
-
-		if (!result.cancelled) {
-
-		} else {
-
-		}
+	addPicture = () => {
+		ImagePicker.showImagePicker({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
+			if (res.didCancel) {
+				console.log("User cancelled!");
+			} else if (res.error) {
+				console.log("Error", res.error);
+			} else {
+				this.uploadAvatar(res).then(() => {
+					alert("Success");
+				}).catch((error) => {
+					alert(error);
+				})
+				// this.setState({
+				// 	avatar: res
+				// 	// avatar: { uri: res.uri }
+				// });
+				// console.log(this.state.avatar);
+			}
+		});
 	}
 
 	submitVehicle = () => {
@@ -91,18 +102,18 @@ class Vehicles extends Component {
 		return (
 			// <KeyboardAvoidingView style={styles.vehicleContainer} behavior="padding">
 			<View style={styles.vehicleContainer}>
-				<Button
-					title="Add Picture"
-					onPress={this.addPicture.bind(this)}
-				/>
+				<Avatar
+						size="xlarge"
+						rounded
+						onPress={() => this.addPicture()}
+						source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
+						showEditButton
+					/>
+
 				<TextInput
 					onChangeText={(vNum) => this.setState({ v_number: vNum })}
 					placeholder="Vehicle Number"
 					style={styles.ti1} />
-
-				{/* <FormLabel>Name</FormLabel>
-				<FormInput onChangeText={(vNum) => this.setState({ v_number: vNum })} />
-				<FormValidationMessage>Error message</FormValidationMessage> */}
 
 				<TextInput
 					onChangeText={(vBrn) => this.setState({ v_brand: vBrn })}
@@ -111,6 +122,7 @@ class Vehicles extends Component {
 				<TextInput
 					onChangeText={(vTyp) => this.setState({ v_type: vTyp })}
 					placeholder="Vehicle Type"
+					placeholderTextColor="white"
 					style={styles.ti1} />
 
 				<Button
@@ -157,17 +169,19 @@ const styles = StyleSheet.create({
 	},
 	vehicleContainer: {
 		flex: 1,
-		marginTop: '10%',
+		width:"100%",
+		paddingTop:1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#ffffff',
+		backgroundColor: '#1c1c1c',
 	},
 	ti1: {
 		// borderColor: 'gray', 
 		// borderWidth: 1,
-		width: 300,
+		marginBottom: 4,
+		width: "100%",
 		height: 40,
-		borderBottomWidth: 1.5,
+		borderBottomWidth: 1,
 		borderBottomColor: 'gray'
 	},
 	contentContainer: {

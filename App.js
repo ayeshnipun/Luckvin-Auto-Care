@@ -4,7 +4,7 @@ import { fb } from './firebaseConfig/config';
 
 import WelcomeScreen from './Views/Screens/WelcomeScreen';
 import Navigation from './Views/Screens/Navigation'
-import Profile from './Views/Screens/MainWindows/Profile'
+import Vehicles from './Views/Screens/MainWindows/Vehicles'
 
 class App extends React.Component {
 
@@ -48,6 +48,7 @@ class App extends React.Component {
 			return (
 				<View style={{ flex: 1 }}>
 					{/* <Profile/> */}
+					{/* <Vehicles/> */}
 					<WelcomeScreen />
 				</View>
 			);
