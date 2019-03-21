@@ -93,6 +93,10 @@ export default class Profile extends Component {
 		// const {user} = this.state.user;
 		return (
 			<View style={{ flex: 1 }}>
+				<Button
+        			onPress={() => this.props.navigation.toggleDrawer()}
+        			title="Go to notifications"
+      			/>
 				<View
 					style={{
 						height: 70,

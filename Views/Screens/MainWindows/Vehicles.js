@@ -102,6 +102,10 @@ class Vehicles extends Component {
 		return (
 			// <KeyboardAvoidingView style={styles.vehicleContainer} behavior="padding">
 			<View style={styles.vehicleContainer}>
+				<Icon.Button 
+					name="toggle-left"
+					onPress={() => this.props.navigation.toggleDrawer()}
+				/>
 				<Avatar
 						size="xlarge"
 						rounded
@@ -191,3 +195,20 @@ const styles = StyleSheet.create({
 
 
 export default Vehicles;
+
+// import React, { Component } from 'react'
+// import { Text, View, Button } from 'react-native'
+
+// export default class Vehicles extends Component {
+//   render() {
+// 	return (
+// 	  <View>
+// 		  <Button
+//         	onPress={() => this.props.navigation.toggleDrawer()}
+//         	title="Go to notifications"
+//       />
+// 		<Text> textInComponent </Text>
+// 	  </View>
+// 	)
+//   }
+// }

@@ -63,6 +63,10 @@ export default class Location extends Component {
 		if (this.state.region.latitude != 0 && this.state.region.longitude != 0) {
 			return (
 				<View style={{ flex: 1 }}>
+					<Button
+        				onPress={() => this.props.navigation.toggleDrawer()}
+        				title="Go to notifications"
+      				/>
 					<MapView
 						provider={PROVIDER_GOOGLE}
 						initialRegion={this.state.region}
@@ -99,6 +103,10 @@ export default class Location extends Component {
 					padding: 10
 				}}
 				>
+					<Button
+        				onPress={() => this.props.navigation.toggleDrawer()}
+        				title="Go to notifications"
+      				/>
 					<ActivityIndicator size="large" color="#00ff00" />
 				</View>
 			);
