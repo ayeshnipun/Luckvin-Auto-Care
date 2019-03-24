@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Text, View, Button, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { Text, View, Button, Image, StyleSheet, TouchableOpacity, ActivityIndicator, TouchableHighlight } from 'react-native'
 // import { ImagePicker } from 'react-native-image-picker'
 import { Avatar } from 'react-native-elements';
 import { fb, database } from '../../../firebaseConfig/config'
-
+import Icon from 'react-native-vector-icons/Octicons'
 import WelcomeScreen from '../WelcomeScreen'
 
 var ImagePicker = require('react-native-image-picker');
@@ -92,39 +92,40 @@ export default class Profile extends Component {
 	render() {
 		// const {user} = this.state.user;
 		return (
-			<View style={{ flex: 1 }}>
-				<Button
-        			onPress={() => this.props.navigation.toggleDrawer()}
-        			title="Go to notifications"
-      			/>
-				<View
-					style={{
-						height: 70,
-						paddingTop: 20,
-						backgroundColor: 'white',
-						borderColor: 'lightgray',
-						borderBottomWidth: 0.5,
-						justifyContent: 'center',
-						alignItems: 'center',
-					}}
-				>
-					<Text
-						style={{
-							fontSize: 20,
-							fontWeight: 'bold',
-						}}
-					>
-						Profile
-					</Text>
+			<View style={{ flex: 1, backgroundColor: '#1c1c1c' }}>
+				<View style={{ flexDirection: 'row', marginTop:8 }}>
+					<View style={{marginBottom:10}}>
+						<TouchableHighlight onPress={() => this.props.navigation.toggleDrawer()} >
+							<Icon
+								name="three-bars"
+								color="white"
+								size={27}
+								style={{marginLeft: 10,marginTop: 10,paddingBottom: 5,backgroundColor: 'transparent'}}
+							/>
+						</TouchableHighlight>
+					</View>
+					<View style={{ marginLeft: "30%", marginTop: 5 }}>
+						<Text style={{ color: 'white', fontSize: 26 }}>Profile</Text>
+					</View>
+					<View style={{marginBottom:10}}>
+						<TouchableHighlight onPress={() => this.logOut()} >
+							<Icon
+								name="sign-out"
+								color="red"
+								size={27}
+								style={{
+									marginLeft: 110,
+									marginTop: 10,
+									paddingBottom: 5,
+									backgroundColor: 'transparent'
+								}}
+							/>
+						</TouchableHighlight>
+					</View>
 				</View>
+
 				<View
-					style={{
-						justifyContent: 'space-evenly',
-						alignItems: 'center',
-						flexDirection: 'row',
-						paddingVertical: 10
-					}}
-				>
+					style={{justifyContent: 'space-evenly',alignItems: 'center',flexDirection: 'row',paddingVertical: 10}}>
 					{/* <TouchableOpacity onPress={() => this.editAvatar()}>
 						<Image
 							source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
@@ -147,19 +148,12 @@ export default class Profile extends Component {
 					>
 						{this.state.userData ? (
 							<View>
-								<Text style={{ fontSize: 15 }}>{this.state.userData.fname}</Text>
-								<Text style={{ fontSize: 15 }}>{this.state.userData.email}</Text>
+								<Text style={styles.profileInfo}>{this.state.userData.fname + " " + this.state.userData.lname}</Text>
+								<Text style={styles.profileInfo}>{this.state.userData.email}</Text>
 								{/* <Text>Username</Text> */}
 							</View>
 						) : (
-								<View style={{
-									flex: 1,
-									justifyContent: 'center',
-									flexDirection: 'row',
-									justifyContent: 'space-around',
-									padding: 10
-								}}
-								>
+								<View style={{flex: 1,justifyContent: 'center',flexDirection: 'row',justifyContent: 'space-around',padding: 10}}>
 									<ActivityIndicator size="small" color="#00ff00" />
 								</View>
 							)}
@@ -167,45 +161,8 @@ export default class Profile extends Component {
 				</View>
 
 				<View style={{ paddingBottom: 20, borderBottomWidth: 1 }}>
-					<TouchableOpacity
-						style={{
-							marginTop: 10,
-							marginHorizontal: 40,
-							paddingVertical: 15,
-							borderRadius: 20,
-							// borderColor:'gray',
-							backgroundColor: 'gray'
-						}}
-						onPress={() => this.logOut()}
-					>
-						<Text
-							style={{
-								textAlign: 'center',
-								color: 'white',
-								fontSize: 17
-							}}
-						>
-							Logout
-						</Text>
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						style={{
-							marginTop: 10,
-							marginHorizontal: 40,
-							paddingVertical: 15,
-							borderRadius: 20,
-							// borderColor:'gray',
-							backgroundColor: 'gray'
-						}}
-					>
-						<Text
-							style={{
-								textAlign: 'center',
-								color: 'white',
-								fontSize: 17
-							}}
-						>
+					<TouchableOpacity style={{marginTop: 10,marginHorizontal: 40,paddingVertical: 15,borderRadius: 20,backgroundColor: 'gray'}}>
+						<Text style={{textAlign: 'center',color: 'white',fontSize: 17}}>
 							Edit Profile
 						</Text>
 					</TouchableOpacity>
@@ -217,3 +174,10 @@ export default class Profile extends Component {
 		)
 	}
 }
+
+const styles = StyleSheet.create({
+	profileInfo:{
+		fontSize: 15, 
+		color:'white' 
+	}
+});

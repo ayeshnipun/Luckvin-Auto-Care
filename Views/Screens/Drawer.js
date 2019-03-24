@@ -13,17 +13,14 @@ import Vehicles from './MainWindows/Vehicles';
 import Profile from './MainWindows/Profile';
 
 const TabNavigator = createDrawerNavigator({
-	Vehicles: {
-		screen: Vehicles
-	},
 	Location: {
 		screen: Location
 	},
 	Profile: {
 		screen: Profile
 	},
-	Profile: {
-		screen: Profile
+	Vehicles: {
+		screen: Vehicles
 	},
 });
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, StyleSheet, TextInput ,ActivityIndicator, KeyboardAvoidingView } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, TextInput, ActivityIndicator, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
 import { Card, ListItem, Button, Image, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/Octicons'
 import { Avatar } from 'react-native-elements';
 import { ImagePicker } from 'react-native-image-picker';
 
@@ -101,66 +101,87 @@ class Vehicles extends Component {
 	render() {
 		return (
 			// <KeyboardAvoidingView style={styles.vehicleContainer} behavior="padding">
-			<View style={styles.vehicleContainer}>
-				<Icon.Button 
-					name="toggle-left"
-					onPress={() => this.props.navigation.toggleDrawer()}
-				/>
-				<Avatar
-						size="xlarge"
-						rounded
-						onPress={() => this.addPicture()}
-						source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
-						showEditButton
-					/>
+			<View style={{ flex: 1, backgroundColor: '#1c1c1c' }}>
+				<View style={{ flexDirection: 'row' }}>
+					<View>
+						<TouchableHighlight onPress={() => this.props.navigation.toggleDrawer()} >
+							<Icon
+								name="three-bars"
+								color="white"
+								size={27}
+								style={{
+									marginLeft: 10,
+									marginTop: 10,
+									paddingBottom: 5,
+									backgroundColor: 'transparent'
+								}}
+							/>
+						</TouchableHighlight>
+					</View>
+					<View style={{ marginLeft: "20%", marginTop: 10 }}>
+						<Text style={{ color: 'white', fontSize: 26 }}>Add a Vehicle</Text>
+					</View>
+				</View>
 
-				<TextInput
-					onChangeText={(vNum) => this.setState({ v_number: vNum })}
-					placeholder="Vehicle Number"
-					style={styles.ti1} />
+				<View style={styles.vehicleContainer}>
+					<View style={{width:"100%", marginBottom:30}}>
+						<Avatar
+							size="large"
+							rounded
+							onPress={() => this.addPicture()}
+							source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
+							showEditButton
+						/>
 
-				<TextInput
-					onChangeText={(vBrn) => this.setState({ v_brand: vBrn })}
-					placeholder="Vehicle Brand" style={styles.ti1} />
+						<TextInput
+							onChangeText={(vNum) => this.setState({ v_number: vNum })}
+							placeholder="Vehicle Number"
+							style={styles.ti1} />
 
-				<TextInput
-					onChangeText={(vTyp) => this.setState({ v_type: vTyp })}
-					placeholder="Vehicle Type"
-					placeholderTextColor="white"
-					style={styles.ti1} />
+						<TextInput
+							onChangeText={(vBrn) => this.setState({ v_brand: vBrn })}
+							placeholder="Vehicle Brand" style={styles.ti1} />
 
-				<Button
-					title="Submit Vehicle"
-					onPress={this.submitVehicle.bind(this)}
-				/>
-				{/* </KeyboardAvoidingView> */}
-				{this.state.v_list ? (
-					<ScrollView style={styles.scrollView}>
-						{
-							this.state.v_list.map((l, i) => (
-								<ListItem
-									key={i}
-									leftAvatar={{ source: { uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg' } }}
-									title={l.details.vehicle_type}
-									subtitle={l.details.vehicle_number}
-									topDivider={true}
-									bottomDivider={true}
-								/>
-							))
-						}
-					</ScrollView>
-				) : (
-						<View style={{
-							flex: 1,
-							justifyContent: 'center',
-							flexDirection: 'row',
-							justifyContent: 'space-around',
-							padding: 10
-						}}
-						>
-							<ActivityIndicator size="small" color="#00ff00" />
-						</View>
-					)}
+						<TextInput
+							onChangeText={(vTyp) => this.setState({ v_type: vTyp })}
+							placeholder="Vehicle Type"
+							placeholderTextColor="white"
+							style={styles.ti1} />
+
+						<Button
+							title="Submit Vehicle"
+							onPress={this.submitVehicle.bind(this)}
+						/>
+					</View>
+					{/* </KeyboardAvoidingView> */}
+					{this.state.v_list ? (
+						<ScrollView style={styles.scrollView}>
+							{
+								this.state.v_list.map((l, i) => (
+									<ListItem
+										key={i}
+										leftAvatar={{ source: { uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg' } }}
+										title={l.details.vehicle_type}
+										subtitle={l.details.vehicle_number}
+										topDivider={true}
+										bottomDivider={true}
+									/>
+								))
+							}
+						</ScrollView>
+					) : (
+							<View style={{
+								flex: 1,
+								justifyContent: 'center',
+								flexDirection: 'row',
+								justifyContent: 'space-around',
+								padding: 10
+							}}
+							>
+								<ActivityIndicator size="small" color="#00ff00" />
+							</View>
+						)}
+				</View>
 			</View>
 		)
 	}
@@ -173,8 +194,9 @@ const styles = StyleSheet.create({
 	},
 	vehicleContainer: {
 		flex: 1,
-		width:"100%",
-		paddingTop:1,
+		width: "100%",
+		marginTop:20,
+		paddingTop: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: '#1c1c1c',
