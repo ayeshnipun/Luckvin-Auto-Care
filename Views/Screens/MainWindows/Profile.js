@@ -93,6 +93,10 @@ export default class Profile extends Component {
 		// const {user} = this.state.user;
 		return (
 			<View style={{ flex: 1 }}>
+				<Button
+        			onPress={() => this.props.navigation.toggleDrawer()}
+        			title="Go to notifications"
+      			/>
 				<View
 					style={{
 						height: 70,
@@ -143,7 +147,7 @@ export default class Profile extends Component {
 					>
 						{this.state.userData ? (
 							<View>
-								<Text style={{ fontSize: 15 }}>{this.state.userData.name}</Text>
+								<Text style={{ fontSize: 15 }}>{this.state.userData.fname}</Text>
 								<Text style={{ fontSize: 15 }}>{this.state.userData.email}</Text>
 								{/* <Text>Username</Text> */}
 							</View>
