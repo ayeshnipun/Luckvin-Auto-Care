@@ -16,7 +16,7 @@ class WelcomeScreen extends Component {
 			name: '',
 			contact: '',
 			user: null,
-			page: 'register'
+			page: ''
 		};
 		this.ref = fb.firestore().collection('Users');
 		// this.signoutUser();
@@ -163,6 +163,10 @@ class WelcomeScreen extends Component {
 							<View style={{ marginBottom: 20 }}>
 								<Text style={{ color: 'white' }}>CONFIRM PASSWORD</Text>
 								<Input style={{ borderBottomColor: 'white', color:'white' }} />
+								<Icon
+									name='fas fa-check'
+									color='green'
+								/>
 							</View>
 
 							<TouchableOpacity style={{
@@ -179,7 +183,7 @@ class WelcomeScreen extends Component {
 							</TouchableOpacity>
 
 							<TouchableOpacity style={{marginTop:40, marginBottom:40}} onPress={() => this.setState({
-								page: "register"
+								page: ""
 							})}>
 								<Text style={{textAlign:'center', color:'white'}}>Already a user? Click here to Login</Text>
 							</TouchableOpacity>
