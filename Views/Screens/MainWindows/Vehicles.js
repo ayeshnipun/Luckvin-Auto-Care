@@ -136,11 +136,12 @@ class Vehicles extends Component {
 						<TextInput
 							onChangeText={(vNum) => this.setState({ v_number: vNum })}
 							placeholder="Vehicle Number"
+							placeholderTextColor="white"
 							style={styles.ti1} />
 
 						<TextInput
 							onChangeText={(vBrn) => this.setState({ v_brand: vBrn })}
-							placeholder="Vehicle Brand" style={styles.ti1} />
+							placeholder="Vehicle Brand" placeholderTextColor="white" style={styles.ti1} />
 
 						<TextInput
 							onChangeText={(vTyp) => this.setState({ v_type: vTyp })}

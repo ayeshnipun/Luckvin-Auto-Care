@@ -10,36 +10,37 @@ import Profile from './MainWindows/Profile';
 const CustomDrawerComponent = (props) => {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
-			<View style={{ height: 150, backgroundColor: 'white', justifyContent:'center', alignItems:"center" }}>
+			<View style={{ height: "20%", backgroundColor: 'white', justifyContent: 'center', alignItems: "center" }}>
 				<Avatar
 					size="large"
 					rounded
 					// onPress={() => this.editAvatar()}
 					source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
-					// showEditButton
+				// showEditButton
 				/>
 				<Text>
 					Ayesh
 				</Text>
 			</View>
-			<ScrollView>
+			<ScrollView contentContainerStyle={styles.contentContainer}>
 				<DrawerItems {...props} />
 			</ScrollView>
 		</SafeAreaView>
 	);
 }
 
-const TabNavigator = createDrawerNavigator({
-	Profile: {
-		screen: Profile
+const TabNavigator = createDrawerNavigator(
+	{
+		Profile: {
+			screen: Profile
+		},
+		Location: {
+			screen: Location
+		},
+		Vehicles: {
+			screen: Vehicles
+		},
 	},
-	Location: {
-		screen: Location
-	},
-	Vehicles: {
-		screen: Vehicles
-	},
-},
 	{
 		contentComponent: CustomDrawerComponent
 	}
@@ -48,8 +49,15 @@ const TabNavigator = createDrawerNavigator({
 
 const AppContainer = createAppContainer(TabNavigator);
 
+const styles = StyleSheet.create({
+	contentContainer: {
+		backgroundColor:'white'
+	}
+});
+
 export default class Drawer extends React.Component {
 	render() {
 		return <AppContainer />;
 	}
 }
+
