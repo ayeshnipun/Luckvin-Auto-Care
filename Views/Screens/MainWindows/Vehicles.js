@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Octicons'
 import { Avatar } from 'react-native-elements';
 // import { ImagePicker } from 'react-native-image-picker';
 
-import { fb, database } from '../../../firebaseConfig/config';
+import { fb, database, storage } from '../../../firebaseConfig/config';
 var ImagePicker = require('react-native-image-picker');
 // var ImagePicker = require('react-native-image-picker');
 
@@ -41,7 +41,7 @@ class Vehicles extends Component {
 								v_list: [...prevState.v_list, { key: change.doc.id, details: change.doc.data() }]
 							}))
 						});
-					}); 
+					});
 			}
 		}.bind(this));
 	}
@@ -53,54 +53,100 @@ class Vehicles extends Component {
 			} else if (res.error) {
 				console.log("Error", res.error);
 			} else {
-				this.uploadAvatar(res)
-				// this.setState({
-				// 	avatar: res
-				// 	// avatar: { uri: res.uri }
-				// });
+				// this.uploadAvatar(res)
+				this.setState({
+					v_image: res
+					// avatar: { uri: res.uri }
+				});
 				// console.log(this.state.avatar);
 			}
 		});
 	}
 
-	uploadAvatar = (res) => {
+	// uploadAvatar = (res) => {
+	// 	this.setState({
+	// 		v_image: res
+	// 	})
+
+	// }
+
+	dataChecker = () => {
+		// if (this.state.v_number == "" || this.state.v_brand == "" || this.state.v_type == "") {
+		// 	alert(
+		// 		'All Fields are required..!!',
+		// 		'My Alert Msg',
+		// 		[
+		// 			{ text: 'Ask me later', onPress: () => console.log('Ask me later pressed') },
+		// 			{
+		// 				text: 'Cancel',
+		// 				onPress: () => console.log('Cancel Pressed'),
+		// 				style: 'cancel',
+		// 			},
+		// 			{ text: 'OK', onPress: () => console.log('OK Pressed') },
+		// 		],
+		// 		{ cancelable: false },
+		// 	);
+		// } else {
+		// this.uploadVehicleToFS()
+		this.uploadVehicleImage()
+		// this.stateEmpty()
+		// }
+	}
+
+	uploadVehicleToFS = () => {
+		database.collection('Users').doc(this.state.user.uid).collection('Vehicles').add({
+			vehicle_number: this.state.v_number,
+			vehicle_brand: this.state.v_brand,
+			vehicle_type: this.state.v_type,
+		});
+	}
+
+	uploadVehicleImage = async () => {
+		var uri = this.state.v_image.uri
+		console.log(uri);
+		var that = this;
+		var vId = this.state.v_number
+		var userId = this.state.user.uid
+		var re = /(?:\.([^.]+))?$/;
+		var ext = re.exec(uri)[1];
+
 		this.setState({
-			v_image:res
+			currentFileType: ext
+		});
+
+		const blob = await new Promise((resolve, reject) => {
+			const xhr = new XMLHttpRequest();
+			xhr.onload = function () {
+				resolve(xhr.response);
+			};
+			xhr.onerror = function (e) {
+				console.log(e);
+				reject(new TypeError('Network request failed'));
+			};
+			xhr.responseType = 'blob';
+			xhr.open('GET', uri, true);
+			xhr.send(null);
+		});
+
+		const response = await fetch(uri);
+		const blob = await response.blob();
+
+		var filePath = vId + '.' + that.state.currentFileType;
+
+		const ref = storage.ref('Vehicles/' + userId + '/' + vId + '/img').child(filePath);
+
+		var snap = ref.put(blob).on('state_changed', snap => {
+			console.log('Progress', snap.bytesTransferred, snap.totalBytes)
 		})
-		
 	}
 
-	submitVehicle = () => {
-		console.log(this.state.v_image)
-		if (this.state.v_number == "" || this.state.v_brand == "" || this.state.v_type == "") {
-			alert(
-				'All Fields are required..!!',
-				'My Alert Msg',
-				[
-					{ text: 'Ask me later', onPress: () => console.log('Ask me later pressed') },
-					{
-						text: 'Cancel',
-						onPress: () => console.log('Cancel Pressed'),
-						style: 'cancel',
-					},
-					{ text: 'OK', onPress: () => console.log('OK Pressed') },
-				],
-				{ cancelable: false },
-			);
-		} else {
-			database.collection('Users').doc(this.state.user.uid).collection('Vehicles').add({
-				vehicle_number: this.state.v_number,
-				vehicle_brand: this.state.v_brand,
-				vehicle_type: this.state.v_type,
-			});
-			this.setState({
-				vehicle_number: "",
-				vehicle_brand: "",
-				vehicle_type: "",
-			});
-		}
+	stateEmpty = () => {
+		this.setState({
+			vehicle_number: "",
+			vehicle_brand: "",
+			vehicle_type: "",
+		});
 	}
-
 
 	render() {
 		return (
@@ -128,7 +174,7 @@ class Vehicles extends Component {
 				</View>
 
 				<View style={styles.vehicleContainer}>
-					<View style={{width:"100%", marginBottom:30}}>
+					<View style={{ width: "100%", marginBottom: 30 }}>
 						<Avatar
 							size="large"
 							rounded
@@ -156,7 +202,7 @@ class Vehicles extends Component {
 
 						<Button
 							title="Submit Vehicle"
-							onPress={this.submitVehicle.bind(this)}
+							onPress={this.dataChecker.bind(this)}
 						/>
 					</View>
 					{/* </KeyboardAvoidingView> */}
@@ -201,7 +247,7 @@ const styles = StyleSheet.create({
 	vehicleContainer: {
 		flex: 1,
 		width: "100%",
-		marginTop:20,
+		marginTop: 20,
 		paddingTop: 1,
 		justifyContent: 'center',
 		alignItems: 'center',

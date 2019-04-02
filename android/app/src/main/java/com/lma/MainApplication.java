@@ -3,6 +3,7 @@ package com.lma;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+// import com.RNFetchBlob.RNFetchBlobPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -38,6 +39,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           	new MainReactPackage(),
+            // new RNFetchBlobPackage(),
             new LinearGradientPackage(),
             new ImagePickerPackage(),
 		  	// new ImagePickerPackage(),

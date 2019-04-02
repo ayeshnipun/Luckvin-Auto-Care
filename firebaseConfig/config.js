@@ -17,7 +17,7 @@ firebase.initializeApp(config);
 export const fb = firebase;
 export const database = firebase.firestore();
 // export const auth = firebase.auth();
-// export const storage = firebase.storage();
+export const storage = firebase.storage();
 
 // initializeFirebase = () => {
 //     const fb = require("firebase");
