@@ -127,9 +127,44 @@ class Vehicles extends Component {
 			xhr.open('GET', uri, true);
 			xhr.send(null);
 		});
+		var filePath = userId + '.' + that.state.currentFileType;
 
-		const response = await fetch(uri);
-		const blob = await response.blob();
+		var uploadTask = storage.ref('user/img').child(filePath).put(blob);
+
+		uploadTask.on('state_changed', function (snapshot) {
+			let progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
+			that.setState({
+				progress: progress
+			});
+		}, function (error) {
+			console.log(error);
+		}, function () {
+			that.setState({
+				progress: 100
+			});
+			// uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+
+			// 	that.setDatabse(downloadURL);
+			// })
+		})
+
+		// const response = await fetch(uri);
+
+		// const blob = await new Promise((resolve, reject) => {
+		// 	const xhr = new XMLHttpRequest();
+		// 	xhr.onload = function () {
+		// 		resolve(xhr.response);
+		// 	};
+		// 	xhr.onerror = function (e) {
+		// 		console.log(e);
+		// 		reject(new TypeError('Network request failed'));
+		// 	};
+		// 	xhr.responseType = 'blob';
+		// 	xhr.open('GET', uri, true);
+		// 	xhr.send(null);
+		// });
+
+		// const blob = await response.blob();
 
 		var filePath = vId + '.' + that.state.currentFileType;
 
