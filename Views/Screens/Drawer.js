@@ -31,14 +31,14 @@ const CustomDrawerComponent = (props) => {
 
 const TabNavigator = createDrawerNavigator(
 	{
+		Vehicles: {
+			screen: Vehicles
+		},
 		Profile: {
 			screen: Profile
 		},
 		Location: {
 			screen: Location
-		},
-		Vehicles: {
-			screen: Vehicles
 		},
 	},
 	{

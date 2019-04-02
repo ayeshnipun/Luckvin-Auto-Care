@@ -22,9 +22,6 @@ const TabNavigator = createBottomTabNavigator({
 	Profile: {
 		screen: Profile
 	},
-	Profile: {
-		screen: Profile
-	},
 });
 
 // const TabNav = createAppContainer(TabNavigator);

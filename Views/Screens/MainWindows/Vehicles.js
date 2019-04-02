@@ -3,10 +3,10 @@ import { Text, View, ScrollView, StyleSheet, TextInput, ActivityIndicator, Keybo
 import { Card, ListItem, Button, Image, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Octicons'
 import { Avatar } from 'react-native-elements';
-import { ImagePicker } from 'react-native-image-picker';
+// import { ImagePicker } from 'react-native-image-picker';
 
 import { fb, database } from '../../../firebaseConfig/config';
-
+var ImagePicker = require('react-native-image-picker');
 // var ImagePicker = require('react-native-image-picker');
 
 
@@ -41,7 +41,7 @@ class Vehicles extends Component {
 								v_list: [...prevState.v_list, { key: change.doc.id, details: change.doc.data() }]
 							}))
 						});
-					});
+					}); 
 			}
 		}.bind(this));
 	}
@@ -53,11 +53,7 @@ class Vehicles extends Component {
 			} else if (res.error) {
 				console.log("Error", res.error);
 			} else {
-				this.uploadAvatar(res).then(() => {
-					alert("Success");
-				}).catch((error) => {
-					alert(error);
-				})
+				this.uploadAvatar(res)
 				// this.setState({
 				// 	avatar: res
 				// 	// avatar: { uri: res.uri }
@@ -67,7 +63,15 @@ class Vehicles extends Component {
 		});
 	}
 
+	uploadAvatar = (res) => {
+		this.setState({
+			v_image:res
+		})
+		
+	}
+
 	submitVehicle = () => {
+		console.log(this.state.v_image)
 		if (this.state.v_number == "" || this.state.v_brand == "" || this.state.v_type == "") {
 			alert(
 				'All Fields are required..!!',
@@ -129,7 +133,8 @@ class Vehicles extends Component {
 							size="large"
 							rounded
 							onPress={() => this.addPicture()}
-							source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
+							// source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
+							source={{ require: this.state.v_image }}
 							showEditButton
 						/>
 

@@ -37,7 +37,8 @@ export default class Profile extends Component {
 					});
 					database.collection('Users').doc(this.state.user.uid).get().then(user => {
 						this.setState({
-							userData: user.data()
+							userData: user.data(),
+							avatar : user.data().photoURL
 						});
 					})
 					// console.log(user);
@@ -87,6 +88,10 @@ export default class Profile extends Component {
 		}).catch(err => {
 			console.log('Error', err);
 		});
+	}
+
+	ccc = () => {
+		console.log(this.state.avatar)
 	}
 
 	render() {
@@ -161,7 +166,7 @@ export default class Profile extends Component {
 				</View>
 
 				<View style={{ paddingBottom: 20, borderBottomWidth: 1 }}>
-					<TouchableOpacity style={{marginTop: 10,marginHorizontal: 40,paddingVertical: 15,borderRadius: 20,backgroundColor: 'gray'}}>
+					<TouchableOpacity style={{marginTop: 10,marginHorizontal: 40,paddingVertical: 15,borderRadius: 20,backgroundColor: 'gray'}} onPress={this.ccc}>
 						<Text style={{textAlign: 'center',color: 'white',fontSize: 17}}>
 							Edit Profile
 						</Text>
