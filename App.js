@@ -14,7 +14,7 @@ class App extends React.Component {
 		YellowBox.ignoreWarnings(['Setting a timer']);
 		this.state = {
 			//make this signup state false after editing profile.js
-			signupState: true,
+			signupState: false,
 			email: '',
 			password: '',
 			user: null

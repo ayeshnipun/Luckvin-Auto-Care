@@ -18,6 +18,7 @@ class Vehicles extends Component {
 			v_brand: "",
 			v_type: "",
 			v_image: null,
+			v_id: null,
 			user: null,
 			v_list: [],
 		};
@@ -55,7 +56,7 @@ class Vehicles extends Component {
 			} else {
 				// this.uploadAvatar(res)
 				this.setState({
-					v_image: res
+					v_image: res.uri
 					// avatar: { uri: res.uri }
 				});
 				// console.log(this.state.avatar);
@@ -87,9 +88,9 @@ class Vehicles extends Component {
 		// 		{ cancelable: false },
 		// 	);
 		// } else {
-		// this.uploadVehicleToFS()
+		this.uploadVehicleToFS()
 		this.uploadVehicleImage()
-		// this.stateEmpty()
+		this.stateEmpty()
 		// }
 	}
 
@@ -98,14 +99,19 @@ class Vehicles extends Component {
 			vehicle_number: this.state.v_number,
 			vehicle_brand: this.state.v_brand,
 			vehicle_type: this.state.v_type,
-		});
+		}).then((data) => {
+			this.setState({
+				v_id: data.id
+			})
+		})
 	}
 
 	uploadVehicleImage = async () => {
-		var uri = this.state.v_image.uri
+		var uri = this.state.v_image;
 		console.log(uri);
 		var that = this;
 		var vId = this.state.v_number
+		var v_id = this.state.v_id
 		var userId = this.state.user.uid
 		var re = /(?:\.([^.]+))?$/;
 		var ext = re.exec(uri)[1];
@@ -168,18 +174,21 @@ class Vehicles extends Component {
 
 		var filePath = vId + '.' + that.state.currentFileType;
 
-		const ref = storage.ref('Vehicles/' + userId).child(filePath);
+		const ref = storage.ref('Vehicles/' + userId + v_id).child(filePath);
 
 		var snap = ref.put(blob).on('state_changed', snap => {
 			console.log('Progress', snap.bytesTransferred, snap.totalBytes)
 		})
+
+		alert("Vehicle Registerd");
 	}
 
 	stateEmpty = () => {
 		this.setState({
-			vehicle_number: "",
-			vehicle_brand: "",
-			vehicle_type: "",
+			v_number: "",
+			v_brand: "",
+			v_type: "",
+			v_image: null,
 		});
 	}
 
@@ -215,7 +224,7 @@ class Vehicles extends Component {
 							rounded
 							onPress={() => this.addPicture()}
 							// source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
-							source={{ require: this.state.v_image }}
+							source={{ uri: this.state.v_image }}
 							showEditButton
 						/>
 
