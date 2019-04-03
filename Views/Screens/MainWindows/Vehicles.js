@@ -89,8 +89,12 @@ class Vehicles extends Component {
 		// 	);
 		// } else {
 		this.uploadVehicleToFS()
-		this.uploadVehicleImage()
-		this.stateEmpty()
+		setTimeout(() => {
+			this.uploadVehicleImage()
+			this.stateEmpty()
+		}, 1000)
+		
+		
 		// }
 	}
 
@@ -100,6 +104,7 @@ class Vehicles extends Component {
 			vehicle_brand: this.state.v_brand,
 			vehicle_type: this.state.v_type,
 		}).then((data) => {
+			console.log(data.id)
 			this.setState({
 				v_id: data.id
 			})
@@ -174,7 +179,7 @@ class Vehicles extends Component {
 
 		var filePath = vId + '.' + that.state.currentFileType;
 
-		const ref = storage.ref('Vehicles/' + userId + v_id).child(filePath);
+		const ref = storage.ref('Vehicles/' + userId +'/'+ v_id).child(filePath);
 
 		var snap = ref.put(blob).on('state_changed', snap => {
 			console.log('Progress', snap.bytesTransferred, snap.totalBytes)
