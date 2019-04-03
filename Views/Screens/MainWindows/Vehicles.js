@@ -127,26 +127,26 @@ class Vehicles extends Component {
 			xhr.open('GET', uri, true);
 			xhr.send(null);
 		});
-		var filePath = userId + '.' + that.state.currentFileType;
+		// var filePath = userId + '.' + that.state.currentFileType;
 
-		var uploadTask = storage.ref('user/img').child(filePath).put(blob);
+		// var uploadTask = storage.ref('user/img').child(filePath).put(blob);
 
-		uploadTask.on('state_changed', function (snapshot) {
-			let progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
-			that.setState({
-				progress: progress
-			});
-		}, function (error) {
-			console.log(error);
-		}, function () {
-			that.setState({
-				progress: 100
-			});
-			// uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+		// uploadTask.on('state_changed', function (snapshot) {
+		// 	let progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
+		// 	that.setState({
+		// 		progress: progress
+		// 	});
+		// }, function (error) {
+		// 	console.log(error);
+		// }, function () {
+		// 	that.setState({
+		// 		progress: 100
+		// 	});
+		// 	// uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
 
-			// 	that.setDatabse(downloadURL);
-			// })
-		})
+		// 	// 	that.setDatabse(downloadURL);
+		// 	// })
+		// })
 
 		// const response = await fetch(uri);
 
@@ -168,7 +168,7 @@ class Vehicles extends Component {
 
 		var filePath = vId + '.' + that.state.currentFileType;
 
-		const ref = storage.ref('Vehicles/' + userId + '/' + vId + '/img').child(filePath);
+		const ref = storage.ref('Vehicles/' + userId).child(filePath);
 
 		var snap = ref.put(blob).on('state_changed', snap => {
 			console.log('Progress', snap.bytesTransferred, snap.totalBytes)
