@@ -26,10 +26,10 @@ class Vehicles extends Component {
 	}
 
 	componentDidMount() {
-		this.getDataFromFBase();
+		this.getVehiclesFromFirebase();
 	}
 
-	getDataFromFBase() {
+	getVehiclesFromFirebase() {
 		fb.auth().onAuthStateChanged(function (user) {
 			if (user) {
 				this.setState({
@@ -105,7 +105,7 @@ class Vehicles extends Component {
 			vehicle_type: this.state.v_type,
 		}).then((data) => {
 			console.log(data.id)
-			this.setState({
+			this.setState({ 
 				v_id: data.id
 			})
 		})
@@ -309,7 +309,8 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: 40,
 		borderBottomWidth: 1,
-		borderBottomColor: 'gray'
+		borderBottomColor: 'gray',
+		color:'white'
 	},
 	contentContainer: {
 		// paddingVertical: 20
