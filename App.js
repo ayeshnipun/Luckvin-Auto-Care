@@ -2,13 +2,10 @@ import React from 'react';
 import { Text, View, YellowBox  } from 'react-native';
 import { fb } from './firebaseConfig/config';
 
-import WelcomeScreen from './Views/Screens/WelcomeScreen';
-import Navigation from './Views/Screens/Navigation'
-import Vehicles from './Views/Screens/MainWindows/Vehicles'
+import WelcomeScreen from './Views/Screens/WelcomeScreen/WelcomeScreen';
 import Drawer from './Views/Screens/Drawer';
 
 class App extends React.Component {
-
 	constructor(props) {
 		super(props);
 		YellowBox.ignoreWarnings(['Setting a timer']);

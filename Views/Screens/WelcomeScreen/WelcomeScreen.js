@@ -5,7 +5,7 @@ import {
 } from 'react-native'
 import { Button, Input } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { fb } from '../../firebaseConfig/config';
+import { fb } from '../../../firebaseConfig/config';
 
 class WelcomeScreen extends Component {
 	constructor(props) {

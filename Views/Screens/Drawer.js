@@ -3,10 +3,10 @@ import { Text, View, StyleSheet, SafeAreaView, ScrollView, Dimensions } from 're
 import { createDrawerNavigator, createAppContainer, DrawerItems } from 'react-navigation';
 import { Avatar } from 'react-native-elements';
 
-import Location from './MainWindows/Location';
-import Vehicles from './MainWindows/Vehicles';
-import Profile from './MainWindows/Profile';
-
+import Location from './MainWindows/Location/Location';
+import Vehicles from './MainWindows/Vehicles/Vehicles';
+import Profile from './MainWindows/Profile/Profile';
+ 
 const CustomDrawerComponent = (props) => {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
