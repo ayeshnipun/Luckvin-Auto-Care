@@ -101,13 +101,13 @@ class WelcomeScreen extends Component {
 	render() {
 		if (this.state.page == '') {
 			return (
-				<ImageBackground source={require('../Images/login3.jpg')} resizeMode='cover' style={styles.container}>
+				<ImageBackground source={require('../../Images/login3.jpg')} resizeMode='cover' style={styles.container}>
 					<KeyboardAvoidingView style={{ flex: 1, width:"100%"}}>
 						{/* <View style={{ marginTop: 70, flex: 1 }}> */}
 							<ScrollView style={{paddingTop: 20, flex: 1 }}>
 								{/* <Text style={{ fontSize: 30, color: 'white', fontWeight: '300', marginBottom: 30, textAlign:'center' }}>Log In</Text> */}
 								<View style={{alignItems:'center'}}>
-									<Image source={require('../Images/tick.png')} style={{height:200, width:200}}/>
+									<Image source={require('../../Images/tick.png')} style={{height:200, width:200}}/>
 								</View>
 								<View style={{ marginBottom: 10, marginTop:30, flexDirection:'row'}}>
 									{/* <Text style={{ color: 'white' }}>EMAIL ADDRESS</Text> */}
@@ -169,7 +169,7 @@ class WelcomeScreen extends Component {
 			)
 		} else if (this.state.page == "register") {
 			return (
-				<ImageBackground source={require('../Images/login3.jpg')} resizeMode='cover' style={styles.container}>
+				<ImageBackground source={require('../../Images/login3.jpg')} resizeMode='cover' style={styles.container}>
 					<KeyboardAvoidingView style={{ flex: 1, width:"100%"}}>
 						<View style={{ marginTop: 0, flex: 1 }}>
 							<TouchableHighlight
