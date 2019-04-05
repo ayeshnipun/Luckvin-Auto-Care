@@ -4,7 +4,7 @@ import { Card, ListItem, Button, Image, FormLabel, FormInput, FormValidationMess
 import Icon from 'react-native-vector-icons/Octicons'
 import { Avatar } from 'react-native-elements';
 
-import { fb, database, storage } from '../../../firebaseConfig/config';
+import { fb, database, storage } from '../../../../firebaseConfig/config';
 var ImagePicker = require('react-native-image-picker');
 
 

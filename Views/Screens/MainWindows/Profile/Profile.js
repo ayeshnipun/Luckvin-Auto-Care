@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { Text, View, Button, Image, StyleSheet, TouchableOpacity, ActivityIndicator, TouchableHighlight } from 'react-native'
 // import { ImagePicker } from 'react-native-image-picker'
 import { Avatar } from 'react-native-elements';
-import { fb, database } from '../../../firebaseConfig/config'
+import { fb, database } from '../../../../firebaseConfig/config'
 import Icon from 'react-native-vector-icons/Octicons'
-import WelcomeScreen from '../WelcomeScreen'
+import WelcomeScreen from '../../WelcomeScreen/WelcomeScreen'
 
 var ImagePicker = require('react-native-image-picker');
 
