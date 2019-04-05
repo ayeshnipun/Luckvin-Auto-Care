@@ -38,6 +38,8 @@ class Vehicles extends Component {
 				database.collection('Users').doc(this.state.user.uid)
 					.collection('Vehicles').onSnapshot(snap => {
 						snap.docChanges().forEach(change => {
+							// var ref = fb.storage().ref('Vehicles/' + this.state.user.uid +'/'+ change.doc.data().vehicle_number.jpg)
+							// const url = ref.getDownloadURL();
 							this.setState(prevState => ({
 								v_list: [...prevState.v_list, { key: change.doc.id, details: change.doc.data() }]
 							}))
@@ -88,13 +90,13 @@ class Vehicles extends Component {
 		// 		{ cancelable: false },
 		// 	);
 		// } else {
-		this.uploadVehicleToFS()
-		setTimeout(() => {
-			this.uploadVehicleImage()
-			this.stateEmpty()
-		}, 1000)
-		
-		
+		this.uploadVehicleImage()
+		// setTimeout(() => {
+		// 	// this.uploadVehicleToFS()
+		// 	this.stateEmpty()
+		// }, 1000)
+
+
 		// }
 	}
 
@@ -105,7 +107,7 @@ class Vehicles extends Component {
 			vehicle_type: this.state.v_type,
 		}).then((data) => {
 			console.log(data.id)
-			this.setState({ 
+			this.setState({
 				v_id: data.id
 			})
 		})
@@ -179,13 +181,65 @@ class Vehicles extends Component {
 
 		var filePath = vId + '.' + that.state.currentFileType;
 
-		const ref = storage.ref('Vehicles/' + userId +'/'+ v_id).child(filePath);
+		var uploadTask = storage.ref('Vehicles/' + userId).child(filePath).put(blob);
 
-		var snap = ref.put(blob).on('state_changed', snap => {
-			console.log('Progress', snap.bytesTransferred, snap.totalBytes)
+		uploadTask.on('state_changed', function (snapshot) {
+			let progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
+			that.setState({
+				progress: progress
+			});
+		}, function (error) {
+			console.log(error);
+		}, function () {
+			that.setState({
+				progress: 100
+			});
+			uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+
+				that.setDatabse(downloadURL);
+			})
 		})
+		// const store = storage.ref('Vehicles/' + userId).child(filePath);
+
+		// var snap = store.put(blob).on('state_changed', snap => {
+		// 	console.log('Progress', snap.bytesTransferred, snap.totalBytes)
+		// })
+
+		// snap.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+
+		// 	that.setDatabse(downloadURL);
+		// })
 
 		alert("Vehicle Registerd");
+	}
+
+	setDatabse = (imageURL) => {
+		// var user = fb.auth().currentUser;
+		// var userID = fb.auth().currentUser.uid;
+		// database.collection('/Users/' + userID + '/Vehicles' + v_id).update({ "avatar": imageURL });
+		// console.log("User: " + user);
+		// user.updateProfile({
+		// 	photoURL: imageURL
+		// });
+		// alert('SuccessFully Published!!');
+		// this.setState({
+		// 	imageSelected: false,
+		// 	uploading: false,
+		// 	progress: 0,
+		// 	caption: '',
+		// 	avatar: imageURL
+		// });
+		database.collection('Users').doc(this.state.user.uid).collection('Vehicles').add({
+			vehicle_number: this.state.v_number,
+			vehicle_brand: this.state.v_brand,
+			vehicle_type: this.state.v_type,
+			vehicle_image: imageURL,
+		}).then((data) => {
+			console.log(data.id)
+			this.setState({
+				v_id: data.id
+			})
+		})
 	}
 
 	stateEmpty = () => {
@@ -261,7 +315,7 @@ class Vehicles extends Component {
 								this.state.v_list.map((l, i) => (
 									<ListItem
 										key={i}
-										leftAvatar={{ source: { uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg' } }}
+										leftAvatar={{ source: { uri: l.details.vehicle_image } }}
 										title={l.details.vehicle_type}
 										subtitle={l.details.vehicle_number}
 										topDivider={true}
@@ -310,7 +364,7 @@ const styles = StyleSheet.create({
 		height: 40,
 		borderBottomWidth: 1,
 		borderBottomColor: 'gray',
-		color:'white'
+		color: 'white'
 	},
 	contentContainer: {
 		// paddingVertical: 20
