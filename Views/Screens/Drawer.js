@@ -6,7 +6,7 @@ import { Avatar } from 'react-native-elements';
 import Location from './MainWindows/Location/Location';
 import Vehicles from './MainWindows/Vehicles/Vehicles';
 import Profile from './MainWindows/Profile/Profile';
- 
+
 const CustomDrawerComponent = (props) => {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
@@ -51,7 +51,7 @@ const AppContainer = createAppContainer(TabNavigator);
 
 const styles = StyleSheet.create({
 	contentContainer: {
-		backgroundColor:'white'
+		backgroundColor: 'white'
 	}
 });
 

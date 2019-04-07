@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, Button, Image, StyleSheet, TouchableOpacity, ActivityIndicator, TouchableHighlight } from 'react-native'
 // import { ImagePicker } from 'react-native-image-picker'
 import { Avatar } from 'react-native-elements';
-import { fb, database } from '../../../../firebaseConfig/config'
+import { fb, database, storage } from '../../../../firebaseConfig/config'
 import Icon from 'react-native-vector-icons/Octicons'
 import WelcomeScreen from '../../WelcomeScreen/WelcomeScreen'
 
@@ -23,7 +23,7 @@ export default class Profile extends Component {
 		this.state = {
 			userData: null,
 			user: null,
-			avatar: null
+			avatar: null,
 		}
 
 	}
@@ -36,9 +36,10 @@ export default class Profile extends Component {
 						user
 					});
 					database.collection('Users').doc(this.state.user.uid).get().then(user => {
+						console.log(user);
 						this.setState({
 							userData: user.data(),
-							avatar : user.data().photoURL
+							avatar: user.data().photoURL
 						});
 					})
 					// console.log(user);
@@ -49,34 +50,84 @@ export default class Profile extends Component {
 		}
 	}
 
-	editAvatar = () => {
+	addPicture = () => {
 		ImagePicker.showImagePicker({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
 			if (res.didCancel) {
 				console.log("User cancelled!");
 			} else if (res.error) {
 				console.log("Error", res.error);
 			} else {
-				this.uploadAvatar(res).then(() => {
-					alert("Success");
-				}).catch((error) => {
-					alert(error);
-				})
+				this.updateProfilePicture(res.uri)
 				// this.setState({
-				// 	avatar: res
-				// 	// avatar: { uri: res.uri }
+				// 	u_image: res.uri
 				// });
-				// console.log(this.state.avatar);
 			}
 		});
 	}
 
-	uploadAvatar = async (res) => {
-		// console.log(res);
-		const response = await fetch(res.uri)
-		console.log(response)
-		// const blob = await response.blob();
-		// var ref = fb.storage().ref().child("Users/" + res.fileName);
-		// return ref.put(blob);
+	updateProfilePicture = async (uri) => {
+		console.log(uri);
+		var that = this;
+		var userId = this.state.user.uid
+		var re = /(?:\.([^.]+))?$/;
+		var ext = re.exec(uri)[1];
+
+		this.setState({
+			currentFileType: ext
+		});
+
+		const blob = await new Promise((resolve, reject) => {
+			const xhr = new XMLHttpRequest();
+			xhr.onload = function () {
+				resolve(xhr.response);
+			};
+			xhr.onerror = function (e) {
+				console.log(e);
+				reject(new TypeError('Network request failed'));
+			};
+			xhr.responseType = 'blob';
+			xhr.open('GET', uri, true);
+			xhr.send(null);
+		});
+
+		var filePath = userId + '.' + that.state.currentFileType;
+
+		var uploadTask = storage.ref('Users/').child(filePath).put(blob);
+
+		uploadTask.on('state_changed', function (snapshot) {
+			let progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
+			that.setState({
+				progress: progress
+			});
+		}, function (error) {
+			console.log(error);
+		}, function () {
+			that.setState({
+				progress: 100
+			});
+			uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+				that.setDatabse(downloadURL);
+			})
+		})
+		// alert("Vehicle Registerd");
+	}
+
+	setDatabse = (imageURL) => {
+		var user = fb.auth().currentUser;
+		var userID = fb.auth().currentUser.uid;
+		database.collection('Users').doc(userID).update({ "avatar": imageURL });
+		console.log("User: " + user);
+		user.updateProfile({
+			photoURL: imageURL
+		});
+		alert('SuccessFully Published!!');
+		// this.setState({
+		//     imageSelected: false,
+		//     uploading: false,
+		//     progress: 0,
+		//     caption: '',
+		//     avatar: imageURL
+		// });
 	}
 
 	logOut = () => {
@@ -98,21 +149,21 @@ export default class Profile extends Component {
 		// const {user} = this.state.user;
 		return (
 			<View style={{ flex: 1, backgroundColor: '#1c1c1c' }}>
-				<View style={{ flexDirection: 'row', marginTop:8 }}>
-					<View style={{marginBottom:10}}>
+				<View style={{ flexDirection: 'row', marginTop: 8 }}>
+					<View style={{ marginBottom: 10 }}>
 						<TouchableHighlight onPress={() => this.props.navigation.toggleDrawer()} >
 							<Icon
 								name="three-bars"
 								color="white"
 								size={27}
-								style={{marginLeft: 10,marginTop: 10,paddingBottom: 5,backgroundColor: 'transparent'}}
+								style={{ marginLeft: 10, marginTop: 10, paddingBottom: 5, backgroundColor: 'transparent' }}
 							/>
 						</TouchableHighlight>
 					</View>
 					<View style={{ marginLeft: "30%", marginTop: 5 }}>
 						<Text style={{ color: 'white', fontSize: 26 }}>Profile</Text>
 					</View>
-					<View style={{marginBottom:10}}>
+					<View style={{ marginBottom: 10 }}>
 						<TouchableHighlight onPress={() => this.logOut()} >
 							<Icon
 								name="sign-out"
@@ -130,7 +181,7 @@ export default class Profile extends Component {
 				</View>
 
 				<View
-					style={{justifyContent: 'space-evenly',alignItems: 'center',flexDirection: 'row',paddingVertical: 10}}>
+					style={{ justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'row', paddingVertical: 10 }}>
 					{/* <TouchableOpacity onPress={() => this.editAvatar()}>
 						<Image
 							source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
@@ -142,8 +193,8 @@ export default class Profile extends Component {
 					<Avatar
 						size="large"
 						rounded
-						onPress={() => this.editAvatar()}
-						source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
+						onPress={this.addPicture}
+						source={{ uri: this.state.userData ? this.state.userData.avatar : null }}
 						showEditButton
 					/>
 					<View
@@ -158,7 +209,7 @@ export default class Profile extends Component {
 								{/* <Text>Username</Text> */}
 							</View>
 						) : (
-								<View style={{flex: 1,justifyContent: 'center',flexDirection: 'row',justifyContent: 'space-around',padding: 10}}>
+								<View style={{ flex: 1, justifyContent: 'center', flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
 									<ActivityIndicator size="small" color="#00ff00" />
 								</View>
 							)}
@@ -166,8 +217,8 @@ export default class Profile extends Component {
 				</View>
 
 				<View style={{ paddingBottom: 20, borderBottomWidth: 1 }}>
-					<TouchableOpacity style={{marginTop: 10,marginHorizontal: 40,paddingVertical: 15,borderRadius: 20,backgroundColor: 'gray'}} onPress={this.ccc}>
-						<Text style={{textAlign: 'center',color: 'white',fontSize: 17}}>
+					<TouchableOpacity style={{ marginTop: 10, marginHorizontal: 40, paddingVertical: 15, borderRadius: 20, backgroundColor: 'gray' }} onPress={this.ccc}>
+						<Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>
 							Edit Profile
 						</Text>
 					</TouchableOpacity>
@@ -181,8 +232,8 @@ export default class Profile extends Component {
 }
 
 const styles = StyleSheet.create({
-	profileInfo:{
-		fontSize: 15, 
-		color:'white' 
+	profileInfo: {
+		fontSize: 15,
+		color: 'white'
 	}
 });

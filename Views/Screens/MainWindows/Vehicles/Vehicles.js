@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Octicons'
 import { Avatar } from 'react-native-elements';
 
 import { fb, database, storage } from '../../../../firebaseConfig/config';
+import Details from './Details/Details';
 var ImagePicker = require('react-native-image-picker');
 
 
@@ -165,7 +166,12 @@ class Vehicles extends Component {
 		});
 	}
 
+	goToVehicle = () => {
+		this.props.navigation.navigate('Details');
+	} 
+
 	render() {
+		const { navigate } = this.props.navigation;
 		return (
 			// <KeyboardAvoidingView style={styles.vehicleContainer} behavior="padding">
 			<View style={{ flex: 1, backgroundColor: '#1c1c1c' }}>
@@ -232,6 +238,8 @@ class Vehicles extends Component {
 										leftAvatar={{ source: { uri: l.details.vehicle_image } }}
 										title={l.details.vehicle_type}
 										subtitle={l.details.vehicle_number}
+										leftIcon={{ name: 'av-timer' }}
+										onPress={() => navigate('Details')}
 										topDivider={true}
 										bottomDivider={true}
 									/>
