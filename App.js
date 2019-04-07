@@ -56,7 +56,7 @@ class App extends React.Component {
 					{/* <KeepAwake></KeepAwake> */}
 					{/* <Text style={{color: "red"}}>dhfhgcgcghchgsdf</Text> */}
 					{/* <Navigation /> */}
-					<Drawer />
+					<Drawer user={this.state.user}/>
 				</View>
 			);
 		}

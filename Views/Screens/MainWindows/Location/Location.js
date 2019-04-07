@@ -8,7 +8,8 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button, ActivityIndicator, TouchableHighlight } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapView,  { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapViewDirections from 'react-native-maps-directions';
 import Icon from 'react-native-vector-icons/Octicons'
 // import Location from './Views/Screens/MainWindows/Location';
 // import WelcomeScreen from './Views/Screens/WelcomeScreen'
