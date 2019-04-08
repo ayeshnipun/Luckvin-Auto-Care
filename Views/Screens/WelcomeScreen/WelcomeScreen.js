@@ -72,7 +72,6 @@ class WelcomeScreen extends Component {
 					fname: this.state.fname,
 					lname: this.state.lname,
 					contact: this.state.contact,
-					password: this.state.password
 				});
 				// console.log(data.user.uid);
 			});

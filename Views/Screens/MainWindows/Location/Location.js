@@ -8,12 +8,17 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button, ActivityIndicator, TouchableHighlight } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapView,  { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapViewDirections from 'react-native-maps-directions';
 import Icon from 'react-native-vector-icons/Octicons'
 // import Location from './Views/Screens/MainWindows/Location';
 // import WelcomeScreen from './Views/Screens/WelcomeScreen'
 
+const coordinates = [
+	{
 
+	}
+]
 export default class Location extends Component {
 	constructor(props) {
 		super(props)
@@ -23,6 +28,10 @@ export default class Location extends Component {
 				longitude: 0,
 				latitudeDelta: 0.0922,
 				longitudeDelta: 0.0421
+			},
+			originCoords: {
+				latitude:5.970375,
+				longitude:80.692441,
 			}
 		}
 	}
@@ -63,6 +72,8 @@ export default class Location extends Component {
 		}
 	}
 
+
+
 	render() {
 		const { region } = this.state.region;
 		if (this.state.region.latitude != 0 && this.state.region.longitude != 0) {
@@ -81,11 +92,18 @@ export default class Location extends Component {
 						showsUserLocation
 						loadingEnabled
 					>
+						<MapViewDirections 
+							origin={this.state.region}
+							destination={this.state.originCoords}
+							strokeWidth = {3}
+							apikey={'AIzaSyCfpyjsCryoM6w90zCbqYJpbZcy87Y6fXc'}
+							strokeColor = "blue"
+						/>
 
 						<Marker
 							coordinate={{
-								latitude: this.state.region.latitude,
-								longitude: this.state.region.longitude
+								latitude: this.state.originCoords.latitude,
+								longitude: this.state.originCoords.longitude
 							}}
 						></Marker>
 					</MapView>

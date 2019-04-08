@@ -24,11 +24,18 @@ export default class Profile extends Component {
 			userData: null,
 			user: null,
 			avatar: null,
+			fName : null,
+			lName: null,
+			email: null
 		}
 
 	}
 
 	componentDidMount() {
+		var email = fb.auth().currentUser.email
+		this.setState({
+			email
+		})
 		if (!this.state.user) {
 			fb.auth().onAuthStateChanged((user) => {
 				if (user) {
@@ -39,6 +46,8 @@ export default class Profile extends Component {
 						console.log(user);
 						this.setState({
 							userData: user.data(),
+							fName: user.data().fname,
+							lName: user.data().lname,
 							avatar: user.data().photoURL
 						});
 					})
@@ -204,8 +213,8 @@ export default class Profile extends Component {
 					>
 						{this.state.userData ? (
 							<View>
-								<Text style={styles.profileInfo}>{this.state.userData.fname + " " + this.state.userData.lname}</Text>
-								<Text style={styles.profileInfo}>{this.state.userData.email}</Text>
+								<Text style={styles.profileInfo}>{this.state.fName + " " + this.state.lName}</Text>
+								<Text style={styles.profileInfo}>{this.state.email}</Text>
 								{/* <Text>Username</Text> */}
 							</View>
 						) : (
