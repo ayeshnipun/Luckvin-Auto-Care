@@ -4,6 +4,7 @@ import { fb } from './firebaseConfig/config';
 
 import WelcomeScreen from './Views/Screens/WelcomeScreen/WelcomeScreen';
 import Drawer from './Views/Screens/Drawer';
+import Location from './Views/Screens/MainWindows/Location/Location';
 
 class App extends React.Component {
 	constructor(props) {
@@ -11,7 +12,7 @@ class App extends React.Component {
 		YellowBox.ignoreWarnings(['Setting a timer']);
 		this.state = {
 			//make this signup state false after editing profile.js
-			signupState: false,
+			signupState: true,
 			email: '',
 			password: '',
 			user: null
@@ -56,7 +57,8 @@ class App extends React.Component {
 					{/* <KeepAwake></KeepAwake> */}
 					{/* <Text style={{color: "red"}}>dhfhgcgcghchgsdf</Text> */}
 					{/* <Navigation /> */}
-					<Drawer user={this.state.user}/>
+					<Location />
+					{/* <Drawer user={this.state.user}/> */}
 				</View>
 			);
 		}

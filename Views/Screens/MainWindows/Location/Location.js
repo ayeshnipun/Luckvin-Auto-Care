@@ -11,15 +11,9 @@ import { Platform, StyleSheet, Text, View, Button, ActivityIndicator, TouchableH
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import Icon from 'react-native-vector-icons/Octicons';
-import Popup from 'react-native-easypopup';
-
+import FlashMessage from "react-native-flash-message";
 var geoLib = require('geolib');
 
-const coordinates = [
-	{
-
-	}
-]
 export default class Location extends Component {
 	constructor(props) {
 		super(props)
@@ -34,7 +28,7 @@ export default class Location extends Component {
 				latitude: 5.970375,
 				longitude: 80.692441,
 			},
-			coverage
+			coverage:false
 		}
 	}
 
@@ -124,7 +118,7 @@ export default class Location extends Component {
 							}}
 						></Marker>
 					</MapView>
-					<View style={{ position: 'absolute', backgroundColor: 'transparent' }}>
+					<View style={{ position: 'absolute', backgroundColor: 'transparent', flex:1 }}>
 						<TouchableHighlight onPress={() => this.props.navigation.toggleDrawer()} >
 							<Icon
 								name="three-bars"
@@ -133,16 +127,10 @@ export default class Location extends Component {
 								style={{ marginLeft: 10, marginTop: 10, paddingBottom: 5, backgroundColor: 'transparent' }}
 							/>
 						</TouchableHighlight>
-						<Popup
-							type="alert" //info
-							semitransparent={false}
-							animation={'none'} //fade - slide - none
-							contenttext={"Kuponunuz silinecektir, Onaylıyormsunuz?"}
-							confirmaction={() => alert('silme işlemi yapılıyor')}
-							cancelaction={() => alert('silme işlemi iptal edildi')}
-							acceptbuttontitle={'Kuponu Sil'}
-							cancelbuttontitle={'İptal Et'} />
-						
+
+						<View style={{height:50, width:"100%" ,backgroundColor:"red", marginTop:300}}>
+							<Text>No Coverage</Text>
+						</View>
 					</View>
 					{/* <Search onLocationSelected={this.handleLocationSelected} /> */}
 					{/* <Button title="Place" color="red" onPress={this.setAlarmToDestination} /> */}
