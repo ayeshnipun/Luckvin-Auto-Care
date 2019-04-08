@@ -8,9 +8,10 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button, ActivityIndicator, TouchableHighlight } from 'react-native';
-import MapView,  { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
-import Icon from 'react-native-vector-icons/Octicons'
+import Icon from 'react-native-vector-icons/Octicons';
+import Popup from 'react-native-easypopup';
 
 var geoLib = require('geolib');
 
@@ -30,8 +31,8 @@ export default class Location extends Component {
 				longitudeDelta: 0.0421
 			},
 			originCoords: {
-				latitude:5.970375,
-				longitude:80.692441,
+				latitude: 5.970375,
+				longitude: 80.692441,
 			},
 			coverage
 		}
@@ -41,8 +42,8 @@ export default class Location extends Component {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				var distance = geoLib.getDistance(
-					{latitude:this.state.originCoords.latitude, longitude: this.state.originCoords.longitude},
-					{latitude:position.coords.latitude, longitude:position.coords.longitude}
+					{ latitude: this.state.originCoords.latitude, longitude: this.state.originCoords.longitude },
+					{ latitude: position.coords.latitude, longitude: position.coords.longitude }
 				);
 				console.log(distance)
 				if (distance <= 5000) {
@@ -50,7 +51,7 @@ export default class Location extends Component {
 						coverage: true
 					})
 				}
-				else{
+				else {
 					this.setState({
 						coverage: false
 					})
@@ -108,12 +109,12 @@ export default class Location extends Component {
 						showsUserLocation
 						loadingEnabled
 					>
-						<MapViewDirections 
+						<MapViewDirections
 							origin={this.state.region}
 							destination={this.state.originCoords}
-							strokeWidth = {3}
+							strokeWidth={3}
 							apikey={'AIzaSyCfpyjsCryoM6w90zCbqYJpbZcy87Y6fXc'}
-							strokeColor = "blue"
+							strokeColor="blue"
 						/>
 
 						<Marker
@@ -132,6 +133,16 @@ export default class Location extends Component {
 								style={{ marginLeft: 10, marginTop: 10, paddingBottom: 5, backgroundColor: 'transparent' }}
 							/>
 						</TouchableHighlight>
+						<Popup
+							type="alert" //info
+							semitransparent={false}
+							animation={'none'} //fade - slide - none
+							contenttext={"Kuponunuz silinecektir, Onaylıyormsunuz?"}
+							confirmaction={() => alert('silme işlemi yapılıyor')}
+							cancelaction={() => alert('silme işlemi iptal edildi')}
+							acceptbuttontitle={'Kuponu Sil'}
+							cancelbuttontitle={'İptal Et'} />
+						
 					</View>
 					{/* <Search onLocationSelected={this.handleLocationSelected} /> */}
 					{/* <Button title="Place" color="red" onPress={this.setAlarmToDestination} /> */}
@@ -167,12 +178,12 @@ export default class Location extends Component {
 					<View style={{
 						flex: 1,
 						justifyContent: 'center',
-						alignItems:'center',
+						alignItems: 'center',
 						flexDirection: 'column',
 						// justifyContent: 'space-around',
 						padding: 10,
 					}}>
-						<Text style={{marginBottom:3, fontSize:28, color:'white'}}>Loading the map..</Text>
+						<Text style={{ marginBottom: 3, fontSize: 28, color: 'white' }}>Loading the map..</Text>
 						<ActivityIndicator size="large" color="#00ff00" />
 					</View>
 				</View>
