@@ -11,7 +11,9 @@ import { Platform, StyleSheet, Text, View, Button, ActivityIndicator, TouchableH
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import Icon from 'react-native-vector-icons/Octicons';
-import FlashMessage from "react-native-flash-message";
+// import PopupDialog, { SlideAnimation, DialogTitle } from 'react-native-popup-dialog';
+import Dialog, { DialogTitle, DialogContent } from 'react-native-popup-dialog';
+
 var geoLib = require('geolib');
 
 export default class Location extends Component {
@@ -28,7 +30,7 @@ export default class Location extends Component {
 				latitude: 5.970375,
 				longitude: 80.692441,
 			},
-			coverage:false
+			coverage: false
 		}
 	}
 
@@ -118,7 +120,7 @@ export default class Location extends Component {
 							}}
 						></Marker>
 					</MapView>
-					<View style={{ position: 'absolute', backgroundColor: 'transparent', flex:1 }}>
+					<View style={{ position: 'absolute', backgroundColor: 'transparent', flex: 1 }}>
 						<TouchableHighlight onPress={() => this.props.navigation.toggleDrawer()} >
 							<Icon
 								name="three-bars"
@@ -128,9 +130,23 @@ export default class Location extends Component {
 							/>
 						</TouchableHighlight>
 
-						<View style={{height:50, width:"100%" ,backgroundColor:"red", marginTop:300}}>
-							<Text>No Coverage</Text>
-						</View>
+						<Dialog
+							visible={this.state.coverage}
+							dialogStyle={{justifyContent: 'flex-end'}}
+							dialogTitle={<DialogTitle title="Dialog Title" />}
+						>
+							<DialogContent>
+								<Text>skhdvshdv</Text>
+							</DialogContent>
+						</Dialog>
+						{/* <PopupDialog
+							ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+							dialogStyle={{ position: 'absolute', bottom: 0 }}
+							dialogAnimation={slideAnimation}
+							height={150}
+							dialogTitle={<DialogTitle title="Select options" />}
+						></PopupDialog> */}
+
 					</View>
 					{/* <Search onLocationSelected={this.handleLocationSelected} /> */}
 					{/* <Button title="Place" color="red" onPress={this.setAlarmToDestination} /> */}
