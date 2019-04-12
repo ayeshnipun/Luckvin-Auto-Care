@@ -7,12 +7,13 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button, ActivityIndicator, TouchableHighlight } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, ActivityIndicator, TouchableHighlight, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import Icon from 'react-native-vector-icons/Octicons';
-// import PopupDialog, { SlideAnimation, DialogTitle } from 'react-native-popup-dialog';
 import Dialog, { DialogTitle, DialogContent } from 'react-native-popup-dialog';
+import Call from './Contact/Call';
+
 
 var geoLib = require('geolib');
 
@@ -30,7 +31,8 @@ export default class Location extends Component {
 				latitude: 5.970375,
 				longitude: 80.692441,
 			},
-			coverage: false
+			coverage: false,
+			distance: 0
 		}
 	}
 
@@ -42,7 +44,10 @@ export default class Location extends Component {
 					{ latitude: position.coords.latitude, longitude: position.coords.longitude }
 				);
 				console.log(distance)
-				if (distance <= 5000) {
+				this.setState({
+					distance
+				});
+				if (distance <= 50000) {
 					this.setState({
 						coverage: true
 					})
@@ -121,62 +126,47 @@ export default class Location extends Component {
 						></Marker>
 					</MapView>
 					<View style={{ position: 'absolute', backgroundColor: 'transparent', flex: 1 }}>
-						<TouchableHighlight onPress={() => this.props.navigation.toggleDrawer()} >
+						<TouchableOpacity onPress={() => this.props.navigation.toggleDrawer()} >
 							<Icon
 								name="three-bars"
 								color="black"
 								size={27}
 								style={{ marginLeft: 10, marginTop: 10, paddingBottom: 5, backgroundColor: 'transparent' }}
 							/>
-						</TouchableHighlight>
-
-						<Dialog
-							visible={this.state.coverage}
-							dialogStyle={{justifyContent: 'flex-end'}}
-							dialogTitle={<DialogTitle title="Dialog Title" />}
-						>
-							<DialogContent>
-								<Text>skhdvshdv</Text>
-							</DialogContent>
-						</Dialog>
-						{/* <PopupDialog
-							ref={(popupDialog) => { this.popupDialog = popupDialog; }}
-							dialogStyle={{ position: 'absolute', bottom: 0 }}
-							dialogAnimation={slideAnimation}
-							height={150}
-							dialogTitle={<DialogTitle title="Select options" />}
-						></PopupDialog> */}
+						</TouchableOpacity>
+						
+						{this.state.coverage ? (
+							<View style={{flex:1, width:"100%", alignContent:"center"}}>
+								<Text>dfsdfdf</Text>
+								<Call />
+							</View>
+						) : (
+							alert("You are no in the coverage area")
+							// console.log("object")
+						)}
+						
 
 					</View>
 					{/* <Search onLocationSelected={this.handleLocationSelected} /> */}
 					{/* <Button title="Place" color="red" onPress={this.setAlarmToDestination} /> */}
 				</View>
-				// <View style={{flex:1}}>
-
-				// 	{/* <WelcomeScreen /> */}
-				// 	{/* <Location/> */}
-				// </View>
 			);
 		} else {
 			return (
 				<View style={{
 					flex: 1,
-					// justifyContent: 'center',
-					// flexDirection: 'row',
-					// justifyContent: 'space-around',
-					// padding: 10,
 					backgroundColor: '#1c1c1c'
 				}}
 				>
 					<View style={{ marginBottom: 10 }}>
-						<TouchableHighlight onPress={() => this.props.navigation.toggleDrawer()} >
+						<TouchableOpacity onPress={() => this.props.navigation.toggleDrawer()} >
 							<Icon
 								name="three-bars"
 								color="white"
 								size={27}
 								style={{ marginLeft: 10, marginTop: 10, paddingBottom: 5, backgroundColor: 'transparent' }}
 							/>
-						</TouchableHighlight>
+						</TouchableOpacity>
 					</View>
 
 					<View style={{

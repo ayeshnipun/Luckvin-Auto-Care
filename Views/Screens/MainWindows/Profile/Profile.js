@@ -24,7 +24,7 @@ export default class Profile extends Component {
 			userData: null,
 			user: null,
 			avatar: null,
-			fName : null,
+			fName: null,
 			lName: null,
 			email: null
 		}
@@ -36,27 +36,26 @@ export default class Profile extends Component {
 		this.setState({
 			email
 		})
-		if (!this.state.user) {
-			fb.auth().onAuthStateChanged((user) => {
-				if (user) {
+		fb.auth().onAuthStateChanged((user) => {
+			if (user) {
+				this.setState({
+					user
+				});
+				database.collection('Users').doc(this.state.user.uid).onSnapshot(user => {
+					console.log(user);
 					this.setState({
-						user
+						userData: user.data(),
+						fName: user.data().fname,
+						lName: user.data().lname,
+						avatar: user.data().photoURL
 					});
-					database.collection('Users').doc(this.state.user.uid).get().then(user => {
-						console.log(user);
-						this.setState({
-							userData: user.data(),
-							fName: user.data().fname,
-							lName: user.data().lname,
-							avatar: user.data().photoURL
-						});
-					})
-					// console.log(user);
-				} else {
-					console.log("Eror")
-				}
-			})
-		}
+				})
+				// console.log(user);
+			} else {
+				console.log("Eror")
+			}
+		})
+
 	}
 
 	addPicture = () => {

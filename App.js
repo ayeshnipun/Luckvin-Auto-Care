@@ -12,7 +12,7 @@ class App extends React.Component {
 		YellowBox.ignoreWarnings(['Setting a timer']);
 		this.state = {
 			//make this signup state false after editing profile.js
-			signupState: true,
+			signupState: false,
 			email: '',
 			password: '',
 			user: null
@@ -56,9 +56,8 @@ class App extends React.Component {
 				<View style={{ flex: 1 }}>
 					{/* <KeepAwake></KeepAwake> */}
 					{/* <Text style={{color: "red"}}>dhfhgcgcghchgsdf</Text> */}
-					{/* <Navigation /> */}
-					<Location />
-					{/* <Drawer user={this.state.user}/> */}
+					{/* <Location /> */}
+					<Drawer user={this.state.user}/>
 				</View>
 			);
 		}
