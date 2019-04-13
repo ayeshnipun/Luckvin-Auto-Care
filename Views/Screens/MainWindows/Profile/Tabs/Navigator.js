@@ -4,6 +4,7 @@ import { createMaterialTopTabNavigator, createAppContainer } from 'react-navigat
 
 import myProfileSettings from './Screens/ProfileSettings/myProfileSettings';
 import myVehicleList from './Screens/VehicleList/myVehicleList'
+import myServices from './Screens/Services/myServices'
 class Navigator extends Component {
 
 }
@@ -11,6 +12,7 @@ class Navigator extends Component {
 const TabNavigator = createMaterialTopTabNavigator(
 	{
 		Vehicles: myVehicleList,
+		Services: myServices,
 		Settings: myProfileSettings,
 	},
 	{

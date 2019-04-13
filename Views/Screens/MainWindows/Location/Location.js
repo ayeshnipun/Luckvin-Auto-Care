@@ -13,9 +13,9 @@ import MapViewDirections from 'react-native-maps-directions';
 import Icon from 'react-native-vector-icons/Octicons';
 import Dialog, { DialogTitle, DialogContent } from 'react-native-popup-dialog';
 import Call from './Contact/Call';
-
-
 var geoLib = require('geolib');
+
+import Styles from './Styles';
 
 export default class Location extends Component {
 	constructor(props) {
@@ -125,18 +125,18 @@ export default class Location extends Component {
 							}}
 						></Marker>
 					</MapView>
-					<View style={{ position: 'absolute', backgroundColor: 'transparent', flex: 1 }}>
+					<View style={Styles.absView}>
 						<TouchableOpacity onPress={() => this.props.navigation.toggleDrawer()} >
 							<Icon
 								name="three-bars"
 								color="black"
 								size={27}
-								style={{ marginLeft: 10, marginTop: 10, paddingBottom: 5, backgroundColor: 'transparent' }}
+								style={Styles.tooglerWithMap}
 							/>
 						</TouchableOpacity>
 						
 						{this.state.coverage ? (
-							<View style={{flex:1, width:"100%", alignContent:"center"}}>
+							<View style={Styles.coverageView}>
 								<Text>dfsdfdf</Text>
 								<Call />
 							</View>
@@ -153,31 +153,20 @@ export default class Location extends Component {
 			);
 		} else {
 			return (
-				<View style={{
-					flex: 1,
-					backgroundColor: '#1c1c1c'
-				}}
-				>
+				<View style={Styles.mapLoadingView}>
 					<View style={{ marginBottom: 10 }}>
 						<TouchableOpacity onPress={() => this.props.navigation.toggleDrawer()} >
 							<Icon
 								name="three-bars"
 								color="white"
 								size={27}
-								style={{ marginLeft: 10, marginTop: 10, paddingBottom: 5, backgroundColor: 'transparent' }}
+								style={Styles.tooglerLoadingMap}
 							/>
 						</TouchableOpacity>
 					</View>
 
-					<View style={{
-						flex: 1,
-						justifyContent: 'center',
-						alignItems: 'center',
-						flexDirection: 'column',
-						// justifyContent: 'space-around',
-						padding: 10,
-					}}>
-						<Text style={{ marginBottom: 3, fontSize: 28, color: 'white' }}>Loading the map..</Text>
+					<View style={Styles.activityIndicatorView}>
+						<Text style={Styles.mapLoadingText}>Loading the map..</Text>
 						<ActivityIndicator size="large" color="#00ff00" />
 					</View>
 				</View>
@@ -187,21 +176,3 @@ export default class Location extends Component {
 	}
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#F5FCFF',
-	},
-	welcome: {
-		fontSize: 20,
-		textAlign: 'center',
-		margin: 10,
-	},
-	instructions: {
-		textAlign: 'center',
-		color: '#333333',
-		marginBottom: 5,
-	},
-});
