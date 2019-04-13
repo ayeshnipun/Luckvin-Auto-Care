@@ -6,9 +6,9 @@ import { fb, database, storage } from '../../../../firebaseConfig/config'
 import Icon from 'react-native-vector-icons/Octicons'
 import WelcomeScreen from '../../WelcomeScreen/WelcomeScreen'
 import Navigator from './Tabs/Navigator';
-
 var ImagePicker = require('react-native-image-picker');
 
+import Styles from './Styles';
 
 const options = {
 	title: 'Select Avatar',
@@ -157,48 +157,36 @@ export default class Profile extends Component {
 	render() {
 		// const {user} = this.state.user;
 		return (
-			<View style={{ flex: 1, backgroundColor: '#1c1c1c' }}>
-				<View style={{ flexDirection: 'row', marginTop: 8 }}>
-					<View style={{ marginBottom: 10 }}>
+			<View style={Styles.mainView}>
+				<View style={Styles.mainHeaderView}>
+					<View style={Styles.navigationIconView}>
 						<TouchableHighlight onPress={() => this.props.navigation.toggleDrawer()} >
 							<Icon
 								name="three-bars"
 								color="white"
 								size={27}
-								style={{ marginLeft: 10, marginTop: 10, paddingBottom: 5, backgroundColor: 'transparent' }}
+								style={Styles.navigationIcon}
 							/>
 						</TouchableHighlight>
 					</View>
-					<View style={{ marginLeft: "30%", marginTop: 5 }}>
-						<Text style={{ color: 'white', fontSize: 26 }}>Profile</Text>
+					<View style={Styles.headerView}>
+						<Text style={Styles.headerText}>Profile</Text>
 					</View>
-					<View style={{ marginBottom: 10 }}>
+					<View style={Styles.signOutIconView}>
 						<TouchableHighlight onPress={() => this.logOut()} >
 							<Icon
 								name="sign-out"
 								color="red"
 								size={27}
-								style={{
-									marginLeft: 110,
-									marginTop: 10,
-									paddingBottom: 5,
-									backgroundColor: 'transparent'
-								}}
+								style={Styles.signOutIcon}
 							/>
 						</TouchableHighlight>
 					</View>
 				</View>
 
 				<View
-					style={{ justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'row', paddingVertical: 10 }}>
-					{/* <TouchableOpacity onPress={() => this.editAvatar()}>
-						<Image
-							source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
-							style={{
-								marginLeft: 10, width: 100, height: 100, borderRadius: 50
-							}}
-						/>
-					</TouchableOpacity> */}
+					style={Styles.infoWithAvatarView}>
+					
 					<Avatar
 						size="large"
 						rounded
@@ -206,19 +194,15 @@ export default class Profile extends Component {
 						source={{ uri: this.state.userData ? this.state.userData.avatar : null }}
 						showEditButton
 					/>
-					<View
-						style={{
-							marginRight: 10
-						}}
-					>
+					<View style={Styles.userDataView}>
 						{this.state.userData ? (
 							<View>
-								<Text style={styles.profileInfo}>{this.state.fName + " " + this.state.lName}</Text>
-								<Text style={styles.profileInfo}>{this.state.email}</Text>
+								<Text style={Styles.profileInfo}>{this.state.fName + " " + this.state.lName}</Text>
+								<Text style={Styles.profileInfo}>{this.state.email}</Text>
 								{/* <Text>Username</Text> */}
 							</View>
 						) : (
-								<View style={{ flex: 1, justifyContent: 'center', flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
+								<View style={Styles.infoLoadingIndicator}>
 									<ActivityIndicator size="small" color="#00ff00" />
 								</View>
 							)}
@@ -233,17 +217,10 @@ export default class Profile extends Component {
 					</TouchableOpacity>
 				</View> */}
 
-				<View style={{flex:1, width:"100%", marginTop:8}}>
+				<View style={Styles.navigator}>
 					<Navigator />
 				</View>
 			</View>
 		)
 	}
 }
-
-const styles = StyleSheet.create({
-	profileInfo: {
-		fontSize: 15,
-		color: 'white'
-	}
-});

@@ -8,7 +8,7 @@ import { fb, database, storage } from '../../../../firebaseConfig/config';
 import Details from './Details/Details';
 var ImagePicker = require('react-native-image-picker');
 
-
+import Styles from './Styles'
 class Vehicles extends Component {
 	constructor(props) {
 		super(props);
@@ -173,36 +173,29 @@ class Vehicles extends Component {
 	render() {
 		const { navigate } = this.props.navigation;
 		return (
-			// <KeyboardAvoidingView style={styles.vehicleContainer} behavior="padding">
-			<View style={{ flex: 1, backgroundColor: '#1c1c1c' }}>
-				<View style={{ flexDirection: 'row' }}>
+			<View style={Styles.mainView}>
+				<View style={Styles.header}>
 					<View>
 						<TouchableHighlight onPress={() => this.props.navigation.toggleDrawer()} >
 							<Icon
 								name="three-bars"
 								color="white"
 								size={27}
-								style={{
-									marginLeft: 10,
-									marginTop: 10,
-									paddingBottom: 5,
-									backgroundColor: 'transparent'
-								}}
+								style={Styles.navigationIcon}
 							/>
 						</TouchableHighlight>
 					</View>
-					<View style={{ marginLeft: "20%", marginTop: 10 }}>
-						<Text style={{ color: 'white', fontSize: 26 }}>Add a Vehicle</Text>
+					<View style={Styles.addVehicleView}>
+						<Text style={Styles.addVehicleText}>Add a Vehicle</Text>
 					</View>
 				</View>
 
-				<View style={styles.vehicleContainer}>
-					<View style={{ width: "100%", marginBottom: 30 }}>
+				<View style={Styles.vehicleContainer}>
+					<View style={Styles.vehicleInputFrom}>
 						<Avatar
 							size="large"
 							rounded
 							onPress={() => this.addPicture()}
-							// source={{ uri: 'https://api.adorable.io/avatars/285/test@user.i.png' }}
 							source={{ uri: this.state.v_image }}
 							showEditButton
 						/>
@@ -211,17 +204,17 @@ class Vehicles extends Component {
 							onChangeText={(vNum) => this.setState({ v_number: vNum })}
 							placeholder="Vehicle Number"
 							placeholderTextColor="white"
-							style={styles.ti1} />
+							style={Styles.ti1} />
 
 						<TextInput
 							onChangeText={(vBrn) => this.setState({ v_brand: vBrn })}
-							placeholder="Vehicle Brand" placeholderTextColor="white" style={styles.ti1} />
+							placeholder="Vehicle Brand" placeholderTextColor="white" style={Styles.ti1} />
 
 						<TextInput
 							onChangeText={(vTyp) => this.setState({ v_type: vTyp })}
 							placeholder="Vehicle Type"
 							placeholderTextColor="white"
-							style={styles.ti1} />
+							style={Styles.ti1} />
 
 						<Button
 							title="Submit Vehicle"
@@ -230,7 +223,7 @@ class Vehicles extends Component {
 					</View>
 					{/* </KeyboardAvoidingView> */}
 					{this.state.v_list ? (
-						<ScrollView style={styles.scrollView}>
+						<ScrollView style={Styles.scrollView}>
 							{
 								this.state.v_list.map((l, i) => (
 									<ListItem
@@ -264,34 +257,6 @@ class Vehicles extends Component {
 	}
 }
 
-
-const styles = StyleSheet.create({
-	scrollView: {
-		width: "100%"
-	},
-	vehicleContainer: {
-		flex: 1,
-		width: "100%",
-		marginTop: 20,
-		paddingTop: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#1c1c1c',
-	},
-	ti1: {
-		// borderColor: 'gray', 
-		// borderWidth: 1,
-		marginBottom: 4,
-		width: "100%",
-		height: 40,
-		borderBottomWidth: 1,
-		borderBottomColor: 'gray',
-		color: 'white'
-	},
-	contentContainer: {
-		// paddingVertical: 20
-	}
-});
 
 
 export default Vehicles;
