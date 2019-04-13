@@ -5,6 +5,7 @@ import { Avatar } from 'react-native-elements';
 import { fb, database, storage } from '../../../../firebaseConfig/config'
 import Icon from 'react-native-vector-icons/Octicons'
 import WelcomeScreen from '../../WelcomeScreen/WelcomeScreen'
+import Navigator from './Tabs/Navigator';
 
 var ImagePicker = require('react-native-image-picker');
 
@@ -224,15 +225,16 @@ export default class Profile extends Component {
 					</View>
 				</View>
 
-				<View style={{ paddingBottom: 20, borderBottomWidth: 1 }}>
+				{/* <View style={{ paddingBottom: 20, borderBottomWidth: 1 }}>
 					<TouchableOpacity style={{ marginTop: 10, marginHorizontal: 40, paddingVertical: 15, borderRadius: 20, backgroundColor: 'gray' }} onPress={this.ccc}>
 						<Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>
 							Edit Profile
 						</Text>
 					</TouchableOpacity>
-					{/* <TouchableOpacity>
-						<Text>Logout</Text>
-					</TouchableOpacity> */}
+				</View> */}
+
+				<View style={{flex:1, width:"100%", marginTop:8}}>
+					<Navigator />
 				</View>
 			</View>
 		)
