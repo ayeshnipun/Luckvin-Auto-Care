@@ -7,6 +7,7 @@ import { Button, Input } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { fb } from '../../../firebaseConfig/config';
 
+import Styles from './Styles';
 class WelcomeScreen extends Component {
 	constructor(props) {
 		super(props);
@@ -100,7 +101,7 @@ class WelcomeScreen extends Component {
 	render() {
 		if (this.state.page == '') {
 			return (
-				<ImageBackground source={require('../../Images/login3.jpg')} resizeMode='cover' style={styles.container}>
+				<ImageBackground source={require('../../Images/login3.jpg')} resizeMode='cover' style={Styles.container}>
 					<KeyboardAvoidingView style={{ flex: 1, width:"100%"}}>
 						{/* <View style={{ marginTop: 70, flex: 1 }}> */}
 							<ScrollView style={{paddingTop: 20, flex: 1 }}>
@@ -112,22 +113,22 @@ class WelcomeScreen extends Component {
 									{/* <Text style={{ color: 'white' }}>EMAIL ADDRESS</Text> */}
 									<Icon
 										size = {20}
-										style={{paddingTop:20, paddingLeft:10, paddingRight:10}}
+										style={Styles.textInputIcons}
   										name='envelope-o'
   										color='white' />
 									<TextInput 
 										keyboardType='email-address'
 										placeholder="Email" 
 										placeholderTextColor="#bab8b8" 
-										style={ styles.textInputs } 
+										style={ Styles.textInputs } 
 										onChangeText={(email) => {this.setState({email})}}
 									/>
 								</View>
 
-								<View style={{ marginBottom: 20, flexDirection:'row' }}>
+								<View style={Styles.textInputIcons}>
 									<Icon
 										size = {20}
-										style={{paddingTop:20, paddingLeft:10, paddingRight:10}}
+										style={Styles.textInputIcons}
   										name='eye'
   										color='white' />
 									{/* <Text style={{ color: 'white' }}>PASSWORD</Text> */}
@@ -135,7 +136,7 @@ class WelcomeScreen extends Component {
 										secureTextEntry={true}
 										placeholder="Password" 
 										placeholderTextColor="#bab8b8" 
-										style={styles.textInputs} 
+										style={Styles.textInputs} 
 										onChangeText={(password) => {this.setState({password})}}/>
 								</View>
 
@@ -168,7 +169,7 @@ class WelcomeScreen extends Component {
 			)
 		} else if (this.state.page == "register") {
 			return (
-				<ImageBackground source={require('../../Images/login3.jpg')} resizeMode='cover' style={styles.container}>
+				<ImageBackground source={require('../../Images/login3.jpg')} resizeMode='cover' style={Styles.container}>
 					<KeyboardAvoidingView style={{ flex: 1, width:"100%"}}>
 						<View style={{ marginTop: 0, flex: 1 }}>
 							<TouchableHighlight
@@ -196,103 +197,94 @@ class WelcomeScreen extends Component {
 							</TouchableHighlight>
 							<ScrollView style={{paddingTop: 40, flex: 1}}>
 								<Text style={{ fontSize: 30, color: 'white', fontWeight: '300', marginBottom: 30 }}>New Account</Text>
-								<View style={{ marginBottom: 20, flexDirection:'row' }}>
+								<View style={Styles.textInputIcons}>
 									<Icon
 										size = {20}
-										style={{paddingTop:20, paddingLeft:10, paddingRight:10}}
+										style={Styles.textInputIcons}
   										name='envelope-o'
   										color='white' />
 									<TextInput 
 										keyboardType='email-address'
 										placeholder = "Emali"
 										placeholderTextColor = "#bab8b8"
-										style={styles.textInputs}  
+										style={Styles.textInputs}  
 										onChangeText={(email) => {this.setState({email})}}
 									/>
 								</View>
-								<View style={{ marginBottom: 20, flexDirection:'row' }}>
+								<View style={Styles.textInputIcons}>
 									<Icon
 										size = {20}
-										style={{paddingTop:20, paddingLeft:10, paddingRight:10}}
+										style={Styles.textInputIcons}
   										name='user'
   										color='white' />
 									<TextInput
 										placeholder = "First Name"
 										placeholderTextColor = "#bab8b8" 
-										style={styles.textInputs} 
+										style={Styles.textInputs} 
 										onChangeText={(fname) => {this.setState({fname})}}
 									/>
 								</View>
-								<View style={{ marginBottom: 20, flexDirection:'row' }}>
+								<View style={Styles.textInputIcons}>
 									<Icon
 										size = {20}
-										style={{paddingTop:20, paddingLeft:10, paddingRight:10}}
+										style={Styles.textInputIcons}
   										name='user'
   										color='white' />
 									<TextInput
 										placeholder = "Last Name"
 										placeholderTextColor = "#bab8b8" 
-										style={styles.textInputs} 
+										style={Styles.textInputs} 
 										onChangeText={(lname) => {this.setState({lname})}}
 									/>
 								</View>
-								<View style={{ marginBottom: 20, flexDirection:'row' }}>
+								<View style={Styles.textInputIcons}>
 									<Icon
 										size = {20}
-										style={{paddingTop:20, paddingLeft:10, paddingRight:10}}
+										style={Styles.textInputIcons}
   										name='phone'
   										color='white' />
 									<TextInput
 										keyboardType='phone-pad'
 										placeholder = "Contact Number"
 										placeholderTextColor = "#bab8b8" 
-										style={styles.textInputs} 
+										style={Styles.textInputs} 
 										onChangeText={(contact) => {this.setState({contact})}}
 									/>
 								</View>
 
-								<View style={{ marginBottom: 20, flexDirection:'row' }}>
+								<View style={Styles.textInputIcons}>
 									<Icon
 										size = {20}
-										style={{paddingTop:20, paddingLeft:10, paddingRight:10}}
+										style={Styles.textInputIcons}
   										name='eye'
   										color='white' />
 									<TextInput 
 										secureTextEntry={true}
 										placeholder = "Password"
 										placeholderTextColor = "#bab8b8"
-										style={styles.textInputs} 
+										style={Styles.textInputs} 
 										onChangeText={(password) => {this.setState({password})}}
 									/>
 								</View>
 								
-								<View style={{ marginBottom: 20, flexDirection:'row' }}>
+								<View style={Styles.textInputView}>
 									<Icon
 										size = {20}
-										style={{paddingTop:20, paddingLeft:10, paddingRight:10}}
+										style={Styles.textInputIcons}
   										name='eye'
   										color='white' />
 									<TextInput 
 										secureTextEntry={true}
 										placeholder = "Confirm Password"
 										placeholderTextColor = "#bab8b8"
-										style={styles.textInputs} 
+										style={Styles.textInputs} 
 										onChangeText={(password_c) => {this.setState({password_c})}}
 									/>
 								</View>
 
-								<TouchableOpacity style={{
-									marginTop: 10,
-									marginHorizontal: 40,
-									paddingVertical: 15,
-									borderRadius: 2,
-									// borderColor:'5e5d5d',
-									backgroundColor: '#ed256d',
-									fontSize: 20,
-									marginBottom:60
-								}}
+								<TouchableOpacity style={Styles.registerBtnStyles}
 									onPress={() => this.signup(this.state.email, this.state.password)}>
-									<Text style={{textAlign:'center', color:'white'}}>REGISTER</Text>
+									<Text style={Styles.registerText}>REGISTER</Text>
 								</TouchableOpacity>
 							</ScrollView>
 						</View>
@@ -303,66 +295,5 @@ class WelcomeScreen extends Component {
 	}
 }
 
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: 'white',
-		flexDirection: 'column',
-		tintColor: 'hsla(360, 100%, 100%, 1.0)'
-		// opacity: 0.1
-
-	},
-	inputContainer: {
-		borderBottomColor: '#f7073f',
-		// backgroundColor: '#FFFFFF',
-		borderRadius: 30,
-		borderBottomWidth: 1,
-		width: 250,
-		height: 45,
-		marginBottom: 20,
-		flexDirection: 'row',
-		alignItems: 'center'
-	},
-	inputs: {
-		height: 45,
-		marginLeft: 16,
-		borderBottomColor: '#FFFFFF',
-		flex: 1,
-	},
-	inputIcon: {
-		width: 30,
-		height: 30,
-		marginLeft: 15,
-		justifyContent: 'center'
-	},
-	buttonContainer: {
-		height: 45,
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginBottom: 20,
-		width: 250,
-		borderRadius: 30,
-	},
-	loginButton: {
-		backgroundColor: "#d12963",
-	},
-	loginText: {
-		color: 'white',
-	},
-	backgroundImage: {
-		flex: 1,
-		resizeMode: 'stretch',
-	},
-	textInputs:{
-		borderBottomColor: '#5e5d5d', 
-		borderBottomWidth:1, 
-		color: 'white', 
-		width:"100%", fontSize:18
-	}
-});
 
 export default WelcomeScreen;
