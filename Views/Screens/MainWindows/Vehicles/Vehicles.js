@@ -35,11 +35,19 @@ class Vehicles extends Component {
 				});
 				database.collection('Users').doc(this.state.user.uid)
 					.collection('Vehicles').onSnapshot(snap => {
-						snap.docChanges().forEach(change => {
-							this.setState(prevState => ({
-								v_list: [...prevState.v_list, { key: change.doc.id, details: change.doc.data() }]
-							}))
+						var vehicles = [];
+						snap.forEach(function(doc) {
+							// cities.push(doc.data().name);
+							vehicles.push({ key: doc.id, details: doc.data() });
 						});
+						this.setState({
+							v_list:vehicles
+						})
+						// snap.docChanges().forEach(change => {
+						// 	this.setState(prevState => ({
+						// 		v_list: [...prevState.v_list, { key: change.doc.id, details: change.doc.data() }]
+						// 	}))
+						// });
 					});
 			}
 		}.bind(this));

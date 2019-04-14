@@ -122,7 +122,7 @@ class WelcomeScreen extends Component {
 									/>
 								</View>
 
-								<View style={Styles.textInputIcons}>
+								<View style={Styles.textInputView}>
 									<Icon
 										size = {20}
 										style={Styles.textInputIcons}
@@ -179,7 +179,7 @@ class WelcomeScreen extends Component {
 							</TouchableHighlight>
 							<ScrollView style={{paddingTop: 40, flex: 1}}>
 								<Text style={{ fontSize: 30, color: 'white', fontWeight: '300', marginBottom: 30 }}>New Account</Text>
-								<View style={Styles.textInputIcons}>
+								<View style={Styles.textInputView}>
 									<Icon
 										size = {20}
 										style={Styles.textInputIcons}
@@ -193,7 +193,7 @@ class WelcomeScreen extends Component {
 										onChangeText={(email) => {this.setState({email})}}
 									/>
 								</View>
-								<View style={Styles.textInputIcons}>
+								<View style={Styles.textInputView}>
 									<Icon
 										size = {20}
 										style={Styles.textInputIcons}
@@ -206,7 +206,7 @@ class WelcomeScreen extends Component {
 										onChangeText={(fname) => {this.setState({fname})}}
 									/>
 								</View>
-								<View style={Styles.textInputIcons}>
+								<View style={Styles.textInputView}>
 									<Icon
 										size = {20}
 										style={Styles.textInputIcons}
@@ -219,7 +219,7 @@ class WelcomeScreen extends Component {
 										onChangeText={(lname) => {this.setState({lname})}}
 									/>
 								</View>
-								<View style={Styles.textInputIcons}>
+								<View style={Styles.textInputView}>
 									<Icon
 										size = {20}
 										style={Styles.textInputIcons}
@@ -234,7 +234,7 @@ class WelcomeScreen extends Component {
 									/>
 								</View>
 
-								<View style={Styles.textInputIcons}>
+								<View style={Styles.textInputView}>
 									<Icon
 										size = {20}
 										style={Styles.textInputIcons}
