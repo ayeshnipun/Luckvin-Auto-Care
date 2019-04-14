@@ -33,6 +33,51 @@ const Styles = StyleSheet.create({
 	textInputView:{ 
 		marginBottom: 20, flexDirection:'row' 
 	},
+	registerView:{ 
+		marginTop: 0, flex: 1 
+	},
+	keyboardAvoid:{ 
+		flex: 1, width:"100%"
+	},
+	gotoRegisterText:{
+		textAlign:'center', color:'#bab8b8', 
+	},
+	gotoRegisterButton:{
+		marginTop:40, marginBottom:30
+	},
+	gotoLoginIcon:{
+		marginLeft:30,
+		marginTop:20,
+		paddingBottom:5,
+		backgroundColor:'transparent'
+	},
+	logintext:{
+		textAlign:'center', color:"white", marginTop:3, marginLeft:5
+	},
+	loginIcon:{
+		marginLeft:100
+	},
+	loginButton:{
+		marginTop: 10,
+		marginHorizontal: 40,
+		paddingVertical: 15,
+		borderRadius: 2,
+		backgroundColor: '#ed256d',
+		fontSize: 20,
+		flexDirection:'row'
+	},
+	loginView:{ 
+		marginBottom: 10, marginTop:30, flexDirection:'row'
+	},
+	topTickIcon:{
+		height:200, width:200
+	},
+	topTickIconView:{
+		alignItems:'center'
+	},
+	loginScrollView:{
+		paddingTop: 20, flex: 1 
+	},
 });
 
 export default Styles;

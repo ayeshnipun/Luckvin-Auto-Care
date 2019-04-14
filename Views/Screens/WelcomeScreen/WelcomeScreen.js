@@ -102,15 +102,12 @@ class WelcomeScreen extends Component {
 		if (this.state.page == '') {
 			return (
 				<ImageBackground source={require('../../Images/login3.jpg')} resizeMode='cover' style={Styles.container}>
-					<KeyboardAvoidingView style={{ flex: 1, width:"100%"}}>
-						{/* <View style={{ marginTop: 70, flex: 1 }}> */}
-							<ScrollView style={{paddingTop: 20, flex: 1 }}>
-								{/* <Text style={{ fontSize: 30, color: 'white', fontWeight: '300', marginBottom: 30, textAlign:'center' }}>Log In</Text> */}
-								<View style={{alignItems:'center'}}>
-									<Image source={require('../../Images/tick.png')} style={{height:200, width:200}}/>
+					<KeyboardAvoidingView style={Styles.keyboardAvoid}>
+							<ScrollView style={Styles.loginScrollView}>
+								<View style={Styles.topTickIconView}>
+									<Image source={require('../../Images/tick.png')} style={Styles.topTickIcon}/>
 								</View>
-								<View style={{ marginBottom: 10, marginTop:30, flexDirection:'row'}}>
-									{/* <Text style={{ color: 'white' }}>EMAIL ADDRESS</Text> */}
+								<View style={Styles.loginView}>
 									<Icon
 										size = {20}
 										style={Styles.textInputIcons}
@@ -131,7 +128,6 @@ class WelcomeScreen extends Component {
 										style={Styles.textInputIcons}
   										name='eye'
   										color='white' />
-									{/* <Text style={{ color: 'white' }}>PASSWORD</Text> */}
 									<TextInput 
 										secureTextEntry={true}
 										placeholder="Password" 
@@ -140,27 +136,18 @@ class WelcomeScreen extends Component {
 										onChangeText={(password) => {this.setState({password})}}/>
 								</View>
 
-								<TouchableOpacity style={{
-									marginTop: 10,
-									marginHorizontal: 40,
-									paddingVertical: 15,
-									borderRadius: 2,
-									// borderColor:'5e5d5d',
-									backgroundColor: '#ed256d',
-									fontSize: 20,
-									flexDirection:'row'
-								}}
+								<TouchableOpacity style={Styles.loginButton}
 									onPress={() => this.loginUser(this.state.email, this.state.password)}>
-									<Icon name="sign-in" color="white" style={{marginLeft:100}} size={27}/>
-									<Text style={{textAlign:'center', color:"white", marginTop:3, marginLeft:5}}>LOGIN</Text>
+									<Icon name="sign-in" color="white" style={Styles.loginIcon} size={27}/>
+									<Text style={Styles.logintext}>LOGIN</Text>
 								</TouchableOpacity>
 
-								<TouchableOpacity style={{marginTop:40, marginBottom:30}} onPress={() => this.setState({
+								<TouchableOpacity style={Styles.gotoRegisterButton} onPress={() => this.setState({
 									page: "register",
 									email: '',
 									password: ''
 								})}>
-									<Text style={{textAlign:'center', color:'#bab8b8', }}>Click here to Register</Text>
+									<Text style={Styles.gotoRegisterText}>Click here to Register</Text>
 								</TouchableOpacity>
 							</ScrollView>
 						{/* </View> */}
@@ -170,8 +157,8 @@ class WelcomeScreen extends Component {
 		} else if (this.state.page == "register") {
 			return (
 				<ImageBackground source={require('../../Images/login3.jpg')} resizeMode='cover' style={Styles.container}>
-					<KeyboardAvoidingView style={{ flex: 1, width:"100%"}}>
-						<View style={{ marginTop: 0, flex: 1 }}>
+					<KeyboardAvoidingView style={Styles.keyboardAvoid}>
+						<View style={Styles.registerView}>
 							<TouchableHighlight
 								onPress={()=>this.setState({
 									page: '',
@@ -187,12 +174,7 @@ class WelcomeScreen extends Component {
 									name="arrow-left"
 									color="white"
 									size={27}
-									style={{
-										marginLeft:30,
-										marginTop:20,
-										paddingBottom:5,
-										backgroundColor:'transparent'
-									}}
+									style={Styles.gotoLoginIcon}
 								/>
 							</TouchableHighlight>
 							<ScrollView style={{paddingTop: 40, flex: 1}}>
