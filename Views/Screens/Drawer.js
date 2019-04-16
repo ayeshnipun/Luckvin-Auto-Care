@@ -6,6 +6,7 @@ import { Avatar } from 'react-native-elements';
 import Location from './MainWindows/Location/Location';
 import Vehicles from './MainWindows/Vehicles/Vehicles';
 import Profile from './MainWindows/Profile/Profile';
+import Details from './MainWindows/Vehicles/Details/Details';
 
 const CustomDrawerComponent = (props) => {
 	return (
@@ -39,6 +40,10 @@ const TabNavigator = createDrawerNavigator(
 		},
 		Location: {
 			screen: Location
+		},
+		Details: {
+			screen: Details,
+			showItem: false
 		},
 	},
 	{

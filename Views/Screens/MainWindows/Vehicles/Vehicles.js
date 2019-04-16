@@ -88,16 +88,6 @@ class Vehicles extends Component {
 		}
 	}
 
-	uploadVehicleToFS = () => {
-		database.collection('Users').doc(this.state.user.uid).collection('Vehicles').add({
-			vehicle_number: this.state.v_number,
-			vehicle_brand: this.state.v_brand,
-			vehicle_type: this.state.v_type,
-		}).then((data) => {
-			console.log(data.id)
-		})
-	}
-
 	uploadVehicleImage = async () => {
 		var uri = this.state.v_image;
 		console.log(uri);
@@ -174,8 +164,9 @@ class Vehicles extends Component {
 		});
 	}
 
-	goToVehicle = () => {
-		this.props.navigation.navigate('Details');
+	goToVehicle = (l) => {
+		console.log(l.details)
+		this.props.navigation.navigate('Details', {l});
 	} 
 
 	render() {
@@ -212,16 +203,21 @@ class Vehicles extends Component {
 							onChangeText={(vNum) => this.setState({ v_number: vNum })}
 							placeholder="Vehicle Number"
 							placeholderTextColor="white"
+							value = {this.state.v_number}
 							style={Styles.ti1} />
 
 						<TextInput
 							onChangeText={(vBrn) => this.setState({ v_brand: vBrn })}
-							placeholder="Vehicle Brand" placeholderTextColor="white" style={Styles.ti1} />
+							placeholder="Vehicle Brand" 
+							placeholderTextColor="white" 
+							value = {this.state.v_brand}
+							style={Styles.ti1} />
 
 						<TextInput
 							onChangeText={(vTyp) => this.setState({ v_type: vTyp })}
 							placeholder="Vehicle Type"
 							placeholderTextColor="white"
+							value = {this.state.v_type}
 							style={Styles.ti1} />
 
 						<Button
@@ -240,7 +236,7 @@ class Vehicles extends Component {
 										title={l.details.vehicle_type}
 										subtitle={l.details.vehicle_number}
 										leftIcon={{ name: 'av-timer' }}
-										onPress={() => navigate('Details')}
+										onPress={() => this.goToVehicle(l)}
 										topDivider={true}
 										bottomDivider={true}
 									/>
