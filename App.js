@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text, View, YellowBox  } from 'react-native';
 import { fb } from './firebaseConfig/config';
+import NetInfo from "@react-native-community/netinfo";
 
 import WelcomeScreen from './Views/Screens/WelcomeScreen/WelcomeScreen';
 import Drawer from './Views/Screens/Drawer';
 import Location from './Views/Screens/MainWindows/Location/Location';
-
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -26,26 +26,35 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
-		fb.auth().onAuthStateChanged(function (user) {
-			if (user) {
-				// console.log(user);
-				this.setState({
-					user,
-					signupState: true
-				});
-				// console.log(this.ref.doc.id);
+		NetInfo.isConnected.fetch().then(isConnected => {
+			console.log("Is connected", isConnected);
+			if (isConnected) {
+				fb.auth().onAuthStateChanged(function (user) {
+					if (user) {
+						// console.log(user);
+						this.setState({
+							user,
+							signupState: true
+						});
+						// console.log(this.ref.doc.id);
+					} else {
+						this.setState({
+							signupState: false
+						});
+					}
+				}.bind(this));
 			} else {
-				this.setState({
-					signupState: false
-				});
+				alert("Check your connection.")
 			}
-		}.bind(this));
+		});
+		
 	}
 
 	render() {
 		if (!this.state.signupState) {
 			return (
 				<View style={{ flex: 1 }}>
+					{/* <Test /> */}
 					{/* <Profile/> */}
 					{/* <Vehicles/> */}
 					<WelcomeScreen />

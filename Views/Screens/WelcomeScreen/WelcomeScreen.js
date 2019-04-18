@@ -44,10 +44,12 @@ class WelcomeScreen extends Component {
 	loginUser = async (email, pw) => {
 		if (email != '' && pw != '') {
 			try {
-				let user = fb.auth().signInWithEmailAndPassword(email, pw);
+				let user = fb.auth().signInWithEmailAndPassword(email, pw).catch((err) => {
+					alert('Invalid email or password');
+				});
 				console.log(user);
 			} catch (error) {
-				console.log(error);
+				alert('Bad connctivity. Check your connection.');
 			}
 		} else {
 			alert('Missing email or password');
