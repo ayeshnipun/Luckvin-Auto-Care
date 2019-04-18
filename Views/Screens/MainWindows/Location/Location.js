@@ -22,8 +22,10 @@ export default class Location extends Component {
 		super(props)
 		this.state = {
 			region: {
-				latitude: 0,
-				longitude: 0,
+				latitude: 6.014977,
+				longitude: 80.438775,
+				// latitude: 0,
+				// longitude: 0,
 				latitudeDelta: 0.0922,
 				longitudeDelta: 0.0421
 			},
@@ -31,48 +33,57 @@ export default class Location extends Component {
 				latitude: 5.970375,
 				longitude: 80.692441,
 			},
-			coverage: false,
+			//make this false after testing
+			coverage: true,
 			distance: 0
 		}
 	}
 
 	componentDidMount() {
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
 				var distance = geoLib.getDistance(
 					{ latitude: this.state.originCoords.latitude, longitude: this.state.originCoords.longitude },
-					{ latitude: position.coords.latitude, longitude: position.coords.longitude }
+					{ latitude: this.state.region.latitude, longitude: this.state.region.longitude }
 				);
 				console.log(distance)
 				this.setState({
 					distance
 				});
-				if (distance <= 50000) {
-					this.setState({
-						coverage: true
-					})
-				}
-				else {
-					this.setState({
-						coverage: false
-					})
-				}
-				this.setState({
-					region: {
-						latitude: position.coords.latitude,
-						longitude: position.coords.longitude,
-						latitudeDelta: 0.01,
-						longitudeDelta: 0.0011
-						// latitude: 20.3742342,
-						// longitude: 37.2234,
-						// latitudeDelta: 0.01,
-						// longitudeDelta: 0.0011
-					}
-				});
-			},
-			(error) => alert("Error", "Cannot get the connection due to bad connectivity."),
-			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-		);
+		// navigator.geolocation.getCurrentPosition(
+		// 	(position) => {
+		// 		var distance = geoLib.getDistance(
+		// 			{ latitude: this.state.originCoords.latitude, longitude: this.state.originCoords.longitude },
+		// 			{ latitude: position.coords.latitude, longitude: position.coords.longitude }
+		// 		);
+		// 		console.log(distance)
+		// 		this.setState({
+		// 			distance
+		// 		});
+		// 		if (distance <= 50000) {
+		// 			this.setState({
+		// 				coverage: true
+		// 			})
+		// 		}
+		// 		else {
+		// 			this.setState({
+		// 				coverage: false
+		// 			})
+		// 		}
+		// 		this.setState({
+		// 			region: {
+		// 				latitude: position.coords.latitude,
+		// 				longitude: position.coords.longitude,
+		// 				latitudeDelta: 0.01,
+		// 				longitudeDelta: 0.0011
+		// 				// latitude: 20.3742342,
+		// 				// longitude: 37.2234,
+		// 				// latitudeDelta: 0.01,
+		// 				// longitudeDelta: 0.0011
+		// 			}
+		// 		});
+		// 	},
+		// 	(error) => alert("Error", "Cannot get the connection due to bad connectivity."),
+		// 	{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+		// );
 	}
 
 	onRegionChange = (region) => {
@@ -97,9 +108,7 @@ export default class Location extends Component {
 		if (this.state.region.latitude != 0 && this.state.region.longitude != 0) {
 			return (
 				<View style={{ flex: 1 }}>
-					{/* <View style={{ marginBottom: 10 }}> */}
 
-					{/* </View> */}
 					<MapView
 						provider={PROVIDER_GOOGLE}
 						initialRegion={this.state.region}
@@ -110,13 +119,13 @@ export default class Location extends Component {
 						showsUserLocation
 						loadingEnabled
 					>
-						<MapViewDirections
+						{/* <MapViewDirections
 							origin={this.state.region}
 							destination={this.state.originCoords}
 							strokeWidth={3}
 							apikey={'AIzaSyCfpyjsCryoM6w90zCbqYJpbZcy87Y6fXc'}
 							strokeColor="blue"
-						/>
+						/> */}
 
 						<Marker
 							coordinate={{
@@ -125,8 +134,9 @@ export default class Location extends Component {
 							}}
 						></Marker>
 					</MapView>
+
 					<View style={Styles.absView}>
-						<TouchableOpacity onPress={() => this.props.navigation.toggleDrawer()} >
+						<TouchableOpacity style={{ marginBottom: 100, width: 40 }} onPress={() => this.props.navigation.toggleDrawer()} >
 							<Icon
 								name="three-bars"
 								color="black"
@@ -134,21 +144,15 @@ export default class Location extends Component {
 								style={Styles.tooglerWithMap}
 							/>
 						</TouchableOpacity>
-						
-						{this.state.coverage ? (
-							<View style={Styles.coverageView}>
-								<Text>dfsdfdf</Text>
-								<Call />
-							</View>
-						) : (
-							alert("You are no in the coverage area")
-							// console.log("object")
-						)}
-						
 
 					</View>
-					{/* <Search onLocationSelected={this.handleLocationSelected} /> */}
-					{/* <Button title="Place" color="red" onPress={this.setAlarmToDestination} /> */}
+
+					<View style={{ flex: 1, width: "100%", alignContent: "center", alignItems: "center", position: "absolute", bottom: 10 }}>
+						<View style={Styles.coverageView}>
+							<Text>You are in {this.state.distance/1000} KM away from us</Text>
+							<Call />
+						</View>
+					</View>
 				</View>
 			);
 		} else {

@@ -3,17 +3,38 @@ import { StyleSheet } from 'react-native'
 
 const Styles = StyleSheet.create({
 	absView:{ 
-		position: 'absolute', backgroundColor: 'transparent', flex: 1 
+		position: 'absolute', 
+		backgroundColor: 'transparent', 
+		flex: 1, 
+		width:"100%", 
+		flexDirection:"column",
+		justifyContent:"space-between"
 	},
+
 	tooglerWithMap:{ 
-		marginLeft: 10, marginTop: 10, paddingBottom: 5, backgroundColor: 'transparent' 
+		marginLeft: 10, 
+		marginTop: 10, 
+		paddingBottom: 5, 
+		backgroundColor: 'transparent' 
 	},
+
 	coverageView:{
-		flex:1, width:"100%", alignContent:"center"
+		width:"90%",  
+		backgroundColor:'white', 
+		// alignItems:"center", 
+		height:150, 
+		borderRadius:10,
+		// bottom:0
+		// marginTop:"112%"
 	},
+
 	tooglerLoadingMap:{ 
-		marginLeft: 10, marginTop: 10, paddingBottom: 5, backgroundColor: 'transparent' 
+		marginLeft: 10, 
+		marginTop: 10, 
+		paddingBottom: 5, 
+		backgroundColor: 'transparent' 
 	},
+
 	activityIndicatorView:{
 		flex: 1,
 		justifyContent: 'center',
@@ -22,9 +43,13 @@ const Styles = StyleSheet.create({
 		// justifyContent: 'space-around',
 		padding: 10,
 	},
+
 	mapLoadingText:{ 
-		marginBottom: 3, fontSize: 28, color: 'white' 
+		marginBottom: 3, 
+		fontSize: 28, 
+		color: 'white' 
 	},
+	
 	mapLoadingView:{
 		flex: 1,
 		backgroundColor: '#1c1c1c'
