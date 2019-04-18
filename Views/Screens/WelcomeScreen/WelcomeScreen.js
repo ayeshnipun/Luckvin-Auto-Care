@@ -3,11 +3,14 @@ import {
 	StyleSheet,
 	Text, View, TextInput, TouchableHighlight, Image, ImageBackground, KeyboardAvoidingView, ScrollView, TouchableOpacity
 } from 'react-native'
+import NetInfo from "@react-native-community/netinfo";
 import { Button, Input } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { fb } from '../../../firebaseConfig/config';
 
 import Styles from './Styles';
+
+let interval;
 class WelcomeScreen extends Component {
 	constructor(props) {
 		super(props);
@@ -19,12 +22,28 @@ class WelcomeScreen extends Component {
 			password: '',
 			password_c:'',
 			user: null,
-			page: ''
+			page: '',
+			isConnected:true
 		};
 		this.ref = fb.firestore().collection('Users');
 		// this.signoutUser();
 
 		// this.signoutUser(); 
+	}
+
+	componentDidMount = () => {
+		interval = setInterval(() => {
+			NetInfo.isConnected.fetch().then(isConnected => {
+				this.setState({
+					isConnected
+				});
+			});
+				// console.log(this.state.isConnected);
+		}, 2000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(interval);
 	}
 
 	addUser() {
@@ -42,17 +61,22 @@ class WelcomeScreen extends Component {
 
 	// user login
 	loginUser = async (email, pw) => {
-		if (email != '' && pw != '') {
-			try {
-				let user = fb.auth().signInWithEmailAndPassword(email, pw).catch((err) => {
-					alert('Invalid email or password');
-				});
-				console.log(user);
-			} catch (error) {
-				alert('Bad connctivity. Check your connection.');
-			}
+		if (this.state.isConnected) {
+			if (email != '' && pw != '' ) {
+				try {
+					let user = fb.auth().signInWithEmailAndPassword(email, pw).catch((err) => {
+						alert('Invalid email or password');
+					});
+					console.log(user);
+				} catch (error) {
+					// alert('Bad connctivity. Check your connection.');
+					console.log(error);
+				}
+			} else {
+				alert('Missing email or password');
+			}	
 		} else {
-			alert('Missing email or password');
+			alert('Bad connctivity. Check your connection.');	
 		}
 	}
 
@@ -68,20 +92,25 @@ class WelcomeScreen extends Component {
 
 	//sign up using email and password 
 	async signup(email, pass) {
-		try {
-			await fb.auth().createUserWithEmailAndPassword(email, pass).then(data => {
-				this.ref.doc(data.user.uid).set({
-					email: data.user.email,
-					fname: this.state.fname,
-					lname: this.state.lname,
-					contact: this.state.contact,
+		if (this.state.isConnected) {
+			try {
+				await fb.auth().createUserWithEmailAndPassword(email, pass).then(data => {
+					this.ref.doc(data.user.uid).set({
+						email: data.user.email,
+						fname: this.state.fname,
+						lname: this.state.lname,
+						contact: this.state.contact,
+					});
+					// console.log(data.user.uid);
 				});
-				// console.log(data.user.uid);
-			});
-			console.log("Account created");
-		} catch (error) {
-			console.log(error.toString())
+				console.log("Account created");
+			} catch (error) {
+				console.log(error.toString())
+			}
+		} else {
+			alert("Check your connection.")
 		}
+		
 	}
 
 	//fb login
