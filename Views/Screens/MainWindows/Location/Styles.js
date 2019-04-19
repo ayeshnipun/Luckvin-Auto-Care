@@ -53,6 +53,9 @@ const Styles = StyleSheet.create({
 	mapLoadingView:{
 		flex: 1,
 		backgroundColor: '#1c1c1c'
+	},
+	reqBtn:{
+		height:50, width:50, borderRadius:50, backgroundColor:"#0968ed", alignItems:"center", alignContent:"center"
 	}
 
 });
