@@ -212,7 +212,7 @@ export default class Location extends Component {
 											<TouchableHighlight onPress={() => { this.submitRequest() }} style={Styles.reqBtn}>
 												<View style={{ alignItems: "center" }}>
 													<Request />
-													<Text style={{ marginTop: 3 }}>Assist</Text>
+													<Text style={{ marginTop: 11 }}>Assist</Text>
 												</View>
 											</TouchableHighlight>
 											<View style={{ width: 80 }}>
