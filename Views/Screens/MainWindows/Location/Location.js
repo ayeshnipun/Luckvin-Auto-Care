@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button, ActivityIndicator, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, Text, View, Animated , ActivityIndicator, TouchableHighlight, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import Icon from 'react-native-vector-icons/Octicons';

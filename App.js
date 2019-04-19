@@ -6,6 +6,7 @@ import NetInfo from "@react-native-community/netinfo";
 import WelcomeScreen from './Views/Screens/WelcomeScreen/WelcomeScreen';
 import Drawer from './Views/Screens/Drawer';
 import Location from './Views/Screens/MainWindows/Location/Location';
+import Profile from './Views/Screens/MainWindows/Profile/Profile';
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -57,8 +58,8 @@ class App extends React.Component {
 					{/* <Test /> */}
 					{/* <Profile/> */}
 					{/* <Vehicles/> */}
-					<Location />
-					{/* <WelcomeScreen /> */}
+					{/* <Location /> */}
+					<WelcomeScreen />
 				</View>
 			);
 		} else {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
-import { createMaterialTopTabNavigator, createAppContainer } from 'react-navigation';
+import { createMaterialTopTabNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation';
 
 import myProfileSettings from './Screens/ProfileSettings/myProfileSettings';
 import myVehicleList from './Screens/VehicleList/myVehicleList'
@@ -9,7 +9,7 @@ class Navigator extends Component {
 
 }
 
-const TabNavigator = createMaterialTopTabNavigator(
+const TabNavigator = createBottomTabNavigator(
 	{
 		Vehicles: myVehicleList,
 		Services: myServices,
@@ -18,10 +18,11 @@ const TabNavigator = createMaterialTopTabNavigator(
 	{
 		tabBarOptions: {
 			showIcon: true,
-			showLabel: false,
-			activeTintColor: 'white',
+			showLabel: true,
+			activeTintColor: '#ed256d',
 			style: {
-				backgroundColor: '#4e4e4f',
+				// marginBottom:10,
+				backgroundColor: 'white',
 			},
 		},
 	}

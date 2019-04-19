@@ -8,7 +8,7 @@ export default class myServices extends Component {
 	render() {
 		return (
 			<View style={styles.outerView}>
-				<Text> Services </Text>
+				<Text style={{color:"white"}}> Services </Text>
 			</View>
 		)
 	}
@@ -19,7 +19,7 @@ myServices.navigationOptions = {
 		<Icon
 			name="customerservice"
 			size={25}
-			color='#ed256d'
+			color = {tintColor}
 		/>
 	)
 } 

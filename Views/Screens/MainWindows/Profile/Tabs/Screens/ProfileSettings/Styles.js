@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
 	outerView:{
 		height:"100%",
-		backgroundColor:'white'
+		backgroundColor:'#1c1c1c'
 	}
 });
 

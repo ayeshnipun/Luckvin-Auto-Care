@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import Styles from './Styles';
 
@@ -8,7 +8,7 @@ export default class myVehicleList extends Component {
 	render() {
 		return (
 			<View style={Styles.outerView}>
-				<Text>My Vehicles</Text>
+				<Text style={{color:"white", fontSize:20}}>My Vehicles</Text>
 			</View>
 		)
 	}
@@ -17,9 +17,9 @@ export default class myVehicleList extends Component {
 myVehicleList.navigationOptions = {
 	tabBarIcon: ({ tintColor, focused }) => (
 		<Icon
-			name="car"
+			name="ios-car"
 			size={25}
-			color='#ed256d'
+			color = {tintColor}
 		/>
 	)
 } 

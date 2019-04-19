@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import Styles from './Styles';
 export default class myProfileSettings extends Component {
@@ -16,9 +16,9 @@ export default class myProfileSettings extends Component {
 myProfileSettings.navigationOptions = {
 	tabBarIcon : ({tintColor, focused}) => (
 		<Icon
-			name="setting"
+			name="ios-settings"
 			size = {25}
-			color = '#ed256d'
+			color = {tintColor}
 		/>
 	)
 } 
