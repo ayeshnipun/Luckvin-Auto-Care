@@ -58,8 +58,8 @@ class App extends React.Component {
 					{/* <Test /> */}
 					{/* <Profile/> */}
 					{/* <Vehicles/> */}
-					{/* <Location /> */}
-					<WelcomeScreen />
+					<Location />
+					{/* <WelcomeScreen /> */}
 				</View>
 			);
 		} else {

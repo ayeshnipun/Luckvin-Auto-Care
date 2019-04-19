@@ -21,8 +21,8 @@ const Styles = StyleSheet.create({
 	coverageView:{
 		width:"90%",  
 		backgroundColor:'white', 
-		// alignItems:"center", 
-		height:150, 
+		alignItems:"center", 
+		height:180, 
 		borderRadius:10,
 		// bottom:0
 		// marginTop:"112%"

@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Animated , ActivityIndicator, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, Text, View, Animated, ActivityIndicator, TouchableHighlight, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import Icon from 'react-native-vector-icons/Octicons';
@@ -16,16 +16,17 @@ import Call from './Contact/Call';
 var geoLib = require('geolib');
 
 import Styles from './Styles';
+import Request from './Request/Request';
 
 export default class Location extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			region: {
-				latitude: 6.014977,
-				longitude: 80.438775,
-				// latitude: 0,
-				// longitude: 0,
+				// latitude: 6.014977,
+				// longitude: 80.438775,
+				latitude: 0,
+				longitude: 0,
 				latitudeDelta: 0.0922,
 				longitudeDelta: 0.0421
 			},
@@ -34,56 +35,56 @@ export default class Location extends Component {
 				longitude: 80.692441,
 			},
 			//make this false after testing
-			coverage: true,
+			coverage: false,
 			distance: 0
 		}
 	}
 
 	componentDidMount() {
+		var distance = geoLib.getDistance(
+			{ latitude: this.state.originCoords.latitude, longitude: this.state.originCoords.longitude },
+			{ latitude: this.state.region.latitude, longitude: this.state.region.longitude }
+		);
+		console.log(distance)
+		this.setState({
+			distance
+		});
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
 				var distance = geoLib.getDistance(
 					{ latitude: this.state.originCoords.latitude, longitude: this.state.originCoords.longitude },
-					{ latitude: this.state.region.latitude, longitude: this.state.region.longitude }
+					{ latitude: position.coords.latitude, longitude: position.coords.longitude }
 				);
 				console.log(distance)
 				this.setState({
 					distance
 				});
-		// navigator.geolocation.getCurrentPosition(
-		// 	(position) => {
-		// 		var distance = geoLib.getDistance(
-		// 			{ latitude: this.state.originCoords.latitude, longitude: this.state.originCoords.longitude },
-		// 			{ latitude: position.coords.latitude, longitude: position.coords.longitude }
-		// 		);
-		// 		console.log(distance)
-		// 		this.setState({
-		// 			distance
-		// 		});
-		// 		if (distance <= 50000) {
-		// 			this.setState({
-		// 				coverage: true
-		// 			})
-		// 		}
-		// 		else {
-		// 			this.setState({
-		// 				coverage: false
-		// 			})
-		// 		}
-		// 		this.setState({
-		// 			region: {
-		// 				latitude: position.coords.latitude,
-		// 				longitude: position.coords.longitude,
-		// 				latitudeDelta: 0.01,
-		// 				longitudeDelta: 0.0011
-		// 				// latitude: 20.3742342,
-		// 				// longitude: 37.2234,
-		// 				// latitudeDelta: 0.01,
-		// 				// longitudeDelta: 0.0011
-		// 			}
-		// 		});
-		// 	},
-		// 	(error) => alert("Error", "Cannot get the connection due to bad connectivity."),
-		// 	{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-		// );
+				if (distance <= 50000) {
+					this.setState({
+						coverage: true
+					})
+				}
+				else {
+					this.setState({
+						coverage: false
+					})
+				}
+				this.setState({
+					region: {
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude,
+						latitudeDelta: 0.01,
+						longitudeDelta: 0.0011
+						// latitude: 20.3742342,
+						// longitude: 37.2234,
+						// latitudeDelta: 0.01,
+						// longitudeDelta: 0.0011
+					}
+				});
+			},
+			(error) => alert("Error", "Cannot get the connection due to bad connectivity."),
+			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+		);
 	}
 
 	onRegionChange = (region) => {
@@ -119,13 +120,13 @@ export default class Location extends Component {
 						showsUserLocation
 						loadingEnabled
 					>
-						{/* <MapViewDirections
+						<MapViewDirections
 							origin={this.state.region}
 							destination={this.state.originCoords}
 							strokeWidth={3}
 							apikey={'AIzaSyCfpyjsCryoM6w90zCbqYJpbZcy87Y6fXc'}
 							strokeColor="blue"
-						/> */}
+						/>
 
 						<Marker
 							coordinate={{
@@ -149,8 +150,39 @@ export default class Location extends Component {
 
 					<View style={{ flex: 1, width: "100%", alignContent: "center", alignItems: "center", position: "absolute", bottom: 10 }}>
 						<View style={Styles.coverageView}>
-							<Text>You are in {this.state.distance/1000} KM away from us</Text>
-							<Call />
+							<Text style={{ marginTop: 3, fontSize: 20, color: "black" }}>You are in {this.state.distance / 1000} KM away from us</Text>
+
+							{
+								this.state.distance < 5000 ? (
+									<View style={{alignItems:"center"}}>
+										<View style={{alignItems:"center"}}>
+											<Text style={{ marginTop: 3 }}>First, Send your Location with 'Assist' Button</Text>
+											<Text style={{ marginTop: 3 }}>Then, You also can give us a call</Text>
+										</View>
+										<View style={{ flex: 1, flexDirection: "row", marginTop: 10 }}>
+											<View style={{ alignItems: "center" }}>
+												<Request />
+												<Text style={{ marginTop: 3 }}>Assist</Text>
+											</View>
+											<View style={{ width: 80 }}>
+
+											</View>
+											<View style={{ alignItems: "center" }}>
+												<Call />
+												<Text style={{ marginTop: 3 }}>Call</Text>
+											</View>
+
+										</View>
+									</View>
+								) : (
+									<View style={{flex:1, justifyContent:"center", alignContent:"center", height:"100%"}}>
+										<View style={{justifyContent:"center", alignItems:"center"}}>
+											<Text style={{ color: "red", fontSize:20 }}>We cannot cover you </Text>
+											<Text style={{ color: "red", fontSize:20 }}>due to the limitation</Text>
+										</View>
+									</View>
+									)
+							}
 						</View>
 					</View>
 				</View>
