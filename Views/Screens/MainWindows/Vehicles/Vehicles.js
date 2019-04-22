@@ -69,7 +69,7 @@ class Vehicles extends Component {
 	}
 
 	dataChecker = () => {
-		if (this.state.v_number == "" || this.state.v_brand == "" || this.state.v_type == "") {
+		if (this.state.v_number == "" || this.state.v_brand == ""  || this.state.v_model == "" || this.state.v_image == "") {
 			alert(
 				'All Fields are required..!!',
 				'My Alert Msg',
@@ -142,15 +142,17 @@ class Vehicles extends Component {
 
 	setDatabse = (imageURL) => {
 		database.collection('Users').doc(this.state.user.uid).collection('Vehicles').add({
+			vehicle_type: this.state.v_type,
 			vehicle_number: this.state.v_number,
 			vehicle_brand: this.state.v_brand,
-			vehicle_type: this.state.v_type,
+			vehicle_model: this.state.v_model,
 			vehicle_image: imageURL,
 		}).then(() => {
 			this.setState({
 				v_number: "",
 				v_brand: "",
 				v_type: "",
+				v_model:"",
 				v_image: null,
 			});
 		})
@@ -161,6 +163,7 @@ class Vehicles extends Component {
 			v_number: "",
 			v_brand: "",
 			v_type: "",
+			v_model:"",
 			v_image: null,
 		});
 	}
@@ -246,7 +249,7 @@ class Vehicles extends Component {
 
 						<TouchableOpacity
 							style={{
-								backgroundColor:'blue', 
+								backgroundColor:'#009dff', 
 								height:50, 
 								width:180,
 								justifyContent:"center",
