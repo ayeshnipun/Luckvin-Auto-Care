@@ -6,6 +6,7 @@ import {
 import NetInfo from "@react-native-community/netinfo";
 import { Button, Input } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
 import { fb } from '../../../firebaseConfig/config';
 
 import Styles from './Styles';
@@ -139,10 +140,10 @@ class WelcomeScreen extends Component {
 									<Image source={require('../../Images/tick.png')} style={Styles.topTickIcon}/>
 								</View>
 								<View style={Styles.loginView}>
-									<Icon
+									<Entypo
 										size = {20}
 										style={Styles.textInputIcons}
-  										name='envelope-o'
+  										name='email'
   										color='white' />
 									<TextInput 
 										keyboardType='email-address'
@@ -211,10 +212,10 @@ class WelcomeScreen extends Component {
 							<ScrollView style={{paddingTop: 40, flex: 1}}>
 								<Text style={{ fontSize: 30, color: 'white', fontWeight: '300', marginBottom: 30 }}>New Account</Text>
 								<View style={Styles.textInputView}>
-									<Icon
+									<Entypo
 										size = {20}
 										style={Styles.textInputIcons}
-  										name='envelope-o'
+  										name='email'
   										color='white' />
 									<TextInput 
 										keyboardType='email-address'

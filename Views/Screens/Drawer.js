@@ -32,20 +32,31 @@ const CustomDrawerComponent = (props) => {
 
 const TabNavigator = createDrawerNavigator(
 	{
-		Profile: {
-			screen: Profile
-		},
 		Vehicles: {
 			screen: Vehicles
 		},
-		Location: {
+		Profile: {
+			screen: Profile
+		},
+		Breakdown: {
 			screen: Location
 		},
-		Details: {
-			screen: Details,
-			showItem: false
-		},
+		// Details: {
+		// 	screen: Details,
+		// 	showItem: false
+		// },
 	},
+	// {
+	// 	tabBarOptions: {
+	// 		showIcon: true,
+	// 		showLabel: true,
+	// 		activeTintColor: '#ed256d',
+	// 		style: {
+	// 			// marginBottom:10,
+	// 			backgroundColor: 'white',
+	// 		},
+	// 	},
+	// },
 	{
 		contentComponent: CustomDrawerComponent
 	}

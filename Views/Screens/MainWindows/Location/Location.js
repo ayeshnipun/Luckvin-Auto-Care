@@ -11,6 +11,7 @@ import { Platform, StyleSheet, Text, View, Button, Animated, ActivityIndicator, 
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import Icon from 'react-native-vector-icons/Octicons';
+import IconFA5 from 'react-native-vector-icons/FontAwesome5';
 // import Dialog, { DialogTitle, DialogContent } from 'react-native-popup-dialog';
 import Call from './Contact/Call';
 var geoLib = require('geolib');
@@ -25,10 +26,10 @@ export default class Location extends Component {
 		super(props)
 		this.state = {
 			region: {
-				latitude: 6.014977,
-				longitude: 80.438775,
-				// latitude: 0,
-				// longitude: 0,
+				// latitude: 6.014977,
+				// longitude: 80.438775,
+				latitude: 0,
+				longitude: 0,
 				latitudeDelta: 0.0922,
 				longitudeDelta: 0.0421
 			},
@@ -36,8 +37,8 @@ export default class Location extends Component {
 				latitude: 5.970375,
 				longitude: 80.692441,
 			},
-			userID: 'g5VF0YgnFqSYHqTEq34TqgzNjwL2', //fb.auth().currentUser.uid,
-			userEmail: 'nipun.dr1@gmail.com', //fb.auth().currentUser.email,
+			userID: fb.auth().currentUser.uid,
+			userEmail: fb.auth().currentUser.email,
 			// request: {
 			// 	userFname: 'Ayesh',
 			// 	userLname: 'Nipun',
@@ -54,50 +55,50 @@ export default class Location extends Component {
 	}
 
 	componentDidMount() {
-		var distance = geoLib.getDistance(
-			{ latitude: this.state.originCoords.latitude, longitude: this.state.originCoords.longitude },
-			{ latitude: this.state.region.latitude, longitude: this.state.region.longitude }
-		);
-		console.log(distance)
-		this.setState({
-			distance
-		});
-		// navigator.geolocation.getCurrentPosition(
-		// 	(position) => {
-		// 		var distance = geoLib.getDistance(
-		// 			{ latitude: this.state.originCoords.latitude, longitude: this.state.originCoords.longitude },
-		// 			{ latitude: position.coords.latitude, longitude: position.coords.longitude }
-		// 		);
-		// 		console.log(distance)
-		// 		this.setState({
-		// 			distance
-		// 		});
-		// 		if (distance <= 50000) {
-		// 			this.setState({
-		// 				coverage: true
-		// 			})
-		// 		}
-		// 		else {
-		// 			this.setState({
-		// 				coverage: false
-		// 			})
-		// 		}
-		// 		this.setState({
-		// 			region: {
-		// 				latitude: position.coords.latitude,
-		// 				longitude: position.coords.longitude,
-		// 				latitudeDelta: 0.01,
-		// 				longitudeDelta: 0.0011
-		// 				// latitude: 20.3742342,
-		// 				// longitude: 37.2234,
-		// 				// latitudeDelta: 0.01,
-		// 				// longitudeDelta: 0.0011
-		// 			}
-		// 		});
-		// 	},
-		// 	(error) => alert("Error", "Cannot get the connection due to bad connectivity."),
-		// 	{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+		// var distance = geoLib.getDistance(
+		// 	{ latitude: this.state.originCoords.latitude, longitude: this.state.originCoords.longitude },
+		// 	{ latitude: this.state.region.latitude, longitude: this.state.region.longitude }
 		// );
+		// console.log(distance)
+		// this.setState({
+		// 	distance
+		// });
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				var distance = geoLib.getDistance(
+					{ latitude: this.state.originCoords.latitude, longitude: this.state.originCoords.longitude },
+					{ latitude: position.coords.latitude, longitude: position.coords.longitude }
+				);
+				console.log(distance)
+				this.setState({
+					distance
+				});
+				if (distance <= 50000) {
+					this.setState({
+						coverage: true
+					})
+				}
+				else {
+					this.setState({
+						coverage: false
+					})
+				}
+				this.setState({
+					region: {
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude,
+						latitudeDelta: 0.01,
+						longitudeDelta: 0.0011
+						// latitude: 20.3742342,
+						// longitude: 37.2234,
+						// latitudeDelta: 0.01,
+						// longitudeDelta: 0.0011
+					}
+				});
+			},
+			(error) => alert("Error", "Cannot get the connection due to bad connectivity."),
+			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+		);
 	}
 
 	onRegionChange = (region) => {
@@ -169,13 +170,13 @@ export default class Location extends Component {
 						showsUserLocation
 						loadingEnabled
 					>
-						{/* <MapViewDirections
+						<MapViewDirections
 							origin={this.state.region}
 							destination={this.state.originCoords}
 							strokeWidth={3}
 							apikey={'AIzaSyCfpyjsCryoM6w90zCbqYJpbZcy87Y6fXc'}
 							strokeColor="blue"
-						/> */}
+						/>
 
 						<Marker
 							coordinate={{
@@ -263,38 +264,12 @@ export default class Location extends Component {
 	}
 }
 
-const styles = StyleSheet.create({
-
-	MainContainer: {
-
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginTop: (Platform.OS == 'ios') ? 20 : 0
-
-	},
-
-	ModalInsideView: {
-
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: "#00BCD4",
-		height: 300,
-		width: '90%',
-		borderRadius: 10,
-		borderWidth: 1,
-		borderColor: '#fff'
-
-	},
-
-	TextStyle: {
-
-		fontSize: 20,
-		marginBottom: 20,
-		color: "#fff",
-		padding: 20,
-		textAlign: 'center'
-
-	}
-
-});
+Location.navigationOptions = {
+	tabBarIcon: ({ tintColor, focused }) => (
+		<IconFA5
+			name="car-crash"
+			size={25}
+			color = {tintColor}
+		/>
+	)
+} 

@@ -11,7 +11,8 @@ const Styles = StyleSheet.create({
 		paddingTop: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#1c1c1c',
+		backgroundColor: 'white',
+		// backgroundColor: '#1c1c1c',
 	},
 	ti1: {
 		marginBottom: 4,
@@ -22,10 +23,30 @@ const Styles = StyleSheet.create({
 		color: 'white'
 	},
 	vehicleInputFrom:{ 
-		width: "100%", marginBottom: 30 
+		marginTop: 10,
+		width: "95%",
+		height: 170,
+		backgroundColor: 'white',
+		borderRadius: 20,
+		shadowColor: 'black',
+		shadowOffset: {
+			width: 10,
+			height: 10
+		},
+		shadowRadius: 10,
+		shadowOpacity: 1.0
+		// width: "95%", 
+		// marginBottom: 30,
+		// shadowColor: 'black',
+		// shadowOffset: {
+		// 	width: 10,
+		// 	height: 10
+		// },
+		// shadowRadius: 10,
+		// shadowOpacity: 1.0 
 	},
 	addVehicleText:{ 
-		color: 'white', fontSize: 26 
+		color: 'black', fontSize: 26 
 	},
 	addVehicleView:{ 
 		marginLeft: "20%", marginTop: 10 
@@ -40,7 +61,9 @@ const Styles = StyleSheet.create({
 		flexDirection: 'row' 
 	},
 	mainView:{ 
-		flex: 1, backgroundColor: '#1c1c1c' 
+		flex: 1, 
+		backgroundColor: 'white' 
+		// backgroundColor: '#1c1c1c' 
 	}
 });
 

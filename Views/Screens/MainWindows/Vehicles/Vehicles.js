@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, StyleSheet, TextInput, ActivityIndicator, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, TextInput, Picker, ActivityIndicator, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
 import { Card, ListItem, Button, Image, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Octicons'
 import { Avatar } from 'react-native-elements';
@@ -15,7 +15,7 @@ class Vehicles extends Component {
 		this.state = {
 			v_number: "",
 			v_brand: "",
-			v_type: "",
+			v_type: "Select a Type",
 			v_image: null,
 			user: null,
 			v_list: [],
@@ -36,12 +36,12 @@ class Vehicles extends Component {
 				database.collection('Users').doc(this.state.user.uid)
 					.collection('Vehicles').onSnapshot(snap => {
 						var vehicles = [];
-						snap.forEach(function(doc) {
+						snap.forEach(function (doc) {
 							// cities.push(doc.data().name);
 							vehicles.push({ key: doc.id, details: doc.data() });
 						});
 						this.setState({
-							v_list:vehicles
+							v_list: vehicles
 						})
 						// snap.docChanges().forEach(change => {
 						// 	this.setState(prevState => ({
@@ -166,8 +166,8 @@ class Vehicles extends Component {
 
 	goToVehicle = (l) => {
 		console.log(l.details)
-		this.props.navigation.navigate('Details', {l});
-	} 
+		this.props.navigation.navigate('Details', { l });
+	}
 
 	render() {
 		const { navigate } = this.props.navigation;
@@ -178,7 +178,7 @@ class Vehicles extends Component {
 						<TouchableHighlight onPress={() => this.props.navigation.toggleDrawer()} >
 							<Icon
 								name="three-bars"
-								color="white"
+								color="black"
 								size={27}
 								style={Styles.navigationIcon}
 							/>
@@ -190,35 +190,54 @@ class Vehicles extends Component {
 				</View>
 
 				<View style={Styles.vehicleContainer}>
-					<View style={Styles.vehicleInputFrom}>
-						<Avatar
-							size="large"
-							rounded
-							onPress={() => this.addPicture()}
-							source={{ uri: this.state.v_image }}
-							showEditButton
-						/>
+					<View elevation={5} style={Styles.vehicleInputFrom}>
+						<View style={{ flexDirection: "row", alignItems: "center" }}>
+							<Avatar
+								size="large"
+								rounded
+								onPress={() => this.addPicture()}
+								source={{ uri: this.state.v_image }}
+								showEditButton
+							/>
+							<View>
+								<Picker
+									selectedValue={this.state.v_type}
+									style={{ height: 50, width: 150, borderStyle:'solid', borderBottomColor:'black' }}
+									onValueChange={(v_type, itemIndex) =>
+										this.setState({ v_type })
+									}>
+									<Picker.Item label="Motorcycle" value="Motorcycle" />
+									<Picker.Item label="Three wheel" value="Three wheel" />
+									<Picker.Item label="Car" value="Car" />
+									<Picker.Item label="Van" value="Van" />
+									<Picker.Item label="Lorry" value="Lorry" />
+									<Picker.Item label="Bus" value="Bus" />
+									<Picker.Item label="Hand Tractor" value="Hand Tractor" />
+									<Picker.Item label="Land Vehicle" value="Land Vehicle" />
+								</Picker>
+							</View>
+						</View>
 
 						<TextInput
 							onChangeText={(vNum) => this.setState({ v_number: vNum })}
 							placeholder="Vehicle Number"
-							placeholderTextColor="white"
-							value = {this.state.v_number}
+							placeholderTextColor="black"
+							value={this.state.v_number}
 							style={Styles.ti1} />
 
 						<TextInput
 							onChangeText={(vBrn) => this.setState({ v_brand: vBrn })}
-							placeholder="Vehicle Brand" 
-							placeholderTextColor="white" 
-							value = {this.state.v_brand}
+							placeholder="Vehicle Brand"
+							placeholderTextColor="black"
+							value={this.state.v_brand}
 							style={Styles.ti1} />
 
-						<TextInput
+						{/* <TextInput
 							onChangeText={(vTyp) => this.setState({ v_type: vTyp })}
 							placeholder="Vehicle Type"
 							placeholderTextColor="white"
-							value = {this.state.v_type}
-							style={Styles.ti1} />
+							value={this.state.v_type}
+							style={Styles.ti1} /> */}
 
 						<Button
 							title="Submit Vehicle"
