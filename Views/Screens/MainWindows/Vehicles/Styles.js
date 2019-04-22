@@ -15,17 +15,21 @@ const Styles = StyleSheet.create({
 		// backgroundColor: '#1c1c1c',
 	},
 	ti1: {
-		marginBottom: 4,
-		width: "100%",
-		height: 40,
-		borderBottomWidth: 1,
-		borderBottomColor: 'gray',
-		color: 'white'
-	},
-	vehicleInputFrom:{ 
 		marginTop: 10,
+		width: "80%",
+		height: 40,
+		backgroundColor:'#c9cacc',
+		// borderBottomWidth: 1,
+		// borderBottomColor: 'gray',
+		color: 'black',
+		borderRadius:10
+	},
+	vehicleInputFrom:{ 		
+		
+		marginTop: 10,
+		marginBottom: 30,
 		width: "95%",
-		height: 170,
+		height: "50%",
 		backgroundColor: 'white',
 		borderRadius: 20,
 		shadowColor: 'black',

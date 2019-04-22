@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, StyleSheet, TextInput, Picker, ActivityIndicator, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, TextInput, Picker, ActivityIndicator, KeyboardAvoidingView, TouchableHighlight, TouchableOpacity } from 'react-native'
 import { Card, ListItem, Button, Image, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Octicons'
 import { Avatar } from 'react-native-elements';
@@ -15,7 +15,8 @@ class Vehicles extends Component {
 		this.state = {
 			v_number: "",
 			v_brand: "",
-			v_type: "Select a Type",
+			v_model:"",
+			v_type: null,
 			v_image: null,
 			user: null,
 			v_list: [],
@@ -175,14 +176,14 @@ class Vehicles extends Component {
 			<View style={Styles.mainView}>
 				<View style={Styles.header}>
 					<View>
-						<TouchableHighlight onPress={() => this.props.navigation.toggleDrawer()} >
+						<TouchableOpacity onPress={() => this.props.navigation.toggleDrawer()} >
 							<Icon
 								name="three-bars"
 								color="black"
 								size={27}
 								style={Styles.navigationIcon}
 							/>
-						</TouchableHighlight>
+						</TouchableOpacity>
 					</View>
 					<View style={Styles.addVehicleView}>
 						<Text style={Styles.addVehicleText}>Add a Vehicle</Text>
@@ -190,8 +191,10 @@ class Vehicles extends Component {
 				</View>
 
 				<View style={Styles.vehicleContainer}>
-					<View elevation={5} style={Styles.vehicleInputFrom}>
-						<View style={{ flexDirection: "row", alignItems: "center" }}>
+					<ScrollView elevation={5} style={Styles.vehicleInputFrom} contentContainerStyle={{alignItems:"center",}}>
+						{/* <View style={{ flexDirection: "row", alignItems: "center" }}> */}
+						<View style={{marginBottom:20, marginTop:20, flexDirection:"row", alignItems:"center"}}>
+							<Text style={{marginRight:20}}>Choose an image</Text>
 							<Avatar
 								size="large"
 								rounded
@@ -199,13 +202,15 @@ class Vehicles extends Component {
 								source={{ uri: this.state.v_image }}
 								showEditButton
 							/>
-							<View>
+						</View>
+							{/* <View style={{borderRadius:10, width: "80%", overflow: 'hidden' }}> */}
 								<Picker
 									selectedValue={this.state.v_type}
-									style={{ height: 50, width: 150, borderStyle:'solid', borderBottomColor:'black' }}
+									style={{ height: 40, width: "80%"}}
 									onValueChange={(v_type, itemIndex) =>
 										this.setState({ v_type })
 									}>
+									{/* <Picker.Item label="Select a vehicle type" value={null} /> */}
 									<Picker.Item label="Motorcycle" value="Motorcycle" />
 									<Picker.Item label="Three wheel" value="Three wheel" />
 									<Picker.Item label="Car" value="Car" />
@@ -215,37 +220,48 @@ class Vehicles extends Component {
 									<Picker.Item label="Hand Tractor" value="Hand Tractor" />
 									<Picker.Item label="Land Vehicle" value="Land Vehicle" />
 								</Picker>
-							</View>
-						</View>
+							{/* </View> */}
+						{/* </View> */}
 
 						<TextInput
 							onChangeText={(vNum) => this.setState({ v_number: vNum })}
-							placeholder="Vehicle Number"
-							placeholderTextColor="black"
+							placeholder="Plate number"
+							placeholderTextColor="#98999b"
 							value={this.state.v_number}
 							style={Styles.ti1} />
 
 						<TextInput
 							onChangeText={(vBrn) => this.setState({ v_brand: vBrn })}
-							placeholder="Vehicle Brand"
-							placeholderTextColor="black"
+							placeholder="Brand"
+							placeholderTextColor="#98999b"
 							value={this.state.v_brand}
 							style={Styles.ti1} />
 
-						{/* <TextInput
-							onChangeText={(vTyp) => this.setState({ v_type: vTyp })}
-							placeholder="Vehicle Type"
-							placeholderTextColor="white"
-							value={this.state.v_type}
-							style={Styles.ti1} /> */}
+						<TextInput
+							onChangeText={(vMdl) => this.setState({ v_model: vMdl })}
+							placeholder="Model"
+							placeholderTextColor="#98999b"
+							value={this.state.v_model}
+							style={Styles.ti1} />
 
-						<Button
-							title="Submit Vehicle"
+						<TouchableOpacity
+							style={{
+								backgroundColor:'blue', 
+								height:50, 
+								width:180,
+								justifyContent:"center",
+								alignItems:"center", 
+								borderRadius:10,
+								marginTop:20
+							}}
+							// title="Submit Vehicle"
 							onPress={this.dataChecker.bind(this)}
-						/>
-					</View>
+						>
+							<Text style={{color:'white', fontSize:15}}>Save My Vehicle</Text>
+						</TouchableOpacity>
+					</ScrollView>
 					{/* </KeyboardAvoidingView> */}
-					{this.state.v_list ? (
+					{/* {this.state.v_list ? (
 						<ScrollView style={Styles.scrollView}>
 							{
 								this.state.v_list.map((l, i) => (
@@ -273,7 +289,7 @@ class Vehicles extends Component {
 							>
 								<ActivityIndicator size="small" color="#00ff00" />
 							</View>
-						)}
+						)} */}
 				</View>
 			</View>
 		)
