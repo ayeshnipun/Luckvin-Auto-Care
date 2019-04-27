@@ -7,7 +7,7 @@ export default class myProfileSettings extends Component {
   render() {
 	return (
 	  <View style={Styles.outerView}>
-		<Text> textponent </Text>
+		<Text style={{color:"#7c7c7c", fontSize:20}}> Settings </Text>
 	  </View>
 	)
   }

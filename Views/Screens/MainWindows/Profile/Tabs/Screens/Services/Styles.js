@@ -3,9 +3,8 @@ import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
 	outerView:{
-		height:"100%",
-		backgroundColor:'#1c1c1c',
-		alignItems:"center"
+		backgroundColor:"#d9dbdd", height:"100%", alignItems:"center",
+		borderTopLeftRadius:10, borderTopRightRadius:10,
 	}
 });
 

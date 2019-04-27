@@ -8,7 +8,7 @@ export default class myVehicleList extends Component {
 	render() {
 		return (
 			<View style={Styles.outerView}>
-				<Text style={{color:"white", fontSize:20}}>My Vehicles</Text>
+				<Text style={{color:"#878787", fontSize:20}}>My Vehicles</Text>
 			</View>
 		)
 	}

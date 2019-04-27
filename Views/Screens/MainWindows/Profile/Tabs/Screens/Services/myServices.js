@@ -8,7 +8,7 @@ export default class myServices extends Component {
 	render() {
 		return (
 			<View style={styles.outerView}>
-				<Text style={{color:"white"}}> Services </Text>
+				<Text style={{color:"#7c7c7c", fontSize:20}}> Services </Text>
 			</View>
 		)
 	}

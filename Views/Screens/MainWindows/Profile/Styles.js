@@ -3,19 +3,38 @@ import { StyleSheet } from 'react-native'
 const Styles = StyleSheet.create({
 	profileInfo: {
 		fontSize: 15,
-		color: 'white'
+		color: 'black'
 	},
 	infoLoadingIndicator:{ 
 		flex: 1, justifyContent: 'center', flexDirection: 'row', justifyContent: 'space-around', padding: 10 
 	},
 	navigator:{
-		flex:1, width:"100%", marginTop:8
+		flex:1, 
+		width:"100%",
+		marginTop:30 
+		// marginTop:8
+		// top:20,
+		// bottom:20
 	},
 	userDataView:{
 		marginRight: 10
 	},
 	infoWithAvatarView:{ 
-		justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'row', paddingVertical: 10 
+		top: 10,
+		bottom: 30,
+		width: "95%",
+		height: 120,
+		backgroundColor: 'white',
+		borderRadius: 20,
+		shadowColor: 'black',
+		shadowOffset: {
+			width: 10,
+			height: 10
+		},
+		shadowRadius: 10,
+		shadowOpacity: 1.0,
+		flexDirection:"row",
+		alignItems:"center"
 	},
 	signOutIcon:{
 		marginLeft: 110,
@@ -27,7 +46,7 @@ const Styles = StyleSheet.create({
 		marginBottom: 10 
 	},
 	headerText:{ 
-		color: 'white', fontSize: 26 
+		color: 'black', fontSize: 26 
 	},
 	headerView:{ 
 		marginLeft: "30%", marginTop: 5 
@@ -42,7 +61,7 @@ const Styles = StyleSheet.create({
 		flexDirection: 'row', marginTop: 8 
 	},
 	mainView:{ 
-		flex: 1, backgroundColor: '#1c1c1c' 
+		flex: 1, backgroundColor: 'white' 
 	}
 });
 

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Text, View, Button, Image, StyleSheet, TouchableOpacity, ActivityIndicator, TouchableHighlight } from 'react-native'
+import { Text, View, Button, Image, StyleSheet, TouchableOpacity, ActivityIndicator, Dimensions  } from 'react-native'
 // import { ImagePicker } from 'react-native-image-picker'
 import { Avatar } from 'react-native-elements';
 import { fb, database, storage } from '../../../../firebaseConfig/config'
 import Icon from 'react-native-vector-icons/Octicons'
+import IconFA5 from 'react-native-vector-icons/FontAwesome5'
 import WelcomeScreen from '../../WelcomeScreen/WelcomeScreen'
 import Navigator from './Tabs/Navigator';
 var ImagePicker = require('react-native-image-picker');
@@ -27,9 +28,18 @@ export default class Profile extends Component {
 			avatar: null,
 			fName: null,
 			lName: null,
-			email: null
+			email: null,
+			profileCardWidth:0
 		}
 
+	}
+
+	componentWillMount(){
+		const width = Dimensions.get('window').width;
+		const profileCardWidth = width - 30;
+		this.setState({
+			profileCardWidth
+		})
 	}
 
 	componentDidMount() {
@@ -160,55 +170,75 @@ export default class Profile extends Component {
 			<View style={Styles.mainView}>
 				<View style={Styles.mainHeaderView}>
 					<View style={Styles.navigationIconView}>
-						<TouchableHighlight onPress={() => this.props.navigation.toggleDrawer()} >
+						<TouchableOpacity onPress={() => this.props.navigation.toggleDrawer()} >
 							<Icon
 								name="three-bars"
-								color="white"
+								color="black"
 								size={27}
 								style={Styles.navigationIcon}
 							/>
-						</TouchableHighlight>
+						</TouchableOpacity>
 					</View>
 					<View style={Styles.headerView}>
 						<Text style={Styles.headerText}>Profile</Text>
 					</View>
 					<View style={Styles.signOutIconView}>
-						<TouchableHighlight onPress={() => this.logOut()} >
+						<TouchableOpacity onPress={() => this.logOut()} >
 							<Icon
 								name="sign-out"
 								color="red"
 								size={27}
 								style={Styles.signOutIcon}
 							/>
-						</TouchableHighlight>
+						</TouchableOpacity>
 					</View>
 				</View>
 
-				<View
-					style={Styles.infoWithAvatarView}>
-					
-					<Avatar
-						size="large"
-						rounded
-						onPress={this.addPicture}
-						source={{ uri: this.state.userData ? this.state.userData.avatar : null }}
-						showEditButton
-					/>
-					<View style={Styles.userDataView}>
-						{this.state.userData ? (
-							<View>
-								<Text style={Styles.profileInfo}>{this.state.fName + " " + this.state.lName}</Text>
-								<Text style={Styles.profileInfo}>{this.state.email}</Text>
-								{/* <Text>Username</Text> */}
-							</View>
-						) : (
-								<View style={Styles.infoLoadingIndicator}>
-									<ActivityIndicator size="small" color="#00ff00" />
+				{/* <View elevation={5}>
+					<Text>asas</Text>
+				</View> */}
+				<View style={{alignItems:"center"}}>
+					<View elevation={5} style={{
+						top: 10,
+						bottom: 30,
+						width: this.state.profileCardWidth,
+						height: 120,
+						backgroundColor: 'white',
+						borderRadius: 20,
+						shadowColor: 'black',
+						shadowOffset: {
+							width: 10,
+							height: 10
+						},
+						shadowRadius: 10,
+						shadowOpacity: 1.0,
+						flexDirection:"row",
+						alignItems:"center"
+					}}>
+						<View style={{ left: 40, marginRight: 60 }}>
+							<Avatar
+								size="large"
+								rounded
+								onPress={this.addPicture}
+								source={{ uri: this.state.userData ? this.state.userData.avatar : null }}
+								showEditButton
+							/>
+						</View>
+						<View style={Styles.userDataView}>
+							{this.state.userData ? (
+								<View>
+									<Text style={Styles.profileInfo}>{this.state.fName + " " + this.state.lName}</Text>
+									<Text style={Styles.profileInfo}>{this.state.email}</Text>
+									{/* <Text>Username</Text> */}
 								</View>
-							)}
+							) : (
+									<View style={Styles.infoLoadingIndicator}>
+										<ActivityIndicator size="small" color="#00ff00" />
+									</View>
+								)}
+						</View>
 					</View>
 				</View>
-
 				{/* <View style={{ paddingBottom: 20, borderBottomWidth: 1 }}>
 					<TouchableOpacity style={{ marginTop: 10, marginHorizontal: 40, paddingVertical: 15, borderRadius: 20, backgroundColor: 'gray' }} onPress={this.ccc}>
 						<Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>
@@ -224,3 +254,16 @@ export default class Profile extends Component {
 		)
 	}
 }
+
+
+Profile.navigationOptions = {
+	tabBarIcon: ({ tintColor, focused }) => (
+		<View>
+			<IconFA5
+				name="user-friends"
+				size={26}
+				color={tintColor}
+			/>
+		</View>
+	)
+} 
