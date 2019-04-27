@@ -203,7 +203,7 @@ export default class Profile extends Component {
 						bottom: 30,
 						width: this.state.profileCardWidth,
 						height: 120,
-						backgroundColor: 'white',
+						backgroundColor: '#efeded',
 						borderRadius: 20,
 						shadowColor: 'black',
 						shadowOffset: {

@@ -69,7 +69,7 @@ class Vehicles extends Component {
 	}
 
 	dataChecker = () => {
-		if (this.state.v_number == "" || this.state.v_brand == ""  || this.state.v_model == "" || this.state.v_image == "") {
+		if (this.state.v_number == "" || this.state.v_brand == ""  || this.state.v_model == "" || this.state.v_image == "" || this.state.v_type == null) {
 			alert(
 				'All Fields are required..!!',
 				'My Alert Msg',
@@ -137,7 +137,6 @@ class Vehicles extends Component {
 			})
 		})
 
-		alert("Vehicle Registerd");
 	}
 
 	setDatabse = (imageURL) => {
@@ -148,6 +147,7 @@ class Vehicles extends Component {
 			vehicle_model: this.state.v_model,
 			vehicle_image: imageURL,
 		}).then(() => {
+			alert("Vehicle Registerd");
 			this.setState({
 				v_number: "",
 				v_brand: "",
@@ -213,7 +213,7 @@ class Vehicles extends Component {
 									onValueChange={(v_type, itemIndex) =>
 										this.setState({ v_type })
 									}>
-									{/* <Picker.Item label="Select a vehicle type" value={null} /> */}
+									<Picker.Item label="Select a vehicle type" value={null} />
 									<Picker.Item label="Motorcycle" value="Motorcycle" />
 									<Picker.Item label="Three wheel" value="Three wheel" />
 									<Picker.Item label="Car" value="Car" />
