@@ -53,7 +53,7 @@ export default class Profile extends Component {
 					user
 				});
 				database.collection('Users').doc(this.state.user.uid).onSnapshot(user => {
-					console.log(user);
+					// console.log(user);
 					this.setState({
 						userData: user.data(),
 						fName: user.data().fname,

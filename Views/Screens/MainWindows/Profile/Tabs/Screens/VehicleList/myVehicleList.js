@@ -38,7 +38,7 @@ export default class myVehicleList extends Component {
 						this.setState({
 							v_list: vehicles
 						})
-						console.log(this.state.v_list)
+						// console.log(this.state.v_list)
 						// snap.docChanges().forEach(change => {
 						// 	this.setState(prevState => ({
 						// 		v_list: [...prevState.v_list, { key: change.doc.id, details: change.doc.data() }]

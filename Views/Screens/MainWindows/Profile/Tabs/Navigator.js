@@ -11,9 +11,9 @@ class Navigator extends Component {
 
 const TabNavigator = createBottomTabNavigator(
 	{
+		Settings: myProfileSettings,
 		Vehicles: myVehicleList,
 		Services: myServices,
-		Settings: myProfileSettings,
 	},
 	{
 		tabBarOptions: {
