@@ -12,10 +12,10 @@ export default class myProfileSettings extends Component {
 		fName: "",
 		lName: "",
 		contact: "",
-		textInputWidth:0
+		textInputWidth: 0
 	}
 
-	componentWillMount(){
+	componentWillMount() {
 		const width = Dimensions.get('window').width;
 		const textInputWidth = width - 50;
 		this.setState({
@@ -23,7 +23,7 @@ export default class myProfileSettings extends Component {
 		})
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		fb.auth().onAuthStateChanged((user) => {
 			if (user) {
 				this.setState({
@@ -44,17 +44,53 @@ export default class myProfileSettings extends Component {
 		})
 	}
 
+	updateVehicle = () => {
+		database.collection("Users").doc(this.state.userId).update({
+			fname : this.state.fName,
+			lname : this.state.lName,
+			contact : this.state.contact
+		}).then(() => {
+			alert("Profile Updated")
+		}).catch((error) => {
+			console.log(error);
+		})
+	}
+
 	render() {
 		const user = this.state
 		return (
 			<View style={Styles.outerView}>
 				<Text style={{ color: "#878787", fontSize: 20, marginBottom: 10 }}>Edit Profile</Text>
-				
-				<ScrollView style={{width:"100%"}}>
-				<TextInput style={{backgroundColor:"gray", borderRadius:5, width: this.state.textInputWidth, fontSize:20, marginBottom:10}}>{user.fName}</TextInput>
-				<TextInput style={{backgroundColor:"gray", borderRadius:5, width: this.state.textInputWidth, fontSize:20, marginBottom:10}}>{user.lName}</TextInput>
-				<TextInput style={{backgroundColor:"gray", borderRadius:5, width: this.state.textInputWidth, fontSize:20, marginBottom:10}}>{user.contact}</TextInput>
-				</ScrollView>
+				{/* <View style={{width:"100%", alignItems:"center"}}> */}
+					<ScrollView style={{ width: "100%", flex:1 }} contentContainerStyle={{alignItems:"center"}}>
+						<TextInput 
+							style={{ 
+								backgroundColor: "#c9cacc", 
+								borderRadius: 5, width: this.state.textInputWidth, fontSize: 20, marginBottom: 10 
+							}}
+							onChangeText={(fName) => this.setState({fName})}
+						>{user.fName}</TextInput>
+
+						<TextInput 
+							style={{ 
+								backgroundColor: "#c9cacc", 
+								borderRadius: 5, width: this.state.textInputWidth, fontSize: 20, marginBottom: 10 
+								}}
+							onChangeText={(lName) => this.setState({lName})}
+						>{user.lName}</TextInput>
+
+						<TextInput 
+							style={{ backgroundColor: "#c9cacc", 
+								borderRadius: 5, width: this.state.textInputWidth, fontSize: 20, marginBottom: 10 
+								}}
+							onChangeText={(contact) => this.setState({contact})}
+						>{user.contact}</TextInput>
+
+						<TouchableOpacity onPress={this.updateVehicle} style={{height:30, width:100, justifyContent:"center", backgroundColor:"green", alignItems:"center"}} >
+							<Text>Update</Text>
+						</TouchableOpacity>
+					</ScrollView>
+				{/* </View> */}
 			</View>
 		)
 	}
