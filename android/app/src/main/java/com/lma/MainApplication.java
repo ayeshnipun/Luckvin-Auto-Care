@@ -3,6 +3,7 @@ package com.lma;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.reactnativecommunity.netinfo.NetInfoPackage;
 // import com.RNFetchBlob.RNFetchBlobPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -40,6 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           	new MainReactPackage(),
+            new AsyncStoragePackage(),
             new NetInfoPackage(),
             // new RNFetchBlobPackage(),
             new LinearGradientPackage(),

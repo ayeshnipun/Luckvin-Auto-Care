@@ -44,7 +44,7 @@ export default class myProfileSettings extends Component {
 		})
 	}
 
-	updateVehicle = () => {
+	updateProfile = () => {
 		database.collection("Users").doc(this.state.userId).update({
 			fname : this.state.fName,
 			lname : this.state.lName,
@@ -86,7 +86,7 @@ export default class myProfileSettings extends Component {
 							onChangeText={(contact) => this.setState({contact})}
 						>{user.contact}</TextInput>
 
-						<TouchableOpacity onPress={this.updateVehicle} style={{height:30, width:100, justifyContent:"center", backgroundColor:"green", alignItems:"center"}} >
+						<TouchableOpacity onPress={this.updateProfile} style={{height:30, width:100, justifyContent:"center", backgroundColor:"green", alignItems:"center"}} >
 							<Text>Update</Text>
 						</TouchableOpacity>
 					</ScrollView>

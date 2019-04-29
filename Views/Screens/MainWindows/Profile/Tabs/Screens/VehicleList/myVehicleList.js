@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ActivityIndicator, ScrollView } from 'react-native'
+import { Text, View, ActivityIndicator, ScrollView, TextInput, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Card, ListItem, Button, Image, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import { fb, database } from '../../../../../../../firebaseConfig/config'
@@ -13,7 +13,12 @@ export default class myVehicleList extends Component {
 			user: null,
 			v_list: [],
 			dialogVisible: false,
-			vehicleToDelete: null
+			vehicleToDelete: null,
+			gotoEdit: false,
+			e_brand:"",
+			e_model:"",
+			e_number:"",
+			e_type:""
 		};
 
 	}
@@ -60,7 +65,7 @@ export default class myVehicleList extends Component {
 	editVehicle = () => {
 		this.setState({ dialogVisible: false });
 	}
-	
+
 	deleteVehicle = () => {
 		this.setState({ dialogVisible: false });
 		database.collection("Users").doc(this.state.user.uid).collection("Vehicles").doc(this.state.vehicleToDelete).delete().then(() => {
@@ -71,6 +76,7 @@ export default class myVehicleList extends Component {
 	}
 
 	render() {
+		const vehicle = this.state
 		return (
 			<View style={Styles.outerView}>
 
@@ -87,32 +93,66 @@ export default class myVehicleList extends Component {
 				<Text style={{ color: "#878787", fontSize: 20, marginBottom: 10 }}>My Vehicles</Text>
 				{this.state.v_list ? (
 					// console.log(object)
-					<ScrollView style={Styles.scrollView}>
-						{
-							this.state.v_list.map((l, i) => (
-								<ListItem
-									key={i}
-									leftAvatar={{ source: { uri: l.details.vehicle_image } }}
-									title={l.details.vehicle_brand + " " + l.details.vehicle_model}
-									subtitle={l.details.vehicle_number}
-									// leftIcon={{ name: 'av-timer' }}
-									onPress={() => console.log(l)}
-									onLongPress={() => this.setState({dialogVisible: true, vehicleToDelete:l.key})}
-									// this.setState({dialogVisible: true, vehicleToDelete:l})
-									topDivider={true}
-									bottomDivider={true}
-									// rightIcon={{ name: 'arrow-right', type: 'font-awesome', style: { marginRight: 10, fontSize: 15 } }}
-									chevron
-									chevronColor="black"
-									// chevronSize={25}
-
-									containerStyle={{
-										// backgroundColor: "red"
+					!this.state.gotoEdit ? (
+						<ScrollView style={Styles.scrollView}>
+							{
+								this.state.v_list.map((l, i) => (
+									<ListItem
+										key={i}
+										leftAvatar={{ source: { uri: l.details.vehicle_image } }}
+										title={l.details.vehicle_brand + " " + l.details.vehicle_model}
+										subtitle={l.details.vehicle_number}
+										onPress={() => this.setState({ 
+											gotoEdit: true,
+											e_brand: l.details.vehicle_brand,
+											e_model: l.details.vehicle_model,
+											e_number: l.details.vehicle_number
+										})}
+										onLongPress={() => this.setState({ dialogVisible: true, vehicleToDelete: l.key })}
+										// this.setState({dialogVisible: true, vehicleToDelete:l})
+										topDivider={true}
+										bottomDivider={true}
+										// rightIcon={{ name: 'arrow-right', type: 'font-awesome', style: { marginRight: 10, fontSize: 15 } }}
+										chevron
+										chevronColor="black"
+										containerStyle={{
+											// backgroundColor: "red"
+										}}
+									/>
+								))
+							}
+						</ScrollView>
+					) : (
+							<ScrollView style={Styles.scrollView}>
+								<TextInput
+									style={{
+										backgroundColor: "#c9cacc",
+										borderRadius: 5, width: this.state.textInputWidth, fontSize: 20, marginBottom: 10
 									}}
-								/>
-							))
-						}
-					</ScrollView>
+									onChangeText={(e_brand) => this.setState({ e_brand })}
+								>{vehicle.e_brand}</TextInput>
+
+								<TextInput
+									style={{
+										backgroundColor: "#c9cacc",
+										borderRadius: 5, width: this.state.textInputWidth, fontSize: 20, marginBottom: 10
+									}}
+									onChangeText={(e_model) => this.setState({ e_model })}
+								>{vehicle.e_model}</TextInput>
+
+								<TextInput
+									style={{
+										backgroundColor: "#c9cacc",
+										borderRadius: 5, width: this.state.textInputWidth, fontSize: 20, marginBottom: 10
+									}}
+									onChangeText={(e_number) => this.setState({ e_number })}
+								>{vehicle.e_number}</TextInput>
+
+								<TouchableOpacity onPress={()=>console.log(vehicle.e_brand)} style={{ height: 30, width: 100, justifyContent: "center", backgroundColor: "green", alignItems: "center" }} >
+									<Text>Update</Text>
+								</TouchableOpacity>
+							</ScrollView>
+						)
 				) : (
 						<View style={{
 							flex: 1,
