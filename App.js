@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, YellowBox  } from 'react-native';
+import { Text, View, YellowBox } from 'react-native';
 import { fb } from './firebaseConfig/config';
 import NetInfo from "@react-native-community/netinfo";
 
@@ -18,37 +18,33 @@ class App extends React.Component {
 			password: '',
 			user: null
 		};
-
-
-
-		// this.ref = fb.firestore().collection('Users');
-
-		// console.log(this.ref.doc.data());
 	}
 
 	componentDidMount() {
 		NetInfo.isConnected.fetch().then(isConnected => {
-			console.log("Is connected", isConnected);
+			console.log("status", isConnected);			
 			if (isConnected) {
-				fb.auth().onAuthStateChanged(function (user) {
-					if (user) {
-						// console.log(user);
-						this.setState({
-							user,
-							signupState: true
-						});
-						// console.log(this.ref.doc.id);
-					} else {
-						this.setState({
-							signupState: false
-						});
-					}
-				}.bind(this));
-			} else {
+				// this.getUser()
+				if (!this.state.user) {					
+					fb.auth().onAuthStateChanged(function (user) {
+						if (user) {
+							// console.log(user);
+							this.setState({
+								user,
+								signupState: true
+							});
+							// console.log(this.ref.doc.id);
+						} else {
+							this.setState({
+								signupState: false
+							});
+						}
+					}.bind(this));					
+				}
+			}else {
 				alert("Check your connection.")
 			}
 		});
-		
 	}
 
 	render() {
@@ -68,7 +64,7 @@ class App extends React.Component {
 					{/* <KeepAwake></KeepAwake> */}
 					{/* <Text style={{color: "red"}}>dhfhgcgcghchgsdf</Text> */}
 					{/* <Location /> */}
-					<Drawer user={this.state.user}/>
+					<Drawer user={this.state.user} />
 				</View>
 			);
 		}
