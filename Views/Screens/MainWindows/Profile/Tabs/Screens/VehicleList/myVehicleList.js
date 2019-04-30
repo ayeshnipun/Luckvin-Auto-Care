@@ -14,6 +14,7 @@ export default class myVehicleList extends Component {
 			v_list: [],
 			dialogVisible: false,
 			vehicleToDelete: null,
+			vehicleToEdit: null,
 			gotoEdit: false,
 			e_brand:"",
 			e_model:"",
@@ -62,8 +63,20 @@ export default class myVehicleList extends Component {
 		this.setState({ dialogVisible: false });
 	};
 
+
 	editVehicle = () => {
-		this.setState({ dialogVisible: false });
+		database.collection("Users").doc(this.state.user.uid).collection("Vehicles").doc(this.state.vehicleToEdit).update({
+			vehicle_brand:this.state.e_brand,
+			vehicle_model:this.state.e_model,
+			vehicle_number:this.state.e_number,
+		}).then(() => {
+			alert("Vehicle Updated")
+			this.setState({
+				vehicleToEdit: null
+			})
+		}).catch((error) => {
+			console.log(error);
+		})
 	}
 
 	deleteVehicle = () => {
@@ -85,7 +98,7 @@ export default class myVehicleList extends Component {
 					{/* <Dialog.Description>
 						Vehicle Options
           				</Dialog.Description> */}
-					<Dialog.Button label="Edit" onPress={this.editVehicle} />
+					{/* <Dialog.Button label="Edit" onPress={this.editVehicle} /> */}
 					<Dialog.Button label="Delete" onPress={this.deleteVehicle} />
 					<Dialog.Button label="Cancle" onPress={this.closeDialog} />
 				</Dialog.Container>
@@ -106,7 +119,8 @@ export default class myVehicleList extends Component {
 											gotoEdit: true,
 											e_brand: l.details.vehicle_brand,
 											e_model: l.details.vehicle_model,
-											e_number: l.details.vehicle_number
+											e_number: l.details.vehicle_number,
+											vehicleToEdit: l.key
 										})}
 										onLongPress={() => this.setState({ dialogVisible: true, vehicleToDelete: l.key })}
 										// this.setState({dialogVisible: true, vehicleToDelete:l})
@@ -124,6 +138,15 @@ export default class myVehicleList extends Component {
 						</ScrollView>
 					) : (
 							<ScrollView style={Styles.scrollView}>
+								<TouchableOpacity onPress={() => this.setState({ 
+											gotoEdit: false,
+											e_brand: "",
+											e_model: "",
+											e_number: "",
+											vehicleToEdit: null
+										})}>
+									<Text>dsdsdsds</Text>
+								</TouchableOpacity>
 								<TextInput
 									style={{
 										backgroundColor: "#c9cacc",
@@ -148,7 +171,7 @@ export default class myVehicleList extends Component {
 									onChangeText={(e_number) => this.setState({ e_number })}
 								>{vehicle.e_number}</TextInput>
 
-								<TouchableOpacity onPress={()=>console.log(vehicle.e_brand)} style={{ height: 30, width: 100, justifyContent: "center", backgroundColor: "green", alignItems: "center" }} >
+								<TouchableOpacity onPress={this.editVehicle} style={{ height: 30, width: 100, justifyContent: "center", backgroundColor: "green", alignItems: "center" }} >
 									<Text>Update</Text>
 								</TouchableOpacity>
 							</ScrollView>
