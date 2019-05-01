@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, ActivityIndicator, ScrollView, TextInput, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Card, ListItem, Button, Image, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
-import { fb, database } from '../../../../../../../firebaseConfig/config'
+import { fb, database, storage } from '../../../../../../../firebaseConfig/config'
 import Dialog from 'react-native-dialog';
 import Styles from './Styles';
 
@@ -90,9 +90,10 @@ export default class myVehicleList extends Component {
 		})
 	}
 
-
 	deleteVehicle = () => {
-		this.setState({ dialogVisible: false });
+		this.setState({ 
+			dialogVisible: false 
+		});
 		database.collection("Vehicles").doc(this.state.vehicleToDelete).delete().then(() => {
 			console.log("Success");
 		}).catch((error) => {
@@ -134,7 +135,7 @@ export default class myVehicleList extends Component {
 										// 	e_number: l.details.vehicle_number,
 										// 	vehicleToEdit: l.key
 										// })}
-										onLongPress={() => this.setState({ vehicle: l, dialogVisible: true, vehicleToDelete: l.key })}
+										onLongPress={() => this.setState({ vehicle: l, dialogVisible: true, vehicleToDelete: l.key, })}
 										// this.setState({dialogVisible: true, vehicleToDelete:l})
 										topDivider={true}
 										bottomDivider={true}

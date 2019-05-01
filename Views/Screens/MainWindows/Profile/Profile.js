@@ -11,14 +11,6 @@ var ImagePicker = require('react-native-image-picker');
 
 import Styles from './Styles';
 
-const options = {
-	title: 'Select Avatar',
-	customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-	storageOptions: {
-		skipBackup: true,
-		path: 'images',
-	},
-};
 export default class Profile extends Component {
 	constructor(props) {
 		super(props);
@@ -51,7 +43,7 @@ export default class Profile extends Component {
 				this.setState({
 					user
 				});
-				database.collection('Users').doc(this.state.user.uid).onSnapshot(user => {
+				database.collection('users').doc(this.state.user.uid).onSnapshot(user => {
 					// console.log(user);
 					this.setState({
 						userData: user.data(),

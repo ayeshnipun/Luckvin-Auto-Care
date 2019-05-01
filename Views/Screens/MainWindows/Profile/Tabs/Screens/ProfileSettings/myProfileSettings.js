@@ -30,7 +30,7 @@ export default class myProfileSettings extends Component {
 					userEmail: user.email,
 				})
 
-				database.collection('Users').doc(user.uid).onSnapshot(user => {
+				database.collection('users').doc(user.uid).onSnapshot(user => {
 					this.setState({
 						displayName: user.data().displayName,
 						contact: user.data().contact,
@@ -43,7 +43,7 @@ export default class myProfileSettings extends Component {
 	}
 
 	updateProfile = () => {
-		database.collection("Users").doc(this.state.userId).update({
+		database.collection("users").doc(this.state.userId).update({
 			displayName : this.state.displayName,
 			contact : this.state.contact
 		}).then(() => {
