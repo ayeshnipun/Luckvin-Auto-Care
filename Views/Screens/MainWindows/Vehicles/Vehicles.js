@@ -16,8 +16,11 @@ class Vehicles extends Component {
 			v_number: "",
 			v_brand: "",
 			v_model:"",
+			v_reading: 30,
+			v_year: 1980,
 			v_type: null,
 			v_image: null,
+			v_status: false,
 			user: null,
 			v_list: [],
 		};
@@ -25,31 +28,11 @@ class Vehicles extends Component {
 	}
 
 	componentDidMount() {
-		this.getVehiclesFromFirebase();
-	}
-
-	getVehiclesFromFirebase() {
 		fb.auth().onAuthStateChanged(function (user) {
 			if (user) {
 				this.setState({
 					user
 				});
-				database.collection('Users').doc(this.state.user.uid)
-					.collection('Vehicles').onSnapshot(snap => {
-						var vehicles = [];
-						snap.forEach(function (doc) {
-							// cities.push(doc.data().name);
-							vehicles.push({ key: doc.id, details: doc.data() });
-						});
-						this.setState({
-							v_list: vehicles
-						})
-						// snap.docChanges().forEach(change => {
-						// 	this.setState(prevState => ({
-						// 		v_list: [...prevState.v_list, { key: change.doc.id, details: change.doc.data() }]
-						// 	}))
-						// });
-					});
 			}
 		}.bind(this));
 	}
@@ -140,12 +123,17 @@ class Vehicles extends Component {
 	}
 
 	setDatabse = (imageURL) => {
-		database.collection('Users').doc(this.state.user.uid).collection('Vehicles').add({
+		database.collection('Vehicles').add({
 			vehicle_type: this.state.v_type,
-			vehicle_number: this.state.v_number,
+			Reg_no: this.state.v_number,
 			vehicle_brand: this.state.v_brand,
 			vehicle_model: this.state.v_model,
-			vehicle_image: imageURL,
+			imgurl: imageURL,
+			Odometer_reading:this.state.v_reading,
+			manufactured_year: this.state.v_year,
+			userid: this.state.user.uid,
+			v_status: !this.state.v_status ? "unconfirmed" : "confirmed"
+
 		}).then(() => {
 			alert("Vehicle Registerd");
 			this.setState({
@@ -154,23 +142,11 @@ class Vehicles extends Component {
 				v_type: "",
 				v_model:"",
 				v_image: null,
+				v_reading: 0,
+				v_year: 1980,
+				v_status: false
 			});
 		})
-	}
-
-	stateEmpty = () => {
-		this.setState({
-			v_number: "",
-			v_brand: "",
-			v_type: "",
-			v_model:"",
-			v_image: null,
-		});
-	}
-
-	goToVehicle = (l) => {
-		console.log(l.details)
-		this.props.navigation.navigate('Details', { l });
 	}
 
 	render() {
@@ -214,14 +190,12 @@ class Vehicles extends Component {
 										this.setState({ v_type })
 									}>
 									<Picker.Item label="Select a vehicle type" value={null} />
-									<Picker.Item label="Motorcycle" value="Motorcycle" />
-									<Picker.Item label="Three wheel" value="Three wheel" />
-									<Picker.Item label="Car" value="Car" />
-									<Picker.Item label="Van" value="Van" />
-									<Picker.Item label="Lorry" value="Lorry" />
-									<Picker.Item label="Bus" value="Bus" />
-									<Picker.Item label="Hand Tractor" value="Hand Tractor" />
-									<Picker.Item label="Land Vehicle" value="Land Vehicle" />
+									<Picker.Item label="Motor cycle" value="motorcycle" />
+									<Picker.Item label="Threewheeler" value="threewheeler" />
+									<Picker.Item label="Car (C class)" value="Car (C class) licence" />
+									<Picker.Item label="Light Rigid (LR class) Heavy" value="Light Rigid (LR class) heavy vehicle" />
+									<Picker.Item label="Medium Rigid (MR class) Heavy" value="Medium Rigid (MR class) heavy vehicle" />
+									<Picker.Item label="Special tractor" value="Tractor" />
 								</Picker>
 							{/* </View> */}
 						{/* </View> */}
@@ -257,42 +231,12 @@ class Vehicles extends Component {
 								borderRadius:10,
 								marginTop:20
 							}}
-							// title="Submit Vehicle"
 							onPress={this.dataChecker.bind(this)}
 						>
 							<Text style={{color:'white', fontSize:15}}>Save My Vehicle</Text>
 						</TouchableOpacity>
 					</ScrollView>
 					{/* </KeyboardAvoidingView> */}
-					{/* {this.state.v_list ? (
-						<ScrollView style={Styles.scrollView}>
-							{
-								this.state.v_list.map((l, i) => (
-									<ListItem
-										key={i}
-										leftAvatar={{ source: { uri: l.details.vehicle_image } }}
-										title={l.details.vehicle_type}
-										subtitle={l.details.vehicle_number}
-										leftIcon={{ name: 'av-timer' }}
-										onPress={() => this.goToVehicle(l)}
-										topDivider={true}
-										bottomDivider={true}
-									/>
-								))
-							}
-						</ScrollView>
-					) : (
-							<View style={{
-								flex: 1,
-								justifyContent: 'center',
-								flexDirection: 'row',
-								justifyContent: 'space-around',
-								padding: 10
-							}}
-							>
-								<ActivityIndicator size="small" color="#00ff00" />
-							</View>
-						)} */}
 				</View>
 			</View>
 		)
