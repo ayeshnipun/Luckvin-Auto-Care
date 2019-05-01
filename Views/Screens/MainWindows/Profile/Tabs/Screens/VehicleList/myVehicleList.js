@@ -127,7 +127,7 @@ export default class myVehicleList extends Component {
 										key={i}
 										leftAvatar={{ source: { uri: l.details.imgurl } }}
 										title={l.details.vehicle_brand + " " + l.details.vehicle_model}
-										subtitle={l.details.vehicle_number}
+										subtitle={l.details.Reg_no}
 										// onPress={() => this.setState({
 										// 	gotoEdit: true,
 										// 	e_brand: l.details.vehicle_brand,
