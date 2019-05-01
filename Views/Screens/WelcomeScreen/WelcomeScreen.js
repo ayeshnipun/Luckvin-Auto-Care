@@ -98,9 +98,9 @@ class WelcomeScreen extends Component {
 				await fb.auth().createUserWithEmailAndPassword(email, pass).then(data => {
 					this.ref.doc(data.user.uid).set({
 						email: data.user.email,
-						fname: this.state.fname,
-						lname: this.state.lname,
+						displayName: this.state.fname + " " + this.state.lname,
 						contact: this.state.contact,
+						uid: data.user.uid
 					});
 					// console.log(data.user.uid);
 				});

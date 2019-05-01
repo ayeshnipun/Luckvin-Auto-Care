@@ -25,10 +25,9 @@ export default class Profile extends Component {
 		this.state = {
 			userData: null,
 			user: null,
-			avatar: null,
-			fName: null,
-			lName: null,
-			email: null,
+			photoURL: null,
+			displayName: "",
+			email: "",
 			profileCardWidth:0
 		}
 
@@ -56,8 +55,7 @@ export default class Profile extends Component {
 					// console.log(user);
 					this.setState({
 						userData: user.data(),
-						fName: user.data().fname,
-						lName: user.data().lname,
+						displayName: user.data().displayName,
 						avatar: user.data().photoURL
 					});
 				})
@@ -134,7 +132,7 @@ export default class Profile extends Component {
 	setDatabse = (imageURL) => {
 		var user = fb.auth().currentUser;
 		var userID = fb.auth().currentUser.uid;
-		database.collection('Users').doc(userID).update({ "avatar": imageURL });
+		database.collection('Users').doc(userID).update({ "photoURL": imageURL });
 		console.log("User: " + user);
 		user.updateProfile({
 			photoURL: imageURL
@@ -161,7 +159,7 @@ export default class Profile extends Component {
 	}
 
 	ccc = () => {
-		console.log(this.state.avatar)
+		console.log(this.state.photoURL)
 	}
 
 	render() {
@@ -220,14 +218,14 @@ export default class Profile extends Component {
 								size="large"
 								rounded
 								onPress={this.addPicture}
-								source={{ uri: this.state.userData ? this.state.userData.avatar : null }}
+								source={{ uri: this.state.userData ? this.state.userData.photoURL : null }}
 								showEditButton
 							/>
 						</View>
 						<View style={Styles.userDataView}>
 							{this.state.userData ? (
 								<View>
-									<Text style={Styles.profileInfo}>{this.state.fName + " " + this.state.lName}</Text>
+									<Text style={Styles.profileInfo}>{this.state.displayName}</Text>
 									<Text style={Styles.profileInfo}>{this.state.email}</Text>
 									{/* <Text>Username</Text> */}
 								</View>

@@ -9,8 +9,7 @@ export default class myProfileSettings extends Component {
 	state = {
 		userId: null,
 		userEmail: "",
-		fName: "",
-		lName: "",
+		displayName: "",
 		contact: "",
 		textInputWidth: 0
 	}
@@ -33,8 +32,7 @@ export default class myProfileSettings extends Component {
 
 				database.collection('Users').doc(user.uid).onSnapshot(user => {
 					this.setState({
-						fName: user.data().fname,
-						lName: user.data().lname,
+						displayName: user.data().displayName,
 						contact: user.data().contact,
 					});
 				})
@@ -46,8 +44,7 @@ export default class myProfileSettings extends Component {
 
 	updateProfile = () => {
 		database.collection("Users").doc(this.state.userId).update({
-			fname : this.state.fName,
-			lname : this.state.lName,
+			displayName : this.state.displayName,
 			contact : this.state.contact
 		}).then(() => {
 			alert("Profile Updated")
@@ -68,16 +65,16 @@ export default class myProfileSettings extends Component {
 								backgroundColor: "#c9cacc", 
 								borderRadius: 5, width: this.state.textInputWidth, fontSize: 20, marginBottom: 10 
 							}}
-							onChangeText={(fName) => this.setState({fName})}
-						>{user.fName}</TextInput>
+							onChangeText={(displayName) => this.setState({displayName})}
+						>{user.displayName}</TextInput>
 
-						<TextInput 
+						{/* <TextInput 
 							style={{ 
 								backgroundColor: "#c9cacc", 
 								borderRadius: 5, width: this.state.textInputWidth, fontSize: 20, marginBottom: 10 
 								}}
 							onChangeText={(lName) => this.setState({lName})}
-						>{user.lName}</TextInput>
+						>{user.lName}</TextInput> */}
 
 						<TextInput 
 							style={{ backgroundColor: "#c9cacc", 

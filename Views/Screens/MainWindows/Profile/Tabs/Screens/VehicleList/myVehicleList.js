@@ -14,12 +14,13 @@ export default class myVehicleList extends Component {
 			v_list: [],
 			dialogVisible: false,
 			vehicleToDelete: null,
+			vehicle: null,
 			vehicleToEdit: null,
 			gotoEdit: false,
-			e_brand:"",
-			e_model:"",
-			e_number:"",
-			e_type:""
+			e_brand: "",
+			e_model: "",
+			e_number: "",
+			e_type: ""
 		};
 
 	}
@@ -63,12 +64,23 @@ export default class myVehicleList extends Component {
 		this.setState({ dialogVisible: false });
 	};
 
+	handleEdit = () => {
+		const l = this.state.vehicle
+		this.setState({
+			dialogVisible: false,
+			gotoEdit: true,
+			e_brand: l.details.vehicle_brand,
+			e_model: l.details.vehicle_model,
+			e_number: l.details.vehicle_number,
+			vehicleToEdit: l.key
+		})
+	}
 
 	editVehicle = () => {
 		database.collection("Users").doc(this.state.user.uid).collection("Vehicles").doc(this.state.vehicleToEdit).update({
-			vehicle_brand:this.state.e_brand,
-			vehicle_model:this.state.e_model,
-			vehicle_number:this.state.e_number,
+			vehicle_brand: this.state.e_brand,
+			vehicle_model: this.state.e_model,
+			vehicle_number: this.state.e_number,
 		}).then(() => {
 			alert("Vehicle Updated")
 			this.setState({
@@ -78,6 +90,7 @@ export default class myVehicleList extends Component {
 			console.log(error);
 		})
 	}
+
 
 	deleteVehicle = () => {
 		this.setState({ dialogVisible: false });
@@ -98,7 +111,7 @@ export default class myVehicleList extends Component {
 					{/* <Dialog.Description>
 						Vehicle Options
           				</Dialog.Description> */}
-					{/* <Dialog.Button label="Edit" onPress={this.editVehicle} /> */}
+					<Dialog.Button label="Edit" onPress={this.handleEdit} />
 					<Dialog.Button label="Delete" onPress={this.deleteVehicle} />
 					<Dialog.Button label="Cancle" onPress={this.closeDialog} />
 				</Dialog.Container>
@@ -115,14 +128,14 @@ export default class myVehicleList extends Component {
 										leftAvatar={{ source: { uri: l.details.vehicle_image } }}
 										title={l.details.vehicle_brand + " " + l.details.vehicle_model}
 										subtitle={l.details.vehicle_number}
-										onPress={() => this.setState({ 
-											gotoEdit: true,
-											e_brand: l.details.vehicle_brand,
-											e_model: l.details.vehicle_model,
-											e_number: l.details.vehicle_number,
-											vehicleToEdit: l.key
-										})}
-										onLongPress={() => this.setState({ dialogVisible: true, vehicleToDelete: l.key })}
+										// onPress={() => this.setState({
+										// 	gotoEdit: true,
+										// 	e_brand: l.details.vehicle_brand,
+										// 	e_model: l.details.vehicle_model,
+										// 	e_number: l.details.vehicle_number,
+										// 	vehicleToEdit: l.key
+										// })}
+										onLongPress={() => this.setState({ vehicle: l, dialogVisible: true, vehicleToDelete: l.key })}
 										// this.setState({dialogVisible: true, vehicleToDelete:l})
 										topDivider={true}
 										bottomDivider={true}
@@ -138,13 +151,13 @@ export default class myVehicleList extends Component {
 						</ScrollView>
 					) : (
 							<ScrollView style={Styles.scrollView}>
-								<TouchableOpacity onPress={() => this.setState({ 
-											gotoEdit: false,
-											e_brand: "",
-											e_model: "",
-											e_number: "",
-											vehicleToEdit: null
-										})}>
+								<TouchableOpacity onPress={() => this.setState({
+									gotoEdit: false,
+									e_brand: "",
+									e_model: "",
+									e_number: "",
+									vehicleToEdit: null
+								})}>
 									<Text>dsdsdsds</Text>
 								</TouchableOpacity>
 								<TextInput
