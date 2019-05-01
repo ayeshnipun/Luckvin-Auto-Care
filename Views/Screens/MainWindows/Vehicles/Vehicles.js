@@ -123,7 +123,7 @@ class Vehicles extends Component {
 	}
 
 	setDatabse = (imageURL) => {
-		database.collection('Vehicles').add({
+		database.collection('vehicles').add({
 			vehicle_type: this.state.v_type,
 			Reg_no: this.state.v_number,
 			vehicle_brand: this.state.v_brand,
@@ -132,7 +132,7 @@ class Vehicles extends Component {
 			Odometer_reading:this.state.v_reading,
 			manufactured_year: this.state.v_year,
 			userid: this.state.user.uid,
-			v_status: !this.state.v_status ? "unconfirmed" : "confirmed"
+			status: !this.state.v_status ? "unconfirmed" : "confirmed"
 
 		}).then(() => {
 			alert("Vehicle Registerd");

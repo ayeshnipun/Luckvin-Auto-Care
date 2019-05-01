@@ -35,7 +35,7 @@ export default class myVehicleList extends Component {
 				this.setState({
 					user
 				});
-				database.collection('Vehicles').where('userid','==', this.state.user.uid).onSnapshot(snap => {
+				database.collection('vehicles').where('userid','==', this.state.user.uid).onSnapshot(snap => {
 						var vehicles = [];
 						snap.forEach(function (doc) {
 							// cities.push(doc.data().name);
@@ -76,10 +76,10 @@ export default class myVehicleList extends Component {
 	}
 
 	editVehicle = () => {
-		database.collection("Vehicles").doc(this.state.vehicleToEdit).update({
+		database.collection("vehicles").doc(this.state.vehicleToEdit).update({
 			vehicle_brand: this.state.e_brand,
 			vehicle_model: this.state.e_model,
-			vehicle_number: this.state.e_number,
+			Reg_no: this.state.e_number,
 		}).then(() => {
 			alert("Vehicle Updated")
 			this.setState({
@@ -94,7 +94,7 @@ export default class myVehicleList extends Component {
 		this.setState({ 
 			dialogVisible: false 
 		});
-		database.collection("Vehicles").doc(this.state.vehicleToDelete).delete().then(() => {
+		database.collection("vehicles").doc(this.state.vehicleToDelete).delete().then(() => {
 			console.log("Success");
 		}).catch((error) => {
 			console.log(error);
