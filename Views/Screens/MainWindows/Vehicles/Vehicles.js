@@ -101,7 +101,7 @@ class Vehicles extends Component {
 
 		var filePath = vId + '.' + that.state.currentFileType;
 
-		var uploadTask = storage.ref('Vehicles/' + userId).child(filePath).put(blob);
+		var uploadTask = storage.ref('photos/vehicles/' + userId).child(filePath).put(blob);
 
 		uploadTask.on('state_changed', function (snapshot) {
 			let progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);

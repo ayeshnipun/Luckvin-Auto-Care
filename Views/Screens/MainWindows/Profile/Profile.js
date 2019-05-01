@@ -109,7 +109,7 @@ export default class Profile extends Component {
 
 		var filePath = userId + '.' + that.state.currentFileType;
 
-		var uploadTask = storage.ref('Users/').child(filePath).put(blob);
+		var uploadTask = storage.ref('photos/users/').child(filePath).put(blob);
 
 		uploadTask.on('state_changed', function (snapshot) {
 			let progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);

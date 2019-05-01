@@ -35,8 +35,7 @@ export default class myVehicleList extends Component {
 				this.setState({
 					user
 				});
-				database.collection('Users').doc(this.state.user.uid)
-					.collection('Vehicles').onSnapshot(snap => {
+				database.collection('Vehicles').where('userid','==', this.state.user.uid).onSnapshot(snap => {
 						var vehicles = [];
 						snap.forEach(function (doc) {
 							// cities.push(doc.data().name);
@@ -71,13 +70,13 @@ export default class myVehicleList extends Component {
 			gotoEdit: true,
 			e_brand: l.details.vehicle_brand,
 			e_model: l.details.vehicle_model,
-			e_number: l.details.vehicle_number,
+			e_number: l.details.Reg_no,
 			vehicleToEdit: l.key
 		})
 	}
 
 	editVehicle = () => {
-		database.collection("Users").doc(this.state.user.uid).collection("Vehicles").doc(this.state.vehicleToEdit).update({
+		database.collection("Vehicles").doc(this.state.vehicleToEdit).update({
 			vehicle_brand: this.state.e_brand,
 			vehicle_model: this.state.e_model,
 			vehicle_number: this.state.e_number,
@@ -94,7 +93,7 @@ export default class myVehicleList extends Component {
 
 	deleteVehicle = () => {
 		this.setState({ dialogVisible: false });
-		database.collection("Users").doc(this.state.user.uid).collection("Vehicles").doc(this.state.vehicleToDelete).delete().then(() => {
+		database.collection("Vehicles").doc(this.state.vehicleToDelete).delete().then(() => {
 			console.log("Success");
 		}).catch((error) => {
 			console.log(error);
@@ -125,7 +124,7 @@ export default class myVehicleList extends Component {
 								this.state.v_list.map((l, i) => (
 									<ListItem
 										key={i}
-										leftAvatar={{ source: { uri: l.details.vehicle_image } }}
+										leftAvatar={{ source: { uri: l.details.imgurl } }}
 										title={l.details.vehicle_brand + " " + l.details.vehicle_model}
 										subtitle={l.details.vehicle_number}
 										// onPress={() => this.setState({
