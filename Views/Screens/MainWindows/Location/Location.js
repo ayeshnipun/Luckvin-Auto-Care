@@ -120,6 +120,8 @@ export default class Location extends Component {
 		database.collection('Breakdowns').add({
 			user: this.state.userID,
 			email: this.state.userEmail,
+			message: 'My vehicle brokedown. It cannot be moved. Please send your agent. thank you.',
+			date: new Date().getDate(),
 			latitude: this.state.region.latitude,
 			longitude: this.state.region.longitude,
 		}).then(() => {
@@ -131,6 +133,10 @@ export default class Location extends Component {
 	closeDialog = () => {
 		this.setState({ dialogVisible: false });
 	};
+
+	showLoc = (loc) => {
+		console.log(loc);
+	}
 
 
 	render() {
@@ -169,6 +175,7 @@ export default class Location extends Component {
 						// onRegionChange={this.onRegionChange}
 						showsUserLocation
 						loadingEnabled
+						onPress={(event) => console.log(event.nativeEvent.coordinate)}
 					>
 						<MapViewDirections
 							origin={this.state.region}
