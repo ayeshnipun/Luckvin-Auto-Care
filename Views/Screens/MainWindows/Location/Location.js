@@ -124,6 +124,7 @@ export default class Location extends Component {
 			date: new Date().getDate(),
 			latitude: this.state.region.latitude,
 			longitude: this.state.region.longitude,
+			status: 'unseen'
 		}).then(() => {
 			this.setState({ dialogVisible: true });
 		})
