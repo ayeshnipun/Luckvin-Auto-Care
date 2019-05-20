@@ -117,11 +117,14 @@ export default class Location extends Component {
 	}
 
 	submitRequest() {
+		var date = new Date().getDate();
+		var month = new Date().getMonth() + 1;
+		var year = new Date().getFullYear()
 		database.collection('Breakdowns').add({
 			user: this.state.userID,
 			email: this.state.userEmail,
 			message: 'My vehicle brokedown. It cannot be moved. Please send your agent. thank you.',
-			date: new Date().getDate(),
+			date: date +'/'+ month +'/'+year,
 			latitude: this.state.region.latitude,
 			longitude: this.state.region.longitude,
 			status: 'unseen'
@@ -277,7 +280,7 @@ Location.navigationOptions = {
 		<IconFA5
 			name="car-crash"
 			size={25}
-			color = {tintColor}
+			color={tintColor}
 		/>
 	)
 } 
