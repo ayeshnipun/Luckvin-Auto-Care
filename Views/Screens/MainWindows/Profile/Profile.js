@@ -124,7 +124,7 @@ export default class Profile extends Component {
 	setDatabse = (imageURL) => {
 		var user = fb.auth().currentUser;
 		var userID = fb.auth().currentUser.uid;
-		database.collection('Users').doc(userID).update({ "photoURL": imageURL });
+		database.collection('users').doc(userID).update({ "photoURL": imageURL });
 		console.log("User: " + user);
 		user.updateProfile({
 			photoURL: imageURL

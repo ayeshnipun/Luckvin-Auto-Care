@@ -26,7 +26,7 @@ class WelcomeScreen extends Component {
 			page: '',
 			isConnected:true
 		};
-		this.ref = fb.firestore().collection('Users');
+		this.ref = fb.firestore().collection('users');
 		// this.signoutUser();
 
 		// this.signoutUser(); 

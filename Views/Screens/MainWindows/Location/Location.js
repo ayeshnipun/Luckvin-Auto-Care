@@ -214,7 +214,7 @@ export default class Location extends Component {
 							<Text style={{ marginTop: 3, fontSize: 20, color: "black" }}>You are in {this.state.distance / 1000} KM away from us</Text>
 
 							{
-								this.state.distance < 50000 ? (
+								this.state.distance < 500000 ? (
 									<View style={{ alignItems: "center" }}>
 										<View style={{ alignItems: "center" }}>
 											<Text style={{ marginTop: 3 }}>First, Send your Location with 'Assist' Button</Text>

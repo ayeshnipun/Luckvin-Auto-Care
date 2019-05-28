@@ -110,6 +110,12 @@ android {
         versionName "1.0"
     }
 	signingConfigs {
+		 debug {
+			storeFile file(MYAPP_RELEASE_STORE_FILE)
+			storePassword MYAPP_RELEASE_STORE_PASSWORD
+			keyAlias MYAPP_RELEASE_KEY_ALIAS
+			keyPassword MYAPP_RELEASE_KEY_PASSWORD
+		}
         release {
             if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
                 storeFile file(MYAPP_RELEASE_STORE_FILE)
@@ -159,7 +165,7 @@ dependencies {
     implementation project(':react-native-gesture-handler')
 	// implementation 'com.facebook.android:facebook-android-sdk:4.34.0'
     // implementation project(':react-native-fbsdk')
-	compile project(':react-native-image-picker')
+	implementation project(':react-native-image-picker')
     // implementation project(':react-native-image-picker')
     implementation project(':react-native-maps')
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -169,8 +175,9 @@ dependencies {
        exclude group: 'com.google.android.gms', module: 'play-services-base'
        exclude group: 'com.google.android.gms', module: 'play-services-maps'
 	}
-	implementation 'com.google.android.gms:play-services-base:11.4.0'
+	implementation 'com.google.android.gms:play-services-base:15.0.1'
 	implementation 'com.google.android.gms:play-services-maps:16.0.0'
+	implementation 'com.google.firebase:firebase-core:16.0.1'
 }
 
 // Run this once to be able to run the application with BUCK
@@ -179,3 +186,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply plugin: 'com.google.gms.google-services'
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
